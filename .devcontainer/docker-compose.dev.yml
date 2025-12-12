@@ -1,18 +1,12 @@
-name: integration ( DEV )
+#Compose Stack Name
+name: Dev_Arka_Project
 
-volumes:
-  mysqldata:
-
-networks:
-  Data-Back:
-    driver: bridge
-  Front-Back:
-    driver: bridge
 
 services:
   db:
     image: mysql:8.4
-    container_name: demo_mysql
+    mem_limit: 2420m
+    container_name: MySQL_Arka
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_0900_ai_ci
@@ -33,54 +27,60 @@ services:
     networks:
       - Data-Back
 
-  backend:
-    build:
-      context: ../backend/Arka
+  backend:  
+    build:  
+      context: ../Backend  
       dockerfile: Dockerfile.dev
-      target: "runner"
-    container_name: Dev_Backend_Arka
-    working_dir : /workspace
+    mem_limit: 6420m
+    network_mode: host
+    container_name: Backend_Arka
+    working_dir: /workspace
+    # command: bash -lc "./gradlew bootRun --continuous"  
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      SPRING_PROFILES_ACTIVE: prod
-      SPRING_DATASOURCE_URL: jdbc:mysql://demo_mysql:3306/appdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      db_username: appuser
-      db_password: pword
-    volumes:
-      - ../backend:/app
-    ports:
-      - "8080:8080"
+    environment:  
+      # - SPRING_PROFILES_ACTIVE=dev  
+      - JAVA_TOOL_OPTIONS=-Djava.net.preferIPv4Stack=true -Djava.net.preferIPv4Addresses=true -XX:MaxRAMPercentage=85
+      - GRADLE_USER_HOME=/home/vscode/.gradle  
+      # - SPRING_PROFILES_ACTIVE= prod
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/appdb?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      - db_username=appuser
+      - db_password=pword
+    # ports:  
+    #   - "8080:8080"   # Spring Boot  
+    volumes:  
+      # El workspace para este servicio lo monta automáticamente devcontainer  
+      - gradle-cache:/home/vscode/.gradle
+      - ../Backend/Backend:/workspace
+    init: true
     stdin_open: true
     tty: true
-    # tmpfs:
-    #   - /tmp
-    # cap_drop:
-    #   - ALL
-    security_opt:
-      - no-new-privileges:true
-    networks:
-      - Data-Back
-      - Front-Back
+    # security_opt:
+    #   - no-new-privileges:true
+    # networks:
+    #   - Data-Back
+    #   - Front-Back
+
 
   frontend:
-  #   build:
-  #     context: ../frontend
-  #     dockerfile: Dockerfile.dev
-  #     args:
-  #       NEXT_PUBLIC_AUTH_API_URL: "http://localhost:8080/api/v1/user"
-  #       NEXT_PUBLIC_PRODUCT_API_URL: "http://localhost:8080/api/v1/products"
-  #       NEXT_PUBLIC_PROVIDER_API_URL: "http://localhost:8080/api/proveedores"
-  #   container_name: demo_frontend
-  #   volumes:
-  #     - ../frontend:/app:cached
-  #   working_dir: /app
-  #   init: true
-  #   tty: true
-  #   stdin_open: true
-  #   depends_on:
-  #     - app
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.dev
+      # args:
+        # NEXT_PUBLIC_AUTH_API_URL: "http://localhost:8080/api/v1/user"
+        # NEXT_PUBLIC_PRODUCT_API_URL: "http://localhost:8080/api/v1/products"
+        # NEXT_PUBLIC_PROVIDER_API_URL: "http://localhost:8080/api/proveedores"
+    mem_limit: 6420m
+    container_name: Frontend_Arka
+    volumes:
+      - ../frontend:/app
+    working_dir: /app
+    init: true
+    tty: true
+    stdin_open: true
+    depends_on:
+      - backend
     ports:
       - "3000:3000"
     networks:
@@ -88,3 +88,15 @@ services:
   #   security_opt:
   #      - no-new-privileges:true
     
+
+volumes:
+  mysqldata:
+  gradle-cache:
+
+networks:
+  Data-Back:
+    driver: bridge
+    enable_ipv6: false
+  Front-Back:
+    driver: bridge
+    enable_ipv6: false

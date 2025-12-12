@@ -1,0 +1,85 @@
+# Backedn ignore
+
+Backend/Backend/HELP.md
+Backend/Backend/.gradle
+Backend/Backend/build/
+Backend/Backend/!gradle/wrapper/gradle-wrapper.jar
+Backend/Backend/!**/src/main/**/build/
+Backend/Backend/!**/src/test/**/build/
+
+
+Backend/Backend/### STS ###
+Backend/Backend/.apt_generated
+Backend/Backend/.classpath
+Backend/Backend/.factorypath
+Backend/Backend/.project
+Backend/Backend/.settings
+Backend/Backend/.springBeans
+Backend/Backend/.sts4-cache
+Backend/Backend/bin/
+Backend/Backend/!**/src/main/**/bin/
+Backend/Backend/!**/src/test/**/bin/
+Backend/Backend/
+Backend/Backend/### IntelliJ IDEA ###
+Backend/Backend/.idea
+Backend/Backend/*.iws
+Backend/Backend/*.iml
+Backend/Backend/*.ipr
+Backend/Backend/out/
+Backend/Backend/!**/src/main/**/out/
+Backend/Backend/!**/src/test/**/out/
+Backend/Backend/
+Backend/Backend/### NetBeans ###
+Backend/Backend//nbproject/private/
+Backend/Backend/nbbuild/
+Backend/Backend/dist/
+Backend/Backend/nbdist/
+Backend/Backend/.nb-gradle/
+Backend/Backend/
+Backend/Backend/### VS Code ###
+Backend/Backend/.vscode/
+
+
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+frontend/!.yarn/patches
+frontend/!.yarn/plugins
+frontend/!.yarn/releases
+frontend/!.yarn/versions
+frontend/
+frontend/# testing
+frontend/coverage
+frontend/
+frontend/# next.js
+frontend/.next/
+frontend/out/
+frontend/
+frontend/# production
+frontend/build
+frontend/
+frontend/# misc
+frontend/.DS_Store
+frontend/*.pem
+frontend/
+frontend/# debug
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+frontend/
+frontend/# env files (can opt-in for committing if needed)
+frontend/.env*
+frontend/
+frontend/# vercel
+frontend/.vercel
+frontend/
+frontend/# typescript
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts

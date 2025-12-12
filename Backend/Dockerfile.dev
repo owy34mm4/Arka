@@ -1,0 +1,19 @@
+# Imagen base optimizada para Dev Containers con JDK 21 y usuario "vscode"
+# FROM gradle:8.14.3-jdk21-ubi-minimal
+FROM eclipse-temurin:21-jdk
+
+# Utilidades opcionales (inotify ayuda con algunos watchers en host)
+RUN apt-get update && apt-get install -y \    
+    curl
+
+#Importante para evitar la Activacion perpetua de Java -> Aumenta los recursos del contenedor, evitando este problema
+# ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75 -Xmx2g"
+# Gradle wrapper descargará su distro aquí
+ENV GRADLE_USER_HOME=/home/vscode/.gradle
+
+# Carpeta de trabajo: tu proyecto Spring Boot
+WORKDIR /workspace
+
+EXPOSE 8080
+
+CMD ["bash", "./gradlew interfaces:bootRun -t"]
