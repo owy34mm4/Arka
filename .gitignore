@@ -1,45 +1,52 @@
-# Backedn ignore
+#IDE ignore
+.idea
+.vscode
+.vs
 
-Backend/Backend/HELP.md
-Backend/Backend/.gradle
-Backend/Backend/build/
-Backend/Backend/!gradle/wrapper/gradle-wrapper.jar
-Backend/Backend/!**/src/main/**/build/
-Backend/Backend/!**/src/test/**/build/
-
-
-Backend/Backend/### STS ###
-Backend/Backend/.apt_generated
-Backend/Backend/.classpath
-Backend/Backend/.factorypath
-Backend/Backend/.project
-Backend/Backend/.settings
-Backend/Backend/.springBeans
-Backend/Backend/.sts4-cache
-Backend/Backend/bin/
-Backend/Backend/!**/src/main/**/bin/
-Backend/Backend/!**/src/test/**/bin/
-Backend/Backend/
-Backend/Backend/### IntelliJ IDEA ###
-Backend/Backend/.idea
-Backend/Backend/*.iws
-Backend/Backend/*.iml
-Backend/Backend/*.ipr
-Backend/Backend/out/
-Backend/Backend/!**/src/main/**/out/
-Backend/Backend/!**/src/test/**/out/
-Backend/Backend/
-Backend/Backend/### NetBeans ###
-Backend/Backend//nbproject/private/
-Backend/Backend/nbbuild/
-Backend/Backend/dist/
-Backend/Backend/nbdist/
-Backend/Backend/.nb-gradle/
-Backend/Backend/
-Backend/Backend/### VS Code ###
-Backend/Backend/.vscode/
+#env ignore
+./devcontainer/.env.db
+./devcontainer/.env.back
+./devcontainer/.env.front
 
 
+# Backend ignore
+
+Backend/src/HELP.md
+Backend/src/.gradle
+Backend/src/build/
+Backend/src/!gradle/wrapper/gradle-wrapper.jar
+Backend/src/!**/src/main/**/build/
+Backend/src/!**/src/test/**/build/Backend/src
+Backend/src/### STS ###
+Backend/src/.apt_generated
+Backend/src/.classpath
+Backend/src/.factorypath
+Backend/src/.project
+Backend/src/.settings
+Backend/src/.springBeans
+Backend/src/.sts4-cache
+Backend/src/bin/
+Backend/src/!**/src/main/**/bin/
+Backend/src/!**/src/test/**/bin/
+Backend/src/
+Backend/src/### IntelliJ IDEA ###
+Backend/src/.idea
+Backend/src/*.iws
+Backend/src/*.iml
+Backend/src/*.ipr
+Backend/src/out/
+Backend/src/!**/src/main/**/out/
+Backend/src/!**/src/test/**/out/
+Backend/src/
+Backend/src/### NetBeans ###
+Backend/src//nbproject/private/
+Backend/src/nbbuild/
+Backend/src/dist/
+Backend/src/nbdist/
+Backend/src/.nb-gradle/
+Backend/src/
+Backend/src/### VS Code ###
+Backend/src/.vscode
 
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
