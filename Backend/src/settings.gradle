@@ -1,0 +1,13 @@
+// ═══════════════════════════════════════════════════════════════
+// settings.gradle (raíz)
+// ═══════════════════════════════════════════════════════════════
+
+rootProject.name = 'arka'
+
+include 'shared-kernel'
+include 'product'
+include 'client'
+include 'order'
+include 'category'
+include 'shopingCart'
+include 'bootstrap'

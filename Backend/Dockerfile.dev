@@ -1,10 +1,9 @@
 FROM eclipse-temurin:21-jdk
 
-# Utilidades opcionales (inotify ayuda con algunos watchers en host)
+# Utilidades opcionales 
 #RUN apt-get update && apt-get install -y \    
    # curl
-
-# Carpeta de trabajo: tu proyecto Spring Boot
+   
 WORKDIR /workspace
 
 EXPOSE 8080

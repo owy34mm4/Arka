@@ -1,0 +1,200 @@
+Estructura de Directorios
+
+Arka/  
+├── Backend/  
+│   ├── build.gradle  
+│   ├── settings.gradle  
+│   ├── gradlew  
+│   ├── gradlew.bat  
+│   ├── gradle/  
+│   │   └── wrapper/  
+│   │       ├── gradle-wrapper.jar  
+│   │       └── gradle-wrapper.properties  
+│   │  
+│   ├── domain/                              # Módulo de Dominio (Entities & Use Cases)  
+│   │   ├── build.gradle  
+│   │   └── src/  
+│   │       ├── main/  
+│   │       │   └── java/  
+│   │       │       └── com/arka/domain/  
+│   │       │           ├── model/          # Entidades de dominio  
+│   │       │           │   ├── Product.java  
+│   │       │           │   ├── User.java  
+│   │       │           │   ├── Order.java  
+│   │       │           │   └── Provider.java  
+│   │       │           │  
+│   │       │           ├── port/           # Interfaces (puertos)  
+│   │       │           │   ├── in/         # Casos de uso (entrada)  
+│   │       │           │   │   ├── CreateProductUseCase.java  
+│   │       │           │   │   ├── GetProductUseCase.java  
+│   │       │           │   │   ├── UpdateProductUseCase.java  
+│   │       │           │   │   └── DeleteProductUseCase.java  
+│   │       │           │   │  
+│   │       │           │   └── out/        # Repositorios (salida)  
+│   │       │           │       ├── ProductRepository.java  
+│   │       │           │       ├── UserRepository.java  
+│   │       │           │       └── OrderRepository.java  
+│   │       │           │  
+│   │       │           ├── exception/      # Excepciones de dominio  
+│   │       │           │   ├── ProductNotFoundException.java  
+│   │       │           │   ├── ValidationException.java  
+│   │       │           │   └── BusinessRuleException.java  
+│   │       │           │  
+│   │       │           └── valueobject/    # Value Objects  
+│   │       │               ├── Email.java  
+│   │       │               ├── Money.java  
+│   │       │               └── ProductCode.java  
+│   │       │  
+│   │       └── test/  
+│   │           └── java/  
+│   │               └── com/arka/domain/  
+│   │                   └── model/  
+│   │                       └── ProductTest.java  
+│   │  
+│   ├── application/                         # Módulo de Aplicación (Use Cases Implementation)  
+│   │   ├── build.gradle  
+│   │   └── src/  
+│   │       ├── main/  
+│   │       │   └── java/  
+│   │       │       └── com/arka/application/  
+│   │       │           ├── service/        # Implementación de casos de uso  
+│   │       │           │   ├── ProductService.java  
+│   │       │           │   ├── UserService.java  
+│   │       │           │   └── OrderService.java  
+│   │       │           │  
+│   │       │           ├── dto/            # DTOs internos (opcional)  
+│   │       │           │   ├── CreateProductCommand.java  
+│   │       │           │   ├── UpdateProductCommand.java  
+│   │       │           │   └── ProductQuery.java  
+│   │       │           │  
+│   │       │           └── mapper/         # Mappers entre capas  
+│   │       │               └── ProductMapper.java  
+│   │       │  
+│   │       └── test/  
+│   │           └── java/  
+│   │               └── com/arka/application/  
+│   │                   └── service/  
+│   │                       └── ProductServiceTest.java  
+│   │  
+│   ├── infrastructure/                      # Módulo de Infraestructura (Adaptadores)  
+│   │   ├── build.gradle  
+│   │   └── src/  
+│   │       ├── main/  
+│   │       │   ├── java/  
+│   │       │   │   └── com/arka/infrastructure/  
+│   │       │   │       ├── adapter/  
+│   │       │   │       │   ├── persistence/    # Adaptador de persistencia  
+│   │       │   │       │   │   ├── entity/  
+│   │       │   │       │   │   │   ├── ProductEntity.java  
+│   │       │   │       │   │   │   ├── UserEntity.java  
+│   │       │   │       │   │   │   └── OrderEntity.java  
+│   │       │   │       │   │   │  
+│   │       │   │       │   │   ├── mapper/  
+│   │       │   │       │   │   │   ├── ProductEntityMapper.java  
+│   │       │   │       │   │   │   └── UserEntityMapper.java  
+│   │       │   │       │   │   │  
+│   │       │   │       │   │   ├── repository/  
+│   │       │   │       │   │   │   ├── JpaProductRepository.java  
+│   │       │   │       │   │   │   ├── JpaUserRepository.java  
+│   │       │   │       │   │   │   └── ProductRepositoryImpl.java  
+│   │       │   │       │   │   │  
+│   │       │   │       │   │   └── specification/  
+│   │       │   │       │   │       └── ProductSpecification.java  
+│   │       │   │       │   │  
+│   │       │   │       │   ├── messaging/      # Adaptador de mensajería  
+│   │       │   │       │   │   ├── kafka/  
+│   │       │   │       │   │   │   ├── KafkaProducer.java  
+│   │       │   │       │   │   │   └── KafkaConsumer.java  
+│   │       │   │       │   │   └── rabbitmq/  
+│   │       │   │       │   │  
+│   │       │   │       │   └── external/       # Adaptadores externos  
+│   │       │   │       │       ├── EmailServiceAdapter.java  
+│   │       │   │       │       └── PaymentServiceAdapter.java  
+│   │       │   │       │  
+│   │       │   │       └── config/             # Configuraciones  
+│   │       │   │           ├── DatabaseConfig.java  
+│   │       │   │           ├── SecurityConfig.java  
+│   │       │   │           └── KafkaConfig.java  
+│   │       │   │  
+│   │       │   └── resources/  
+│   │       │       ├── application.yml  
+│   │       │       ├── application-dev.yml  
+│   │       │       ├── application-prod.yml  
+│   │       │       └── db/  
+│   │       │           └── migration/  
+│   │       │               ├── V1__create_product_table.sql  
+│   │       │               └── V2__create_user_table.sql  
+│   │       │  
+│   │       └── test/  
+│   │           └── java/  
+│   │               └── com/arka/infrastructure/  
+│   │                   └── adapter/  
+│   │                       └── persistence/  
+│   │                           └── ProductRepositoryImplTest.java  
+│   │  
+│   └── interfaces/                          # Módulo de Interfaces (Web, API)  
+│       ├── build.gradle  
+│       └── src/  
+│           ├── main/  
+│           │   ├── java/  
+│           │   │   └── com/arka/interfaces/  
+│           │   │       ├── ArkaApplication.java     # Main class  
+│           │   │       │  
+│           │   │       ├── rest/                   # Controllers REST  
+│           │   │       │   ├── controller/  
+│           │   │       │   │   ├── ProductController.java  
+│           │   │       │   │   ├── UserController.java  
+│           │   │       │   │   └── OrderController.java  
+│           │   │       │   │  
+│           │   │       │   ├── dto/                # DTOs de API  
+│           │   │       │   │   ├── request/  
+│           │   │       │   │   │   ├── CreateProductRequest.java  
+│           │   │       │   │   │   └── UpdateProductRequest.java  
+│           │   │       │   │   └── response/  
+│           │   │       │   │       ├── ProductResponse.java  
+│           │   │       │   │       └── ApiResponse.java  
+│           │   │       │   │  
+│           │   │       │   └── mapper/             # Mappers REST  
+│           │   │       │       └── ProductRestMapper.java  
+│           │   │       │  
+│           │   │       ├── graphql/                # GraphQL (opcional)  
+│           │   │       │   └── resolver/  
+│           │   │       │       └── ProductResolver.java  
+│           │   │       │  
+│           │   │       ├── exception/              # Exception handlers  
+│           │   │       │   ├── GlobalExceptionHandler.java  
+│           │   │       │   └── ErrorResponse.java  
+│           │   │       │  
+│           │   │       ├── security/               # Seguridad  
+│           │   │       │   ├── JwtAuthenticationFilter.java  
+│           │   │       │   ├── JwtTokenProvider.java  
+│           │   │       │   └── UserDetailsServiceImpl.java  
+│           │   │       │  
+│           │   │       └── config/                 # Configuración de web  
+│           │   │           ├── WebConfig.java  
+│           │   │           ├── SwaggerConfig.java  
+│           │   │           └── CorsConfig.java  
+│           │   │  
+│           │   └── resources/  
+│           │       ├── static/  
+│           │       ├── templates/  
+│           │       └── graphql/  
+│           │           └── schema.graphqls  
+│           │  
+│           └── test/  
+│               └── java/  
+│                   └── com/arka/interfaces/  
+│                       ├── rest/  
+│                       │   └── controller/  
+│                       │       └── ProductControllerTest.java  
+│                       └── ArkaApplicationTests.java  
+│  
+├── .devcontainer/  
+│   ├── devcontainer.json  
+│   ├── docker-compose.dev.yml  
+│   └── Dockerfile.dev  
+│  
+├── frontend/  
+│   └── (tu estructura de frontend)  
+│  
+├── .gitignore

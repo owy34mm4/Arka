@@ -1,0 +1,10 @@
+// ═══════════════════════════════════════════════════════════════
+// shared-kernel/build.gradle
+// ═══════════════════════════════════════════════════════════════
+// ⚠️ SIN dependencias de Spring ni infraestructura
+// Solo Java puro - es el núcleo más interno
+
+dependencies {
+    // Solo validación básica (opcional)
+    implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+}

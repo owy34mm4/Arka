@@ -32,7 +32,8 @@ CREATE TABLE products(
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(60),
     description TEXT,
-    price INT
+    price INT,
+    stock int
 ) ENGINE=InnoDB;
 
 CREATE TABLE orders(
