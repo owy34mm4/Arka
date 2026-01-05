@@ -1,3 +1,5 @@
+//bootstrap/build.gradle
+
 plugins {
     id 'org.springframework.boot'
 }
@@ -24,5 +26,9 @@ dependencies {
 }
 
 bootJar {
-    mainClass = 'com.arka.bootstrap.ArkaApplication'
+    mainClass = 'com.arka.bootstrap.ArkaAplication'
+}
+
+bootRun {
+    mainClass = 'com.arka.bootstrap.ArkaAplication'
 }

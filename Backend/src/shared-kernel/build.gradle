@@ -4,7 +4,13 @@
 // ⚠️ SIN dependencias de Spring ni infraestructura
 // Solo Java puro - es el núcleo más interno
 
+plugins {  
+    id 'java-library'  
+}
+
 dependencies {
     // Solo validación básica (opcional)
+    implementation project(':bootstrap')
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
+    
 }

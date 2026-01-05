@@ -5,7 +5,7 @@ name: Dev_Arka_Project
 services:
   db:
     image: mysql:8.4
-    mem_limit: 2420m
+    mem_limit: 1420m
     container_name: MySQL_Arka
     env_file:
       - ./.env.db
@@ -43,7 +43,7 @@ services:
   phpmyadmin: 
     container_name: PHPMyAdmin_Arka_Dev
     image: phpmyadmin:5.2.3-apache
-    mem_limit: 2420m
+    mem_limit: 1420m
     ports:  
       - "127.0.0.1:749:80" 
     environment:  
@@ -60,7 +60,7 @@ services:
       context: ../Backend  
       dockerfile: Dockerfile.dev
     mem_limit: 6420m
-    network_mode: host # -> Means container will use the host network || TODO -> Solve DockerNetworkIssue
+    #network_mode: host # -> Means container will use the host network || TODO -> Solve DockerNetworkIssue
     container_name: Backend_Arka
     working_dir: /workspace
     # DEPRECATED -> command: bash -lc "./gradlew bootRun --continuous"  
@@ -69,8 +69,8 @@ services:
         condition: service_healthy
     env_file:
       - ./.env.back
-    # ports:  
-    #   - "8080:8080"   # Spring Boot  
+    ports:  
+      - "900:8080"   # host:container  \PORTS
     volumes:  
       # El workspace para este servicio lo monta automáticamente devcontainer  
       - gradle-cache:/home/vscode/.gradle
@@ -80,15 +80,15 @@ services:
     tty: true
     # security_opt:
     #   - no-new-privileges:true
-    # networks:
-    #   - Data-Back
-    #   - Front-Back
+    networks:
+      - Data-Back
+      - Front-Back
 
   frontend:
     build:
       context: ../frontend
       dockerfile: Dockerfile.dev
-    mem_limit: 6420m
+    mem_limit: 2420m
     env_file:
       - ./.env.front
     container_name: Frontend_Arka
