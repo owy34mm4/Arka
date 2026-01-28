@@ -4,8 +4,9 @@
 dependencies {
     implementation project(':shared-kernel')
     implementation project(':category')
-    implementation project(':order')
     implementation project(':shopingCart')
+    implementation project(':order')
+
     
 
     // Application layer
@@ -13,7 +14,6 @@ dependencies {
     
     // Infrastructure layer
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.kafka:spring-kafka'
     
     // API layer
     implementation 'org.springframework.boot:spring-boot-starter-web'

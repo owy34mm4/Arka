@@ -7,9 +7,13 @@ logging:
           security: DEBUG 
     com:
       arka: DEBUG
+
+      
 server:
   address: 0.0.0.0
   port: 8080
+
+
 spring:
   datasource:
     url : ${SPRING_DATASOURCE_URL}
@@ -22,10 +26,14 @@ spring:
   jpa:
     show-sql  : true
     hibernate :
-      ddl-auto : validate
+      ddl-auto : create-drop # update \\ validate \\ create-drop
     properties:
       hibernate:
         dialect : org.hibernate.dialect.MySQLDialect
   application:
     name : Backend
+
+jwt:
+  secret: ${JWT_SECRET_KEY}
+  expiration: ${JWT_EXPIRATION_TIME}
 

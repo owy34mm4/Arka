@@ -3,9 +3,11 @@ FROM eclipse-temurin:21-jdk
 # Utilidades opcionales 
 #RUN apt-get update && apt-get install -y \    
    # curl
-   
+
+ENV TZ=America/Bogota
+
 WORKDIR /workspace
 
 EXPOSE 8080
 
-#CMD ["bash", "./gradlew bootstrap:bootRun -t"]
+#ENTRYPOINT ["bash", "./gradlew bootstrap:bootRun -t"]

@@ -4,9 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
-import com.arka.order.domain.model.Order;
-import com.arka.shopingCart.domain.model.ShopingCart;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,7 +24,7 @@ public class Client {
     private boolean isActive;
     private Date lastLogin;
     private LocalDateTime createdAt;
-    private List<ShopingCart> shoppingCarts;  
-    private List<Order> orders;
+    private List<Long> shoppingCartsIds;  
+    private List<Long> ordersIds;
 
 }

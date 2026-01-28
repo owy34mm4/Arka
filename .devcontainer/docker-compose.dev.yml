@@ -5,7 +5,8 @@ name: Dev_Arka_Project
 services:
   db:
     image: mysql:8.4
-    mem_limit: 1420m
+    mem_limit: 1g
+    cpus: "0.5"
     container_name: MySQL_Arka
     env_file:
       - ./.env.db
@@ -13,7 +14,7 @@ services:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_0900_ai_ci
     ports:
-      - "3306:3306"
+      - "127.0.0.1:3306:3306" #PortBinding -> ExposicionHost : PuertoContenedorAExponer
     volumes:
       - mysqldata:/var/lib/mysql
     healthcheck:
@@ -25,6 +26,7 @@ services:
     networks:
       - Data-Back
       - Data-DataManager
+      - Data-DataInit
 
   db-init:  
     image: mysql:8.4  
@@ -38,12 +40,13 @@ services:
     volumes:  
       - ./init.sql:/init.sql  
     networks:  
-      - Data-Back
+      - Data-DataInit
 
   phpmyadmin: 
     container_name: PHPMyAdmin_Arka_Dev
     image: phpmyadmin:5.2.3-apache
-    mem_limit: 1420m
+    mem_limit: 1g
+    cpus: "0.5"
     ports:  
       - "127.0.0.1:749:80" 
     environment:  
@@ -59,11 +62,12 @@ services:
     build:  
       context: ../Backend  
       dockerfile: Dockerfile.dev
-    mem_limit: 6420m
-    #network_mode: host # -> Means container will use the host network || TODO -> Solve DockerNetworkIssue
+    mem_limit: 6g
+    cpus: "6"
+    #network_mode: host # -> Means container will use the host network || DID -> Solve DockerNetworkIssue
     container_name: Backend_Arka
     working_dir: /workspace
-    # DEPRECATED -> command: bash -lc "./gradlew bootRun --continuous"  
+    #Deprecated due to ->dockerfile< ENTRYPOINT [] > -> command: bash -lc "./gradlew bootstrap:bootRun --continuous"  
     depends_on:
       db:
         condition: service_healthy
@@ -75,38 +79,37 @@ services:
       # El workspace para este servicio lo monta automáticamente devcontainer  
       - gradle-cache:/home/vscode/.gradle
       - ../Backend/src:/workspace
-    init: true
-    stdin_open: true
-    tty: true
+    healthcheck:
+      test: ["CMD", "curl localhost:8080/api/v0/healthcheck"] # -> Ping
+      interval: 20s # -> Lapso de Ejecucion
+      timeout: 10s 
+      retries: 2
+      start_period : 20s
     # security_opt:
     #   - no-new-privileges:true
     networks:
       - Data-Back
-      - Front-Back
+      - Back-BackAuth
 
-  frontend:
-    build:
-      context: ../frontend
+  backend_auth:
+    build: 
+      context: ../arka-auth
       dockerfile: Dockerfile.dev
-    mem_limit: 2420m
-    env_file:
-      - ./.env.front
-    container_name: Frontend_Arka
-    volumes:
-      - ../frontend:/app
-    working_dir: /app
-    init: true
-    tty: true
-    stdin_open: true
-    depends_on:
-      - backend
+    mem_limit: 4g
+    cpus: "3"
+    working_dir: /workspace
+    container_name: Arka-Auth-Service
+    #depends_on:
+    #  backend:
+    #    condition : service_healthy
     ports:
-      - "3000:3000"
+      - "901:8080"
+    volumes:
+      - ../arka-auth/src:/workspace
     networks:
-      - Front-Back
-  #   security_opt:
-  #      - no-new-privileges:true
-    
+      - Back-BackAuth
+
+
 volumes:
   mysqldata:
   gradle-cache:
@@ -115,10 +118,11 @@ networks:
   Data-Back:
     driver: bridge
     enable_ipv6: false
-  Front-Back:
-    driver: bridge
-    enable_ipv6: false
+  Data-DataInit:
+    driver : bridge
   Data-DataManager:
+    driver: bridge
+  Back-BackAuth:
     driver: bridge
 
 # Enable ipv6 is an scar, result of the war against DockerNetworkIssue

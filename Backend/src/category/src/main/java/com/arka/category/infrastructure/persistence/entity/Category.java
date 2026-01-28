@@ -2,17 +2,17 @@ package com.arka.category.infrastructure.persistence.entity;
 
 import java.util.List;
 
-import com.arka.product.infrastructure.persistence.entity.Product;
 
-
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,11 +38,20 @@ public class Category {
 
     private String name;
 
-    @ManyToMany
-        @JoinTable(
-            name= "products_x_categories",
-            joinColumns = @JoinColumn(name="category_id", foreignKey = @ForeignKey(name="fk_productsxcategories_category")),
-            inverseJoinColumns = @JoinColumn(name="product_id", foreignKey = @ForeignKey(name="fk_productsxcategories_product"))
-        )
-    private List<Product> products;
+    //OLD WAY -> UNCOMPATIBLE W UN-PLUGGED ARCH
+    //@ManyToMany
+    //    @JoinTable(
+    //        name= "products_x_categories",
+    //        joinColumns = @JoinColumn(name="category_id", foreignKey = @ForeignKey(name="fk_productsxcategories_category")),
+    //        inverseJoinColumns = @JoinColumn(name="product_id", foreignKey = @ForeignKey(name="fk_productsxcategories_product"))
+    //    )
+    //private List<Product> products;
+
+    @ElementCollection
+    @CollectionTable(
+        name = "products_x_categories",
+        joinColumns = @JoinColumn(name="category_id")
+    )
+    @Column(name = "product_id")
+    private List<Long> products;
 }

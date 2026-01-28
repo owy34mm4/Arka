@@ -2,7 +2,7 @@
 
 dependencies {
     implementation project(':shared-kernel')
-    implementation project(':product')  // Si order necesita product
+    //implementation project(':product')  // Si order necesita product
     implementation project(':client')   // Si order necesita client
     
     implementation 'org.springframework:spring-context'

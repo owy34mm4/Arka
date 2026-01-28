@@ -1,0 +1,19 @@
+//Auth
+
+
+dependencies {
+    implementation project(':shared-kernel')
+    
+    // Application layer
+    implementation 'org.springframework:spring-context'
+    
+    // Infrastructure layer
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Spring Security  
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+        
+    // API layer
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+}

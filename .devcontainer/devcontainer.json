@@ -3,9 +3,6 @@
   "dockerComposeFile": ["./docker-compose.dev.yml"],
   "service": "backend",
   
-  //Code Frontend 
-  // "service": "frontend",
-  // "workspaceFolder": "/app",
 
   "workspaceFolder": "/workspace",
   "overrideCommand": true,

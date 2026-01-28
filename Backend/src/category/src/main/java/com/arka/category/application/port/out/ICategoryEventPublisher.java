@@ -6,9 +6,9 @@ package com.arka.category.application.port.out;
  * Implementado por Infrastructure (Kafka, RabbitMQ, etc.)  
  */
 public interface ICategoryEventPublisher {
-    void publish(DomainEvent event);  
+    //void publish(DomainEvent event);  
       
-    void publishAll(List<DomainEvent> events);  
+    //void publishAll(List<DomainEvent> events);  
     
 }
  

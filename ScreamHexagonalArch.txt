@@ -1,0 +1,564 @@
+Backlog check => HU1 - HU2 - 
+
+.
+└── Backend
+    ├── Dockerfile.dev
+    └── src
+        ├── bin
+        │   └── generated-sources
+        │       └── annotations
+        ├── bootstrap
+        │   ├── build.gradle
+        │   └── src
+        │       ├── main
+        │       │   ├── java
+        │       │   │   └── com
+        │       │   │       └── arka
+        │       │   │           ├── bootstrap
+        │       │   │           │   └── ArkaAplication.java
+        │       │   │           └── config
+        │       │   └── resources
+        │       │       ├── application.yaml
+        │       │       └── db
+        │       │           └── databaseQuery.sql
+        │       └── test
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       ├── ArkaAplicationTest.java
+        │                       └── integration
+        │                           └── FullFlowIntegratonTest.java
+        ├── build.gradle
+        ├── category
+        │   ├── build.gradle
+        │   └── src
+        │       ├── main
+        │       │   └── java
+        │       │       └── com
+        │       │           └── arka
+        │       │               └── category
+        │       │                   ├── api
+        │       │                   │   └── rest
+        │       │                   │       ├── CategoryController.java
+        │       │                   │       ├── dto
+        │       │                   │       │   ├── RequestCreateCategory.java
+        │       │                   │       │   └── ResponseCreateCategory.java
+        │       │                   │       └── mapper
+        │       │                   │           └── CategoryApiMapper.java
+        │       │                   ├── application
+        │       │                   │   ├── port
+        │       │                   │   │   ├── in
+        │       │                   │   │   │   └── ICreateCategoryUseCase.java
+        │       │                   │   │   └── out
+        │       │                   │   │       ├── ICategoryEventPublisher.java
+        │       │                   │   │       └── ICategoryRepository.java
+        │       │                   │   └── usecase
+        │       │                   │       ├── command
+        │       │                   │       │   └── CreateCategoryCommand.java
+        │       │                   │       └── handler
+        │       │                   │           └── CreateCategoryHandler.java
+        │       │                   ├── domain
+        │       │                   │   ├── event
+        │       │                   │   ├── exception
+        │       │                   │   │   ├── AlreadyExiststExeption.java
+        │       │                   │   │   ├── InvalidIDException.java
+        │       │                   │   │   └── InvalidNameException.java
+        │       │                   │   └── model
+        │       │                   │       └── Category.java
+        │       │                   └── infrastructure
+        │       │                       ├── config
+        │       │                       │   └── CategorytModuleConfig.java
+        │       │                       ├── messaging
+        │       │                       └── persistence
+        │       │                           ├── entity
+        │       │                           │   └── Category.java
+        │       │                           ├── mapper
+        │       │                           │   └── CategoryMapper.java
+        │       │                           └── repository
+        │       │                               ├── adapter
+        │       │                               │   ├── CategoryRepositoryAdapter.java
+        │       │                               │   └── external
+        │       │                               │       └── CategoryDataAdapter.java
+        │       │                               └── IJPACategoryRepository.java
+        │       └── test
+        │           └── com
+        │               └── arka
+        │                   └── product
+        ├── client
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── generated-test-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── client
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── api
+        │   │   │                   │   └── rest
+        │   │   │                   │       └── dto
+        │   │   │                   ├── config
+        │   │   │                   ├── persistence
+        │   │   │                   │   ├── entity
+        │   │   │                   │   ├── mapper
+        │   │   │                   │   └── repository
+        │   │   │                   └── security
+        │   │   ├── main
+        │   │   └── test
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── client
+        │   ├── build.gradle
+        │   └── src
+        │       ├── main
+        │       │   └── java
+        │       │       └── com
+        │       │           └── arka
+        │       │               └── client
+        │       │                   ├── api
+        │       │                   │   ├── ClientController.java
+        │       │                   │   └── rest
+        │       │                   │       ├── dto
+        │       │                   │       │   ├── request
+        │       │                   │       │   │   └── CreateClientRequest.java
+        │       │                   │       │   └── response
+        │       │                   │       └── mapper
+        │       │                   ├── application
+        │       │                   │   ├── port
+        │       │                   │   │   ├── in
+        │       │                   │   │   └── out
+        │       │                   │   └── usecase
+        │       │                   │       ├── command
+        │       │                   │       └── query
+        │       │                   ├── domain
+        │       │                   │   ├── event
+        │       │                   │   ├── exception
+        │       │                   │   └── model
+        │       │                   │       └── Client.java
+        │       │                   └── infrastructure
+        │       │                       ├── config
+        │       │                       ├── persistence
+        │       │                       │   ├── entity
+        │       │                       │   │   └── Client.java
+        │       │                       │   ├── mapper
+        │       │                       │   │   └── ClientMapper.java
+        │       │                       │   └── repository
+        │       │                       │       └── IClientRepository.java
+        │       │                       └── security
+        │       │                           └── BCryptPasswordEncoder.java
+        │       └── test
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── client
+        ├── deprecatedArch.txt
+        ├── gradle
+        │   └── wrapper
+        │       ├── gradle-wrapper.jar
+        │       ├── gradle-wrapper.jar:Zone.Identifier
+        │       ├── gradle-wrapper.properties
+        │       └── gradle-wrapper.properties:Zone.Identifier
+        ├── gradlew
+        ├── gradlew.bat
+        ├── order
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── order
+        │   │   │               ├── api
+        │   │   │               │   └── rest
+        │   │   │               │       └── dto
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   ├── policy
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       ├── mapper
+        │   │   │                       └── repository
+        │   │   └── main
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── order
+        │   │                   ├── api
+        │   │                   │   └── rest
+        │   │                   │       └── dto
+        │   │                   ├── application
+        │   │                   │   ├── port
+        │   │                   │   │   ├── in
+        │   │                   │   │   └── out
+        │   │                   │   └── usecase
+        │   │                   │       ├── command
+        │   │                   │       └── query
+        │   │                   ├── domain
+        │   │                   │   ├── event
+        │   │                   │   ├── exception
+        │   │                   │   └── model
+        │   │                   │       ├── Order$OrderBuilder.class
+        │   │                   │       └── Order.class
+        │   │                   └── infrastructure
+        │   │                       ├── messaging
+        │   │                       └── persistence
+        │   │                           ├── entity
+        │   │                           │   ├── Order$OrderBuilder.class
+        │   │                           │   ├── Order.class
+        │   │                           │   ├── OrderDetail$OrderDetailBuilder.class
+        │   │                           │   └── OrderDetail.class
+        │   │                           ├── mapper
+        │   │                           │   └── OrderMapper.class
+        │   │                           └── repository
+        │   │                               └── IJPAOrderRepository.class
+        │   ├── build.gradle
+        │   └── src
+        │       └── main
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── order
+        │                           ├── api
+        │                           │   └── rest
+        │                           │       └── dto
+        │                           ├── application
+        │                           │   ├── port
+        │                           │   │   ├── in
+        │                           │   │   └── out
+        │                           │   └── usecase
+        │                           │       ├── command
+        │                           │       └── query
+        │                           ├── domain
+        │                           │   ├── event
+        │                           │   ├── exception
+        │                           │   └── model
+        │                           │       └── Order.java
+        │                           └── infrastructure
+        │                               ├── messaging
+        │                               └── persistence
+        │                                   ├── entity
+        │                                   │   ├── OrderDetail.java
+        │                                   │   └── Order.java
+        │                                   ├── mapper
+        │                                   │   └── OrderMapper.java
+        │                                   └── repository
+        │                                       └── IJPAOrderRepository.java
+        ├── product
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── generated-test-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── product
+        │   │   │               ├── api
+        │   │   │               │   └── rest
+        │   │   │               │       ├── dto
+        │   │   │               │       └── mapper
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   ├── model
+        │   │   │               │   ├── policy
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── config
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       │   ├── Product$ProductBuilder.class
+        │   │   │                       │   └── Product.class
+        │   │   │                       ├── mapper
+        │   │   │                       │   └── ProductMapper.class
+        │   │   │                       └── repository
+        │   │   │                           └── IProductRepository.class
+        │   │   ├── main
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── product
+        │   │   │               ├── api
+        │   │   │               │   ├── ProductController.class
+        │   │   │               │   └── rest
+        │   │   │               │       ├── dto
+        │   │   │               │       │   ├── RequestCreateProduct$RequestCreateProductBuilder.class
+        │   │   │               │       │   ├── RequestCreateProduct.class
+        │   │   │               │       │   ├── ResponseCreateProduct$ResponseCreateProductBuilder.class
+        │   │   │               │       │   └── ResponseCreateProduct.class
+        │   │   │               │       └── mapper
+        │   │   │               │           ├── ProductApiMapper$ProductApiMapperBuilder.class
+        │   │   │               │           └── ProductApiMapper.class
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   │   └── ICreateProductUseCase.class
+        │   │   │               │   │   └── out
+        │   │   │               │   │       └── IProductRepositoryPort.class
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       │   ├── CreateProductCommand$CreateProductCommandBuilder.class
+        │   │   │               │       │   └── CreateProductCommand.class
+        │   │   │               │       └── handler
+        │   │   │               │           └── CreateProductHandler.class
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   │   └── InvalidPropertiesGiven.class
+        │   │   │               │   └── model
+        │   │   │               │       ├── Product$ProductBuilder.class
+        │   │   │               │       └── Product.class
+        │   │   │               └── infrastructure
+        │   │   │                   ├── config
+        │   │   │                   │   └── ProductModuleConfig.class
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       │   ├── Product$ProductBuilder.class
+        │   │   │                       │   └── Product.class
+        │   │   │                       ├── mapper
+        │   │   │                       │   ├── ProductMapper$ProductMapperBuilder.class
+        │   │   │                       │   └── ProductMapper.class
+        │   │   │                       └── repository
+        │   │   │                           ├── adapter
+        │   │   │                           │   ├── external
+        │   │   │                           │   │   └── ProductDataAdapter.class
+        │   │   │                           │   └── ProductRepositoryAdapter.class
+        │   │   │                           └── IJPAProductRepository.class
+        │   │   └── test
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── product
+        │   ├── build.gradle
+        │   └── src
+        │       ├── main
+        │       │   └── java
+        │       │       └── com
+        │       │           └── arka
+        │       │               └── product
+        │       │                   ├── api
+        │       │                   │   ├── ProductController.java
+        │       │                   │   └── rest
+        │       │                   │       ├── dto
+        │       │                   │       │   ├── RequestCreateProduct.java
+        │       │                   │       │   └── ResponseCreateProduct.java
+        │       │                   │       └── mapper
+        │       │                   │           └── ProductApiMapper.java
+        │       │                   ├── application
+        │       │                   │   ├── port
+        │       │                   │   │   ├── in
+        │       │                   │   │   │   └── ICreateProductUseCase.java
+        │       │                   │   │   └── out
+        │       │                   │   │       └── IProductRepositoryPort.java
+        │       │                   │   └── usecase
+        │       │                   │       ├── command
+        │       │                   │       │   └── CreateProductCommand.java
+        │       │                   │       └── handler
+        │       │                   │           └── CreateProductHandler.java
+        │       │                   ├── domain
+        │       │                   │   ├── event
+        │       │                   │   ├── exception
+        │       │                   │   │   └── InvalidPropertiesGiven.java
+        │       │                   │   └── model
+        │       │                   │       └── Product.java
+        │       │                   └── infrastructure
+        │       │                       ├── config
+        │       │                       │   └── ProductModuleConfig.java
+        │       │                       ├── messaging
+        │       │                       └── persistence
+        │       │                           ├── entity
+        │       │                           │   └── Product.java
+        │       │                           ├── mapper
+        │       │                           │   └── ProductMapper.java
+        │       │                           └── repository
+        │       │                               ├── adapter
+        │       │                               │   ├── external
+        │       │                               │   │   └── ProductDataAdapter.java
+        │       │                               │   └── ProductRepositoryAdapter.java
+        │       │                               └── IJPAProductRepository.java
+        │       └── test
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── product
+        ├── ScreamHexagonalArch.txt
+        ├── settings.gradle
+        ├── shared-kernel
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   └── main
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── shared
+        │   │                   ├── application
+        │   │                   │   └── ports
+        │   │                   │       ├── in
+        │   │                   │       └── out
+        │   │                   │           ├── category
+        │   │                   │           │   ├── CategoryInfo$CategoryInfoBuilder.class
+        │   │                   │           │   ├── CategoryInfo.class
+        │   │                   │           │   └── ICategoryDataPort.class
+        │   │                   │           └── product
+        │   │                   │               ├── IProductDataPort.class
+        │   │                   │               ├── ProductInfo$ProductInfoBuilder.class
+        │   │                   │               └── ProductInfo.class
+        │   │                   ├── domain
+        │   │                   │   └── valueObjects
+        │   │                   │       └── PasswordHash.class
+        │   │                   └── exception
+        │   ├── build.gradle
+        │   └── src
+        │       └── main
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── shared
+        │                           ├── application
+        │                           │   └── ports
+        │                           │       ├── in
+        │                           │       └── out
+        │                           │           ├── category
+        │                           │           │   ├── CategoryInfo.java
+        │                           │           │   └── ICategoryDataPort.java
+        │                           │           └── product
+        │                           │               ├── IProductDataPort.java
+        │                           │               └── ProductInfo.java
+        │                           ├── domain
+        │                           │   └── valueObjects
+        │                           │       └── PasswordHash.java
+        │                           └── exception
+        └── shopingCart
+            ├── bin
+            │   ├── default
+            │   ├── generated-sources
+            │   │   └── annotations
+            │   ├── infrastructure
+            │   │   └── com
+            │   │       └── arka
+            │   │           └── shopingCart
+            │   │               ├── api
+            │   │               │   └── rest
+            │   │               │       └── dto
+            │   │               ├── application
+            │   │               │   ├── port
+            │   │               │   │   ├── in
+            │   │               │   │   └── out
+            │   │               │   └── usecase
+            │   │               │       ├── command
+            │   │               │       └── query
+            │   │               ├── domain
+            │   │               │   ├── event
+            │   │               │   ├── exception
+            │   │               │   └── service
+            │   │               └── infrastructure
+            │   │                   ├── messaging
+            │   │                   └── persistence
+            │   │                       ├── entity
+            │   │                       ├── mapper
+            │   │                       └── repository
+            │   └── main
+            │       └── com
+            │           └── arka
+            │               └── shopingCart
+            │                   ├── api
+            │                   │   └── rest
+            │                   │       └── dto
+            │                   ├── application
+            │                   │   ├── port
+            │                   │   │   ├── in
+            │                   │   │   └── out
+            │                   │   └── usecase
+            │                   │       ├── command
+            │                   │       └── query
+            │                   ├── domain
+            │                   │   ├── event
+            │                   │   ├── exception
+            │                   │   └── model
+            │                   │       ├── ShopingCart$ShopingCartBuilder.class
+            │                   │       └── ShopingCart.class
+            │                   └── infrastructure
+            │                       ├── messaging
+            │                       └── persistence
+            │                           ├── entity
+            │                           │   ├── ShopingCart$ShopingCartBuilder.class
+            │                           │   ├── ShopingCart.class
+            │                           │   ├── ShopingCartDetail$ShopingCartDetailBuilder.class
+            │                           │   └── ShopingCartDetail.class
+            │                           ├── mapper
+            │                           │   └── ShopingCartMapper.class
+            │                           └── repository
+            │                               ├── IJPAShopingCart.class
+            │                               └── IJPAShopingCartDetail.class
+            ├── build.gradle
+            └── src
+                ├── main
+                │   └── java
+                │       └── com
+                │           └── arka
+                │               └── shopingCart
+                │                   ├── api
+                │                   │   └── rest
+                │                   │       └── dto
+                │                   ├── application
+                │                   │   ├── port
+                │                   │   │   ├── in
+                │                   │   │   └── out
+                │                   │   └── usecase
+                │                   │       ├── command
+                │                   │       └── query
+                │                   ├── domain
+                │                   │   ├── event
+                │                   │   ├── exception
+                │                   │   └── model
+                │                   │       └── ShopingCart.java
+                │                   └── infrastructure
+                │                       ├── messaging
+                │                       └── persistence
+                │                           ├── entity
+                │                           │   ├── ShopingCartDetail.java
+                │                           │   └── ShopingCart.java
+                │                           ├── mapper
+                │                           │   └── ShopingCartMapper.java
+                │                           └── repository
+                │                               ├── IJPAShopingCartDetail.java
+                │                               └── IJPAShopingCart.java
+                └── test
+                    └── com
+                        └── arka
+                            └── product
+
+530 directories, 178 files

@@ -1,8 +1,9 @@
 // ═══════════════════════════════════════════════════════════════
 // shared-kernel/build.gradle
 // ═══════════════════════════════════════════════════════════════
-// ⚠️ SIN dependencias de Spring ni infraestructura
-// Solo Java puro - es el núcleo más interno
+
+//Dependencia de Spring-SpringSecurity, debido a la implementacion de JWT en el aplicativo.
+//Normalmente deberia ser solo JAVA Puro y validaciones
 
 plugins {  
     id 'java-library'  
@@ -10,7 +11,15 @@ plugins {
 
 dependencies {
     // Solo validación básica (opcional)
-    implementation project(':bootstrap')
+
+    //SpringWeb
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    //SpringSecurity
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    //Validation
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
-    
+    // JWT  
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'  
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'  
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 }

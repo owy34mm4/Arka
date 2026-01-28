@@ -1,3 +1,6 @@
+package com.arka.category.application.port.out;
+
+
 /**  
  * PUERTO DE SALIDA (Driven Port)  
  *   
@@ -7,7 +10,8 @@
  * ⚠️ Trabaja con entidades de DOMINIO, no con entidades JPA.  
  */
 public interface ICategoryRepository {
-    Category save (Category category);
 
     boolean existsByName (String name);
+
+    com.arka.category.domain.model.Category save(com.arka.category.domain.model.Category category);
 }

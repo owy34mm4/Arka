@@ -2,8 +2,6 @@ package com.arka.client.infrastructure.persistence.mapper;
 
 
 import com.arka.client.infrastructure.persistence.entity.Client;
-import com.arka.order.infrastructure.persistence.mapper.OrderMapper;
-import com.arka.shopingCart.infrastructure.persistence.mapper.ShopingCartMapper;
 
 public class ClientMapper {
 
@@ -19,13 +17,8 @@ public class ClientMapper {
                     .isActive(c.isActive())
                     .lastLogin(c.getLastLogin())
                     .createdAt(c.getCreatedAt())
-                    .shoppingCarts(c.getShoppingCarts().stream().map(
-                        sc-> ShopingCartMapper.toEntity(sc)
-                    )
-                    .toList())
-                    .orders(c.getOrders().stream().map(
-                        o-> OrderMapper.toEntity(o)
-                    ).toList())
+                    //.shopingCartsIds(c.getShoppingCartsIds())
+                    //.ordersIds(c.getOrdersIds())
                 .build();
 
     }
@@ -42,12 +35,8 @@ public class ClientMapper {
                     .isActive(c.isActive())
                     .lastLogin(c.getLastLogin())
                     .createdAt(c.getCreatedAt())
-                    .shoppingCarts(c.getShoppingCarts().stream().map(
-                        sc-> ShopingCartMapper.toDomain(sc)
-                    ).toList())
-                    .orders(c.getOrders().stream().map(
-                        o-> OrderMapper.toDomain(o)
-                    ).toList())
+                    //.shoppingCartsIds(c.getShopingCartsIds())
+                    //.ordersIds(c.getOrdersIds())
                 
                 .build();
 

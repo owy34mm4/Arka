@@ -4,9 +4,9 @@
 .vs
 
 #env ignore
-./devcontainer/.env.db
-./devcontainer/.env.back
-./devcontainer/.env.front
+./.devcontainer/.env.db
+./.devcontainer/.env.back
+./.devcontainer/.env.front
 
 
 # Backend ignore

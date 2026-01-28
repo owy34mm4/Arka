@@ -1,12 +1,10 @@
 package com.arka.product.domain.model;
 
-
 import java.util.List;
 
-import com.arka.category.domain.model.Category;
-import com.arka.order.domain.model.Order;
-import com.arka.product.domain.exception.InvalidPropertiesGiven;
-import com.arka.shopingCart.domain.model.ShopingCart;
+import com.arka.shared.application.ports.out.category.CategoryInfo;
+
+import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,16 +22,19 @@ public class Product {
     private String description;
     private Integer price;
     private Integer stock;
-    private List<Category> categories;
-    private List<ShopingCart> shopingCarts;
-    private List<Order> orders;
+    //PostFetch Data parameter
+    private List<CategoryInfo> categories;
+    private List<Long> categoriesIds;
+    private List<Long> shopingCartsIds;
+    private List<Long> ordersIds;
 
 
-    public static Product create (Long id,String name,String description,Integer price,Integer stock,List<Category> categories,List<ShopingCart> shopingCarts,List<Order> orders) throws InvalidPropertiesGiven{
+    public static Product create (Long id,String name,String description,Integer price,Integer stock,List<Long> categoriesIds, List<CategoryInfo> categories ,List<Long> shopingCarts,List<Long> orders) throws InvalidPropertiesGiven{
         validateName(name);
         validateDescription(description);
         validatePrice(price);
         validateStock(stock);
+        validateCategoriesIds(categoriesIds);
 
         return Product.builder()
         .id(id)
@@ -41,11 +42,32 @@ public class Product {
         .description(description)
         .price(price)
         .stock(stock)
-        .categories(categories)
-        .shopingCarts(shopingCarts)
-        .orders(orders)
+        .categoriesIds(categoriesIds)
+        .shopingCartsIds(shopingCarts)
+        .ordersIds(orders)
         .build();
     }
+
+   public void inyectCategoriesFromRespository( List<CategoryInfo> categoriesToInyect) throws InvalidPropertiesGiven{
+        validateCategories(categoriesToInyect);
+        this.setCategories(categoriesToInyect);
+   };
+
+   public void updateStock(Integer newStock) throws InvalidPropertiesGiven{
+    if (newStock <0 || newStock ==null){throw new InvalidPropertiesGiven("Actualziacion de stock fallida, cantidad invalida -> <0");}
+    this.setStock(newStock);
+   }
+
+
+   public void checkIstance() throws InvalidPropertiesGiven{
+        validateName(this.name);
+        validateDescription(this.description);
+        validatePrice(this.price);
+        validateStock(this.stock);
+        validateCategoriesIds(this.categoriesIds);
+        validateCategories(this.categories);
+        
+   }
 
     private static void validateName(String nameToCheck) throws InvalidPropertiesGiven {
         if (nameToCheck.isBlank() || nameToCheck==null){
@@ -66,6 +88,17 @@ public class Product {
         if (stockToCheck<0 || stockToCheck == null){
             throw new InvalidPropertiesGiven("Invalid Product Stock -> stock<0 -> Not Allowed");
         }
+    }
+    private static void validateCategoriesIds(List<Long> categoriesIds) throws InvalidPropertiesGiven{
+        if (categoriesIds.size()<=0 || categoriesIds.isEmpty() || categoriesIds ==null){
+            throw new InvalidPropertiesGiven("Invalid Product CategoriesId -> Not allowed");
+        }
+    }
+    private static void validateCategories(List<CategoryInfo> categoriesToCheck) throws InvalidPropertiesGiven{
+        if(categoriesToCheck.size()<=0 || categoriesToCheck.isEmpty() || categoriesToCheck==null){
+            throw new InvalidPropertiesGiven("Invalid Product Categories -> Not allowed");
+        }
+
     }
    
 

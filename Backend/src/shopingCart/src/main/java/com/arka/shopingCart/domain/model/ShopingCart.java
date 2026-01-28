@@ -3,8 +3,6 @@ package com.arka.shopingCart.domain.model;
 import java.util.Date;
 import java.util.List;
 
-import com.arka.client.domain.model.Client;
-import com.arka.product.domain.model.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +15,7 @@ import lombok.Setter;
 public class ShopingCart {
     private Long id;
     private Date createdAt;
-    private Client owner;
-    private List<Product> products;
+    private Long ownerId;
+    private List<Long> productsIds;
     
 }

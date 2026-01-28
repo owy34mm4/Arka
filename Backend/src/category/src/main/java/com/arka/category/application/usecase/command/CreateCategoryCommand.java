@@ -2,13 +2,14 @@ package com.arka.category.application.usecase.command;
 
 import java.util.List;
 
-import com.arka.category.application.port.in.ICreateCategoryUseCase;
-import com.arka.category.domain.model.Category;
-import com.arka.product.domain.model.Product;
+
+
 
 import jakarta.validation.constraints.NotBlank;  
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**  
@@ -18,18 +19,14 @@ import lombok.Builder;
  * para ejecutar el caso de uso.  
  */
 
-@Builder
-public record CreateCategoryCommand( 
-    @NotBlank Long id,
-    @NotBlank String name ,
-    List<Product> products
-) implements ICreateCategoryUseCase{
-    
-    @Override
-    public Category execute(CreateCategoryCommand command) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
-    }
+@Builder @Getter @Setter
+public class CreateCategoryCommand {
+    @NotBlank 
+    Long id;
+    @NotBlank 
+    String name;
+    List<Long> productsId;
+
 
     
 }

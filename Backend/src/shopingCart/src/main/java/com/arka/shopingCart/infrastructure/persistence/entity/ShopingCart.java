@@ -4,20 +4,15 @@ package com.arka.shopingCart.infrastructure.persistence.entity;
 import java.util.Date;
 import java.util.List;
 
-import com.arka.client.infrastructure.persistence.entity.*;
-import com.arka.product.infrastructure.persistence.entity.Product;
-
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "shoping_cart")
+@Table(name = "shoping_carts")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
 @Builder
@@ -38,15 +33,15 @@ public class ShopingCart {
     @Column(name = "created_at")
     private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)  
-    @JoinColumn(name = "owner_id", foreignKey = @ForeignKey(name = "fk_cart_client"))
-    private Client owner;
-    
-    @ManyToMany
-        @JoinTable(
-            name = "shoping_cart_detail",
-            joinColumns = @JoinColumn(name="shoping_cart_id", foreignKey = @ForeignKey(name="fk_cartdetail_cart")),
-            inverseJoinColumns = @JoinColumn(name="product_id", foreignKey = @ForeignKey(name="fk_cartdetail_product"))
+    @Column(name = "owner_id")
+    private Long ownerId;
+
+    @ElementCollection
+        @CollectionTable(name = "shoping_carts_detail",
+            joinColumns = @JoinColumn(name ="shoping_cart_id")
         )
-    private List<Product> products;
+    @Column(name = "product_id")
+    private List<Long> productsIds;
+    
+    
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.arka.category.domain.exception.InvalidIDException;
 import com.arka.category.domain.exception.InvalidNameException;
-import com.arka.product.domain.model.Product;
+
 
 
 import lombok.Builder;
@@ -18,26 +18,26 @@ import lombok.Setter;
 public class Category {
     private Long id;
     private String name;
-    private List<Product> products;
+    private List<Long> productsId;
 
-    public Category create(Long id, String name, List<Product> products) throws InvalidNameException, InvalidIDException{
-        validateName();
-        validateId();
+    public static Category create(Long id, String name, List<Long> products) throws InvalidNameException, InvalidIDException{
+        validateName(name);
+        //validateId(id);
 
         return Category.builder()
                         .id(id)
                         .name(name)
-                        .products(products)
+                        .productsId(products)
                 .build();
 
     }
 
-    private void validateName() throws InvalidNameException{
-        if(name.strip().isBlank() || name ==null) throw new InvalidNameException();
+    private static void validateName(String nameToCheck) throws InvalidNameException{
+        if(nameToCheck.strip().isBlank() || nameToCheck ==null) throw new InvalidNameException();
     }
 
-    private void validateId() throws InvalidIDException{
-        if(id<=0 || id == null) throw new InvalidIDException();
+    private static void validateId(Long idToCheck) throws InvalidIDException{
+        if( idToCheck == null || idToCheck<=0) throw new InvalidIDException("Id invalido");
     }
 }
     

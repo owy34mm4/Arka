@@ -1,0 +1,19 @@
+package com.arka;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+
+
+
+@RestController
+@RequestMapping("/api/v0")
+public class HealthController {
+
+    @GetMapping("/health")
+    public String health() {
+        return "Online";
+    }
+    
+    
+}
