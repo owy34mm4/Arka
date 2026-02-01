@@ -1,11 +1,14 @@
 package com.arka.category.application.usecase.command;
 
-import java.util.List;
 
 
 
 
-import jakarta.validation.constraints.NotBlank;  
+
+import com.arka.category.domain.model.Category;
+import com.arka.category.infrastructure.entryPoints.rest.dto.useCase.createCategory.RequestCreateCategory;
+
+ 
 
 import lombok.Builder;
 import lombok.Getter;
@@ -21,12 +24,25 @@ import lombok.Setter;
 
 @Builder @Getter @Setter
 public class CreateCategoryCommand {
-    @NotBlank 
     Long id;
-    @NotBlank 
     String name;
-    List<Long> productsId;
-
+    Long requesterId;
 
     
+    public static CreateCategoryCommand createFromRequest(RequestCreateCategory request){
+        return CreateCategoryCommand.builder()
+        .id(null)
+        .name(request.getName())
+        .requesterId(request.getRequester_id())
+        .build();
+    }
+
+    public Category toModel(){
+        return Category.builder()
+        .id(this.id)
+        .name(this.name)
+        .productsId(null)
+        .products(null)
+        .build();
+    }
 }

@@ -4,8 +4,8 @@
 dependencies {
     implementation project(':shared-kernel')
     implementation project(':category')
-    implementation project(':shopingCart')
-    implementation project(':order')
+    //implementation project(':shopingCart')
+    //implementation project(':order')
 
     
 

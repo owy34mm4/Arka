@@ -11,8 +11,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter @Setter
+@ToString
 @NoArgsConstructor 
 @AllArgsConstructor
 @Builder
@@ -22,7 +24,6 @@ public class Product {
     private String description;
     private Integer price;
     private Integer stock;
-    //PostFetch Data parameter
     private List<CategoryInfo> categories;
     private List<Long> categoriesIds;
     private List<Long> shopingCartsIds;
@@ -48,7 +49,7 @@ public class Product {
         .build();
     }
 
-   public void inyectCategoriesFromRespository( List<CategoryInfo> categoriesToInyect) throws InvalidPropertiesGiven{
+   public void inyectCategories( List<CategoryInfo> categoriesToInyect) throws InvalidPropertiesGiven{
         validateCategories(categoriesToInyect);
         this.setCategories(categoriesToInyect);
    };
@@ -65,9 +66,25 @@ public class Product {
         validatePrice(this.price);
         validateStock(this.stock);
         validateCategoriesIds(this.categoriesIds);
-        validateCategories(this.categories);
+        
         
    }
+
+   public ProductHistory toProductHistory(){
+    return ProductHistory.builder()
+        .id(this.getId())
+        .name(this.getName())
+        .description(this.getDescription())
+        .price(this.getPrice())
+        .stock(this.getStock())
+        .categoriesIds(this.getCategoriesIds())
+        .categories(this.getCategories())
+        .shopingCartsIds(this.getShopingCartsIds())
+        .ordersIds(this.getShopingCartsIds())
+    .build();
+   }
+
+
 
     private static void validateName(String nameToCheck) throws InvalidPropertiesGiven {
         if (nameToCheck.isBlank() || nameToCheck==null){
@@ -89,6 +106,7 @@ public class Product {
             throw new InvalidPropertiesGiven("Invalid Product Stock -> stock<0 -> Not Allowed");
         }
     }
+    
     private static void validateCategoriesIds(List<Long> categoriesIds) throws InvalidPropertiesGiven{
         if (categoriesIds.size()<=0 || categoriesIds.isEmpty() || categoriesIds ==null){
             throw new InvalidPropertiesGiven("Invalid Product CategoriesId -> Not allowed");

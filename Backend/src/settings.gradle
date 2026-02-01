@@ -4,19 +4,19 @@
 
 rootProject.name = 'arka'
 
-include 'auth'
+
 include 'shared-kernel'
 include 'product'
-include 'client'
+include 'user'
 include 'order'
 include 'category'
 include 'shopingCart'
 include 'bootstrap'
 
-project(":auth").projectDir = file("./auth")
+
 project(":shared-kernel").projectDir = file("./shared-kernel")
 project(":product").projectDir = file("./product")
-project(":client").projectDir = file("./client")
+project(":user").projectDir = file("./user")
 project(":order").projectDir = file("./order")
 project(":category").projectDir = file("./category")
 project(":shopingCart").projectDir = file("./shopingCart")

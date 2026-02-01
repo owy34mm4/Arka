@@ -2,20 +2,18 @@ package com.arka.product.infrastructure.persistence.mapper.adapter;
 
 import org.springframework.stereotype.Component;
 
+import com.arka.product.domain.model.ProductHistory;
 import com.arka.product.infrastructure.persistence.entity.ProductHistoryTable;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMapper;
 
-import lombok.Builder;
-
 
 @Component
-@Builder
-public class PersistanceProductHistoryMapper implements IPersistanceMapper< com.arka.product.domain.model.ProductHistory , ProductHistoryTable> {
+public class PersistanceProductHistoryMapper implements IPersistanceMapper< ProductHistory , ProductHistoryTable> {
 
     @Override
-    public com.arka.product.domain.model.ProductHistory toDomain(ProductHistoryTable entity) {
+    public ProductHistory toDomain(ProductHistoryTable entity) {
         if (entity ==null) return null;
-        return com.arka.product.domain.model.ProductHistory.builder()
+        return ProductHistory.builder()
             .id(entity.getId())
             .name(entity.getName())
             .description(entity.getDescription())
@@ -27,7 +25,7 @@ public class PersistanceProductHistoryMapper implements IPersistanceMapper< com.
     }
 
     @Override
-    public ProductHistoryTable toEntity(com.arka.product.domain.model.ProductHistory model) {
+    public ProductHistoryTable toEntity(ProductHistory model) {
         if (model ==null) return null;
         return ProductHistoryTable.builder()
             .id(model.getId())

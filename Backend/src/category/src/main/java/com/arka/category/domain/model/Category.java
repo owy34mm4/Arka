@@ -2,12 +2,8 @@ package com.arka.category.domain.model;
 
 import java.util.List;
 
-
-
-import com.arka.category.domain.exception.InvalidIDException;
-import com.arka.category.domain.exception.InvalidNameException;
-
-
+import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -19,25 +15,27 @@ public class Category {
     private Long id;
     private String name;
     private List<Long> productsId;
+    private List<ProductInfo> products;
 
-    public static Category create(Long id, String name, List<Long> products) throws InvalidNameException, InvalidIDException{
+    public static Category create(Long id, String name, List<Long> products) throws InvalidPropertiesGiven {
         validateName(name);
-        //validateId(id);
+        
 
         return Category.builder()
                         .id(id)
                         .name(name)
                         .productsId(products)
+                        .products(null)
                 .build();
 
     }
 
-    private static void validateName(String nameToCheck) throws InvalidNameException{
-        if(nameToCheck.strip().isBlank() || nameToCheck ==null) throw new InvalidNameException();
+    
+
+    private static void validateName(String nameToCheck) throws InvalidPropertiesGiven{
+        if(nameToCheck.strip().isBlank() || nameToCheck ==null) throw new InvalidPropertiesGiven();
     }
 
-    private static void validateId(Long idToCheck) throws InvalidIDException{
-        if( idToCheck == null || idToCheck<=0) throw new InvalidIDException("Id invalido");
-    }
+    
 }
     

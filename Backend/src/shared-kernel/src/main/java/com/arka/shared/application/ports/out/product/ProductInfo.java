@@ -13,4 +13,13 @@ public class ProductInfo {
     private Integer price;
     private Integer stock;
     
+    public static ProductInfo create(Long id, String name, String description, Integer price, Integer stock){
+        return ProductInfo.builder()
+        .id(id)
+        .name(name)
+        .description(description)
+        .price(price)
+        .stock(stock)
+        .build();
+    }
 }

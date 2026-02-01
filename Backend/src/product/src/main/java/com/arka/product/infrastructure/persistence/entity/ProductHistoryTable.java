@@ -13,11 +13,13 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "product_history")
 public class ProductHistoryTable {
@@ -33,10 +35,9 @@ public class ProductHistoryTable {
 
     private Integer stock;
 
-    
     private Date createdAt;
 
-    //private Long modifiedBy; //TO-DO == Link w ClientId
+    private Long modifiedById;
     
     @Column(name = "product_id")
     private Long productId;

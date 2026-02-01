@@ -5,11 +5,10 @@ import org.springframework.stereotype.Component;
 import com.arka.product.infrastructure.persistence.entity.ProductTable;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMapper;
 
-import lombok.Builder;
+
 
 
 @Component
-@Builder
 public class PersistanceProductMapper implements IPersistanceMapper < com.arka.product.domain.model.Product , ProductTable > {
 
     public ProductTable toEntity(com.arka.product.domain.model.Product p){

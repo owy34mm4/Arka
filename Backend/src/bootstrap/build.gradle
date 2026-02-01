@@ -8,7 +8,7 @@ dependencies {
     // Importar todos los módulos
     implementation project(':shared-kernel')
     implementation project(':category')
-    implementation project(':client')
+    implementation project(':user')
     implementation project(':order')
     implementation project(':product')
     implementation project(':shopingCart')

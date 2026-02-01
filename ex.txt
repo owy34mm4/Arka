@@ -1,0 +1,907 @@
+.
+└── Backend
+    └── src
+        ├── bin
+        │   └── generated-sources
+        │       └── annotations
+        ├── bootstrap
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── generated-test-sources
+        │   │   │   └── annotations
+        │   │   ├── main
+        │   │   │   ├── com
+        │   │   │   │   └── arka
+        │   │   │   │       ├── bootstrap
+        │   │   │   │       └── config
+        │   │   │   └── db
+        │   │   └── test
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── integration
+        │   ├── build
+        │   │   ├── classes
+        │   │   │   └── java
+        │   │   │       └── main
+        │   │   │           └── com
+        │   │   │               └── arka
+        │   │   │                   └── bootstrap
+        │   │   ├── generated
+        │   │   │   └── sources
+        │   │   │       ├── annotationProcessor
+        │   │   │       │   └── java
+        │   │   │       │       └── main
+        │   │   │       └── headers
+        │   │   │           └── java
+        │   │   │               └── main
+        │   │   ├── resources
+        │   │   │   └── main
+        │   │   │       └── db
+        │   │   └── tmp
+        │   │       └── compileJava
+        │   │           └── compileTransaction
+        │   │               ├── backup-dir
+        │   │               └── stash-dir
+        │   └── src
+        │       ├── main
+        │       │   ├── java
+        │       │   │   └── com
+        │       │   │       └── arka
+        │       │   │           ├── bootstrap
+        │       │   │           └── config
+        │       │   └── resources
+        │       │       └── db
+        │       └── test
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── integration
+        ├── build
+        │   └── reports
+        │       └── problems
+        ├── category
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── category
+        │   │   │               ├── api
+        │   │   │               │   └── rest
+        │   │   │               │       └── dto
+        │   │   │               │           └── mapper
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   ├── model
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── config
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       ├── mapper
+        │   │   │                       └── repository
+        │   │   └── main
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── category
+        │   │                   ├── application
+        │   │                   │   ├── port
+        │   │                   │   │   ├── in
+        │   │                   │   │   └── out
+        │   │                   │   └── usecase
+        │   │                   │       ├── command
+        │   │                   │       └── handler
+        │   │                   ├── domain
+        │   │                   │   └── model
+        │   │                   └── infrastructure
+        │   │                       ├── entryPoints
+        │   │                       │   └── rest
+        │   │                       │       └── dto
+        │   │                       │           └── useCase
+        │   │                       │               └── createCategory
+        │   │                       └── persistence
+        │   │                           ├── entity
+        │   │                           ├── mapper
+        │   │                           └── repository
+        │   │                               ├── external
+        │   │                               │   ├── adapter
+        │   │                               │   └── gateway
+        │   │                               └── internal
+        │   │                                   ├── adapter
+        │   │                                   └── gateway
+        │   ├── build
+        │   │   ├── classes
+        │   │   │   └── java
+        │   │   │       └── main
+        │   │   │           └── com
+        │   │   │               └── arka
+        │   │   │                   └── category
+        │   │   │                       ├── application
+        │   │   │                       │   ├── port
+        │   │   │                       │   │   ├── in
+        │   │   │                       │   │   └── out
+        │   │   │                       │   └── usecase
+        │   │   │                       │       ├── command
+        │   │   │                       │       └── handler
+        │   │   │                       ├── domain
+        │   │   │                       │   └── model
+        │   │   │                       └── infrastructure
+        │   │   │                           ├── entryPoints
+        │   │   │                           │   └── rest
+        │   │   │                           │       └── dto
+        │   │   │                           │           └── useCase
+        │   │   │                           │               └── createCategory
+        │   │   │                           └── persistence
+        │   │   │                               ├── entity
+        │   │   │                               ├── mapper
+        │   │   │                               └── repository
+        │   │   │                                   ├── external
+        │   │   │                                   │   ├── adapter
+        │   │   │                                   │   └── gateway
+        │   │   │                                   └── internal
+        │   │   │                                       ├── adapter
+        │   │   │                                       └── gateway
+        │   │   ├── generated
+        │   │   │   └── sources
+        │   │   │       ├── annotationProcessor
+        │   │   │       │   └── java
+        │   │   │       │       └── main
+        │   │   │       └── headers
+        │   │   │           └── java
+        │   │   │               └── main
+        │   │   ├── libs
+        │   │   └── tmp
+        │   │       ├── compileJava
+        │   │       │   └── compileTransaction
+        │   │       │       ├── backup-dir
+        │   │       │       └── stash-dir
+        │   │       └── jar
+        │   └── src
+        │       ├── main
+        │       │   └── java
+        │       │       └── com
+        │       │           └── arka
+        │       │               └── category
+        │       │                   ├── application
+        │       │                   │   ├── port
+        │       │                   │   │   ├── in
+        │       │                   │   │   └── out
+        │       │                   │   └── usecase
+        │       │                   │       ├── command
+        │       │                   │       └── handler
+        │       │                   ├── domain
+        │       │                   │   └── model
+        │       │                   └── infrastructure
+        │       │                       ├── entryPoints
+        │       │                       │   └── rest
+        │       │                       │       └── dto
+        │       │                       │           └── useCase
+        │       │                       │               └── createCategory
+        │       │                       └── persistence
+        │       │                           ├── entity
+        │       │                           ├── mapper
+        │       │                           └── repository
+        │       │                               ├── external
+        │       │                               │   ├── adapter
+        │       │                               │   └── gateway
+        │       │                               └── internal
+        │       │                                   ├── adapter
+        │       │                                   └── gateway
+        │       └── test
+        │           └── com
+        │               └── arka
+        │                   └── product
+        ├── gradle
+        │   └── wrapper
+        ├── order
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── order
+        │   │   │               ├── api
+        │   │   │               │   └── rest
+        │   │   │               │       └── dto
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   ├── policy
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       ├── mapper
+        │   │   │                       └── repository
+        │   │   └── main
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── order
+        │   │                   ├── application
+        │   │                   │   ├── port
+        │   │                   │   │   ├── in
+        │   │                   │   │   └── out
+        │   │                   │   └── usecase
+        │   │                   │       ├── command
+        │   │                   │       └── handler
+        │   │                   ├── domain
+        │   │                   │   └── model
+        │   │                   │       └── enums
+        │   │                   └── infrastructure
+        │   │                       ├── entryPoints
+        │   │                       │   └── rest
+        │   │                       │       └── dto
+        │   │                       │           └── useCase
+        │   │                       │               ├── ModifyOrder
+        │   │                       │               ├── NotifyState
+        │   │                       │               └── RegisterOrder
+        │   │                       └── persistence
+        │   │                           ├── entity
+        │   │                           │   └── enums
+        │   │                           ├── mapper
+        │   │                           │   └── adapter
+        │   │                           └── repository
+        │   │                               ├── external
+        │   │                               │   ├── adapter
+        │   │                               │   └── gateway
+        │   │                               └── internal
+        │   │                                   ├── adapter
+        │   │                                   └── gateway
+        │   ├── build
+        │   │   ├── classes
+        │   │   │   └── java
+        │   │   │       └── main
+        │   │   │           └── com
+        │   │   │               └── arka
+        │   │   │                   └── order
+        │   │   │                       ├── application
+        │   │   │                       │   ├── port
+        │   │   │                       │   │   ├── in
+        │   │   │                       │   │   └── out
+        │   │   │                       │   └── usecase
+        │   │   │                       │       ├── command
+        │   │   │                       │       └── handler
+        │   │   │                       ├── domain
+        │   │   │                       │   └── model
+        │   │   │                       │       └── enums
+        │   │   │                       └── infrastructure
+        │   │   │                           ├── entryPoints
+        │   │   │                           │   └── rest
+        │   │   │                           │       └── dto
+        │   │   │                           │           └── useCase
+        │   │   │                           │               └── RegisterOrder
+        │   │   │                           └── persistence
+        │   │   │                               ├── entity
+        │   │   │                               │   └── enums
+        │   │   │                               ├── mapper
+        │   │   │                               │   └── adapter
+        │   │   │                               └── repository
+        │   │   │                                   └── internal
+        │   │   │                                       ├── adapter
+        │   │   │                                       └── gateway
+        │   │   ├── generated
+        │   │   │   └── sources
+        │   │   │       ├── annotationProcessor
+        │   │   │       │   └── java
+        │   │   │       │       └── main
+        │   │   │       └── headers
+        │   │   │           └── java
+        │   │   │               └── main
+        │   │   ├── libs
+        │   │   └── tmp
+        │   │       ├── compileJava
+        │   │       │   └── compileTransaction
+        │   │       │       ├── backup-dir
+        │   │       │       └── stash-dir
+        │   │       └── jar
+        │   └── src
+        │       └── main
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── order
+        │                           ├── application
+        │                           │   ├── port
+        │                           │   │   ├── in
+        │                           │   │   └── out
+        │                           │   └── usecase
+        │                           │       ├── command
+        │                           │       └── handler
+        │                           ├── domain
+        │                           │   └── model
+        │                           │       └── enums
+        │                           └── infrastructure
+        │                               ├── entryPoints
+        │                               │   └── rest
+        │                               │       └── dto
+        │                               │           └── useCase
+        │                               │               ├── ModifyOrder
+        │                               │               ├── NotifyState
+        │                               │               └── RegisterOrder
+        │                               └── persistence
+        │                                   ├── entity
+        │                                   │   └── enums
+        │                                   ├── mapper
+        │                                   │   └── adapter
+        │                                   └── repository
+        │                                       ├── external
+        │                                       │   ├── adapter
+        │                                       │   └── gateway
+        │                                       └── internal
+        │                                           ├── adapter
+        │                                           └── gateway
+        ├── product
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── generated-test-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── product
+        │   │   │               ├── api
+        │   │   │               │   └── rest
+        │   │   │               │       ├── dto
+        │   │   │               │       └── mapper
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   ├── model
+        │   │   │               │   ├── policy
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── config
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       ├── mapper
+        │   │   │                       └── repository
+        │   │   ├── main
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── product
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── useCase
+        │   │   │               │       ├── command
+        │   │   │               │       └── handler
+        │   │   │               ├── domain
+        │   │   │               │   └── model
+        │   │   │               └── infrastructure
+        │   │   │                   ├── entryPoints
+        │   │   │                   │   └── rest
+        │   │   │                   │       └── dto
+        │   │   │                   │           └── useCase
+        │   │   │                   │               ├── CreateProduct
+        │   │   │                   │               └── UpdateStock
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       ├── mapper
+        │   │   │                       │   └── adapter
+        │   │   │                       └── repository
+        │   │   │                           ├── external
+        │   │   │                           │   ├── adapter
+        │   │   │                           │   └── gateway
+        │   │   │                           └── internal
+        │   │   │                               ├── adapter
+        │   │   │                               └── gateway
+        │   │   └── test
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── product
+        │   ├── build
+        │   │   ├── classes
+        │   │   │   └── java
+        │   │   │       └── main
+        │   │   │           └── com
+        │   │   │               └── arka
+        │   │   │                   └── product
+        │   │   │                       ├── application
+        │   │   │                       │   ├── port
+        │   │   │                       │   │   ├── in
+        │   │   │                       │   │   └── out
+        │   │   │                       │   └── useCase
+        │   │   │                       │       ├── command
+        │   │   │                       │       └── handler
+        │   │   │                       ├── domain
+        │   │   │                       │   └── model
+        │   │   │                       └── infrastructure
+        │   │   │                           ├── entryPoints
+        │   │   │                           │   └── rest
+        │   │   │                           │       └── dto
+        │   │   │                           │           └── useCase
+        │   │   │                           │               ├── CreateProduct
+        │   │   │                           │               └── UpdateStock
+        │   │   │                           └── persistence
+        │   │   │                               ├── entity
+        │   │   │                               ├── mapper
+        │   │   │                               │   └── adapter
+        │   │   │                               └── repository
+        │   │   │                                   ├── external
+        │   │   │                                   │   ├── adapter
+        │   │   │                                   │   └── gateway
+        │   │   │                                   └── internal
+        │   │   │                                       ├── adapter
+        │   │   │                                       └── gateway
+        │   │   ├── generated
+        │   │   │   └── sources
+        │   │   │       ├── annotationProcessor
+        │   │   │       │   └── java
+        │   │   │       │       └── main
+        │   │   │       └── headers
+        │   │   │           └── java
+        │   │   │               └── main
+        │   │   ├── libs
+        │   │   └── tmp
+        │   │       ├── compileJava
+        │   │       │   └── compileTransaction
+        │   │       │       ├── backup-dir
+        │   │       │       └── stash-dir
+        │   │       └── jar
+        │   └── src
+        │       ├── main
+        │       │   └── java
+        │       │       └── com
+        │       │           └── arka
+        │       │               └── product
+        │       │                   ├── application
+        │       │                   │   ├── port
+        │       │                   │   │   ├── in
+        │       │                   │   │   └── out
+        │       │                   │   └── useCase
+        │       │                   │       ├── command
+        │       │                   │       └── handler
+        │       │                   ├── domain
+        │       │                   │   └── model
+        │       │                   └── infrastructure
+        │       │                       ├── entryPoints
+        │       │                       │   └── rest
+        │       │                       │       └── dto
+        │       │                       │           └── useCase
+        │       │                       │               ├── CreateProduct
+        │       │                       │               └── UpdateStock
+        │       │                       └── persistence
+        │       │                           ├── entity
+        │       │                           ├── mapper
+        │       │                           │   └── adapter
+        │       │                           └── repository
+        │       │                               ├── external
+        │       │                               │   ├── adapter
+        │       │                               │   └── gateway
+        │       │                               └── internal
+        │       │                                   ├── adapter
+        │       │                                   └── gateway
+        │       └── test
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── product
+        ├── shared-kernel
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   └── main
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── shared
+        │   │                   ├── application
+        │   │                   │   └── ports
+        │   │                   │       ├── in
+        │   │                   │       └── out
+        │   │                   │           ├── category
+        │   │                   │           ├── order
+        │   │                   │           ├── product
+        │   │                   │           ├── shoppingCart
+        │   │                   │           └── user
+        │   │                   ├── domain
+        │   │                   │   ├── exceptions
+        │   │                   │   ├── gateway
+        │   │                   │   └── valueObjects
+        │   │                   └── infrastructure
+        │   │                       ├── infoMapper
+        │   │                       │   └── gateway
+        │   │                       └── persistence
+        │   │                           └── mapper
+        │   │                               └── gateway
+        │   ├── build
+        │   │   ├── classes
+        │   │   │   └── java
+        │   │   │       └── main
+        │   │   │           └── com
+        │   │   │               └── arka
+        │   │   │                   └── shared
+        │   │   │                       ├── application
+        │   │   │                       │   └── ports
+        │   │   │                       │       └── out
+        │   │   │                       │           ├── category
+        │   │   │                       │           ├── product
+        │   │   │                       │           ├── shoppingCart
+        │   │   │                       │           └── user
+        │   │   │                       ├── domain
+        │   │   │                       │   ├── exceptions
+        │   │   │                       │   ├── gateway
+        │   │   │                       │   └── valueObjects
+        │   │   │                       └── infrastructure
+        │   │   │                           ├── infoMapper
+        │   │   │                           │   └── gateway
+        │   │   │                           └── persistence
+        │   │   │                               └── mapper
+        │   │   │                                   └── gateway
+        │   │   ├── generated
+        │   │   │   └── sources
+        │   │   │       ├── annotationProcessor
+        │   │   │       │   └── java
+        │   │   │       │       └── main
+        │   │   │       └── headers
+        │   │   │           └── java
+        │   │   │               └── main
+        │   │   ├── libs
+        │   │   └── tmp
+        │   │       ├── compileJava
+        │   │       │   └── compileTransaction
+        │   │       │       ├── backup-dir
+        │   │       │       └── stash-dir
+        │   │       └── jar
+        │   └── src
+        │       └── main
+        │           └── java
+        │               └── com
+        │                   └── arka
+        │                       └── shared
+        │                           ├── application
+        │                           │   └── ports
+        │                           │       ├── in
+        │                           │       └── out
+        │                           │           ├── category
+        │                           │           ├── order
+        │                           │           ├── product
+        │                           │           ├── shoppingCart
+        │                           │           └── user
+        │                           ├── domain
+        │                           │   ├── exceptions
+        │                           │   ├── gateway
+        │                           │   └── valueObjects
+        │                           └── infrastructure
+        │                               ├── infoMapper
+        │                               │   └── gateway
+        │                               └── persistence
+        │                                   └── mapper
+        │                                       └── gateway
+        ├── shopingCart
+        │   ├── bin
+        │   │   ├── default
+        │   │   ├── generated-sources
+        │   │   │   └── annotations
+        │   │   ├── infrastructure
+        │   │   │   └── com
+        │   │   │       └── arka
+        │   │   │           └── shopingCart
+        │   │   │               ├── api
+        │   │   │               │   └── rest
+        │   │   │               │       └── dto
+        │   │   │               ├── application
+        │   │   │               │   ├── port
+        │   │   │               │   │   ├── in
+        │   │   │               │   │   └── out
+        │   │   │               │   └── usecase
+        │   │   │               │       ├── command
+        │   │   │               │       └── query
+        │   │   │               ├── domain
+        │   │   │               │   ├── event
+        │   │   │               │   ├── exception
+        │   │   │               │   └── service
+        │   │   │               └── infrastructure
+        │   │   │                   ├── messaging
+        │   │   │                   └── persistence
+        │   │   │                       ├── entity
+        │   │   │                       ├── mapper
+        │   │   │                       └── repository
+        │   │   └── main
+        │   │       └── com
+        │   │           └── arka
+        │   │               └── shopingCart
+        │   │                   ├── application
+        │   │                   │   ├── port
+        │   │                   │   │   ├── in
+        │   │                   │   │   └── out
+        │   │                   │   └── usecase
+        │   │                   │       ├── command
+        │   │                   │       └── handler
+        │   │                   ├── domain
+        │   │                   │   └── model
+        │   │                   └── infrastructure
+        │   │                       ├── entryPoint
+        │   │                       │   └── rest
+        │   │                       │       └── dto
+        │   │                       │           └── useCase
+        │   │                       │               ├── getForgottenCarts
+        │   │                       │               └── saveCart
+        │   │                       ├── infoMapper
+        │   │                       └── persistence
+        │   │                           ├── entity
+        │   │                           ├── mapper
+        │   │                           └── repository
+        │   │                               ├── external
+        │   │                               │   ├── adapter
+        │   │                               │   └── gateway
+        │   │                               └── internal
+        │   │                                   ├── adapter
+        │   │                                   └── gateway
+        │   ├── build
+        │   │   ├── classes
+        │   │   │   └── java
+        │   │   │       └── main
+        │   │   │           └── com
+        │   │   │               └── arka
+        │   │   │                   └── shopingCart
+        │   │   │                       ├── application
+        │   │   │                       │   ├── port
+        │   │   │                       │   │   ├── in
+        │   │   │                       │   │   └── out
+        │   │   │                       │   └── usecase
+        │   │   │                       │       ├── command
+        │   │   │                       │       └── handler
+        │   │   │                       ├── domain
+        │   │   │                       │   └── model
+        │   │   │                       └── infrastructure
+        │   │   │                           ├── entryPoint
+        │   │   │                           │   └── rest
+        │   │   │                           │       └── dto
+        │   │   │                           │           └── useCase
+        │   │   │                           │               └── saveCart
+        │   │   │                           ├── infoMapper
+        │   │   │                           └── persistence
+        │   │   │                               ├── entity
+        │   │   │                               ├── mapper
+        │   │   │                               └── repository
+        │   │   │                                   ├── external
+        │   │   │                                   │   ├── adapter
+        │   │   │                                   │   └── gateway
+        │   │   │                                   └── internal
+        │   │   │                                       ├── adapter
+        │   │   │                                       └── gateway
+        │   │   ├── generated
+        │   │   │   └── sources
+        │   │   │       ├── annotationProcessor
+        │   │   │       │   └── java
+        │   │   │       │       └── main
+        │   │   │       └── headers
+        │   │   │           └── java
+        │   │   │               └── main
+        │   │   ├── libs
+        │   │   └── tmp
+        │   │       ├── compileJava
+        │   │       │   └── compileTransaction
+        │   │       │       ├── backup-dir
+        │   │       │       └── stash-dir
+        │   │       └── jar
+        │   └── src
+        │       ├── main
+        │       │   └── java
+        │       │       └── com
+        │       │           └── arka
+        │       │               └── shopingCart
+        │       │                   ├── application
+        │       │                   │   ├── port
+        │       │                   │   │   ├── in
+        │       │                   │   │   └── out
+        │       │                   │   └── usecase
+        │       │                   │       ├── command
+        │       │                   │       └── handler
+        │       │                   ├── domain
+        │       │                   │   └── model
+        │       │                   └── infrastructure
+        │       │                       ├── entryPoint
+        │       │                       │   └── rest
+        │       │                       │       └── dto
+        │       │                       │           └── useCase
+        │       │                       │               ├── getForgottenCarts
+        │       │                       │               └── saveCart
+        │       │                       ├── infoMapper
+        │       │                       └── persistence
+        │       │                           ├── entity
+        │       │                           ├── mapper
+        │       │                           └── repository
+        │       │                               ├── external
+        │       │                               │   ├── adapter
+        │       │                               │   └── gateway
+        │       │                               └── internal
+        │       │                                   ├── adapter
+        │       │                                   └── gateway
+        │       └── test
+        │           └── com
+        │               └── arka
+        │                   └── product
+        └── user
+            ├── bin
+            │   ├── default
+            │   ├── generated-sources
+            │   │   └── annotations
+            │   ├── generated-test-sources
+            │   │   └── annotations
+            │   ├── infrastructure
+            │   │   └── com
+            │   │       └── arka
+            │   │           └── client
+            │   │               ├── application
+            │   │               │   ├── port
+            │   │               │   │   ├── in
+            │   │               │   │   └── out
+            │   │               │   └── usecase
+            │   │               │       ├── command
+            │   │               │       └── query
+            │   │               ├── domain
+            │   │               │   ├── event
+            │   │               │   ├── exception
+            │   │               │   └── service
+            │   │               └── infrastructure
+            │   │                   ├── api
+            │   │                   │   └── rest
+            │   │                   │       └── dto
+            │   │                   ├── config
+            │   │                   ├── persistence
+            │   │                   │   ├── entity
+            │   │                   │   ├── mapper
+            │   │                   │   └── repository
+            │   │                   └── security
+            │   ├── main
+            │   │   └── com
+            │   │       └── arka
+            │   │           └── user
+            │   │               ├── application
+            │   │               │   ├── port
+            │   │               │   │   ├── in
+            │   │               │   │   └── out
+            │   │               │   └── usecase
+            │   │               │       ├── command
+            │   │               │       └── handler
+            │   │               ├── domain
+            │   │               │   └── model
+            │   │               │       └── enums
+            │   │               └── infrastructure
+            │   │                   ├── entryPoints
+            │   │                   │   └── rest
+            │   │                   │       └── dto
+            │   │                   │           └── useCase
+            │   │                   │               ├── CreateUser
+            │   │                   │               └── EditUser
+            │   │                   └── persistence
+            │   │                       ├── entity
+            │   │                       │   └── enums
+            │   │                       ├── mapper
+            │   │                       └── repository
+            │   │                           ├── external
+            │   │                           │   ├── adapter
+            │   │                           │   └── gateway
+            │   │                           └── internal
+            │   │                               ├── adapter
+            │   │                               └── gateway
+            │   └── test
+            │       └── com
+            │           └── arka
+            │               └── client
+            ├── build
+            │   ├── classes
+            │   │   └── java
+            │   │       └── main
+            │   │           └── com
+            │   │               └── arka
+            │   │                   └── user
+            │   │                       ├── application
+            │   │                       │   ├── port
+            │   │                       │   │   ├── in
+            │   │                       │   │   └── out
+            │   │                       │   └── usecase
+            │   │                       │       ├── command
+            │   │                       │       └── handler
+            │   │                       ├── domain
+            │   │                       │   └── model
+            │   │                       │       └── enums
+            │   │                       └── infrastructure
+            │   │                           ├── entryPoints
+            │   │                           │   └── rest
+            │   │                           │       └── dto
+            │   │                           │           └── useCase
+            │   │                           │               └── CreateUser
+            │   │                           └── persistence
+            │   │                               ├── entity
+            │   │                               │   └── enums
+            │   │                               ├── mapper
+            │   │                               └── repository
+            │   │                                   ├── external
+            │   │                                   │   ├── adapter
+            │   │                                   │   └── gateway
+            │   │                                   └── internal
+            │   │                                       ├── adapter
+            │   │                                       └── gateway
+            │   ├── generated
+            │   │   └── sources
+            │   │       ├── annotationProcessor
+            │   │       │   └── java
+            │   │       │       └── main
+            │   │       └── headers
+            │   │           └── java
+            │   │               └── main
+            │   ├── libs
+            │   └── tmp
+            │       ├── compileJava
+            │       │   └── compileTransaction
+            │       │       ├── backup-dir
+            │       │       └── stash-dir
+            │       └── jar
+            └── src
+                ├── main
+                │   └── java
+                │       └── com
+                │           └── arka
+                │               └── user
+                │                   ├── application
+                │                   │   ├── port
+                │                   │   │   ├── in
+                │                   │   │   └── out
+                │                   │   └── usecase
+                │                   │       ├── command
+                │                   │       └── handler
+                │                   ├── domain
+                │                   │   └── model
+                │                   │       └── enums
+                │                   └── infrastructure
+                │                       ├── entryPoints
+                │                       │   └── rest
+                │                       │       └── dto
+                │                       │           └── useCase
+                │                       │               ├── CreateUser
+                │                       │               └── EditUser
+                │                       └── persistence
+                │                           ├── entity
+                │                           │   └── enums
+                │                           ├── mapper
+                │                           └── repository
+                │                               ├── external
+                │                               │   ├── adapter
+                │                               │   └── gateway
+                │                               └── internal
+                │                                   ├── adapter
+                │                                   └── gateway
+                └── test
+                    └── java
+                        └── com
+                            └── arka
+                                └── client
+
+905 directories

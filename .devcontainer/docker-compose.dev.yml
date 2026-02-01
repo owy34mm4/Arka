@@ -91,24 +91,6 @@ services:
       - Data-Back
       - Back-BackAuth
 
-  backend_auth:
-    build: 
-      context: ../arka-auth
-      dockerfile: Dockerfile.dev
-    mem_limit: 4g
-    cpus: "3"
-    working_dir: /workspace
-    container_name: Arka-Auth-Service
-    #depends_on:
-    #  backend:
-    #    condition : service_healthy
-    ports:
-      - "901:8080"
-    volumes:
-      - ../arka-auth/src:/workspace
-    networks:
-      - Back-BackAuth
-
 
 volumes:
   mysqldata:

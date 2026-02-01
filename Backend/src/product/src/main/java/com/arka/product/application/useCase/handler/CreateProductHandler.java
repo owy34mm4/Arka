@@ -11,13 +11,12 @@ import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
 import lombok.RequiredArgsConstructor;
 
-import com.arka.category.infrastructure.persistence.repository.adapter.external.CategoryDataAdapter;
-import com.arka.product.application.mapper.adapter.CreateProductLayerMapper;
+import com.arka.category.infrastructure.persistence.repository.external.adapter.CategoryDataAdapter;
 import com.arka.product.application.port.in.ICreateProductUseCase;
+import com.arka.product.application.port.out.IProductHistoryPort;
+import com.arka.product.application.port.out.IProductRepositoryPort;
 import com.arka.product.application.useCase.command.CreateProductCommand;
 import com.arka.product.domain.model.Product;
-
-import com.arka.product.infrastructure.persistence.repository.adapter.ProductRepositoryAdapter;
 
 
 
@@ -30,12 +29,10 @@ public class CreateProductHandler implements ICreateProductUseCase {
     
     private final CategoryDataAdapter categoryRepository;
     
-    private final ProductRepositoryAdapter repository ;
+    private final IProductRepositoryPort productRepository ;
 
-    private final CreateProductLayerMapper layerMapper;
+    private final IProductHistoryPort productHistoryRepository;
 
-
- 
     
     /**
      * Aquí se Ejecuta el Caso de Uso, Recibe parametro <CreateProductCommand>
@@ -48,22 +45,25 @@ public class CreateProductHandler implements ICreateProductUseCase {
      */
     @Override
     public Product execute(CreateProductCommand cmd) throws InvalidPropertiesGiven {
-        //Mapear comando a Dominio
-        Product model = layerMapper.toDomain(cmd);
-
-        //Buscar categorias, con su propio repositorio
-        List<CategoryInfo> categories = categoryRepository.findAllById(model.getCategoriesIds());
-
-        //Inyectar categorias al modelo
-        model.inyectCategoriesFromRespository(categories);
-
+        //Obtener las categorias de su repositorio
+        List <CategoryInfo> categories = categoryRepository.findAllById(cmd.getCategories());
+        
+        //Generamos modelo 
+        Product model = cmd.toModel();
+        
         //Checkear el modelo
         model.checkIstance();
 
-        //guardar
-        Product savedModel = repository.save(model);
+        //guardamos Producto
+        model = productRepository.save(model);
 
-        return savedModel;
+        //Inyectamos Categorias(Validacion en Dominio)
+        model.inyectCategories(categories);
+
+        //Guardar historyRecord
+        productHistoryRepository.save(model.toProductHistory());
+        
+        return model;
         
     }
     

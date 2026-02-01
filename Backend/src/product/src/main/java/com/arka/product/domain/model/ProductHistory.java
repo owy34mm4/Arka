@@ -1,7 +1,10 @@
 package com.arka.product.domain.model;
 
 import java.util.Date;
+import java.util.List;
 
+import com.arka.shared.application.ports.out.category.CategoryInfo;
+import com.arka.shared.application.ports.out.user.UserInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,24 +29,35 @@ public class ProductHistory {
 
     private Integer stock;
 
-    
+    private List<CategoryInfo> categories;
+
+    private List<Long> categoriesIds;
+
+    private List<Long> shopingCartsIds;
+
+    private List<Long> ordersIds;
+
     private Date createdAt;
 
-    //private Long modifiedBy; //TO-DO == Link w ClientId
+    private Long modifiedById; 
+
+    private UserInfo modifiedBy;
     
     private Long productId;
 
-    public static ProductHistory createFromProductEntity(com.arka.product.infrastructure.persistence.entity.ProductTable entity){
-
-        return ProductHistory.builder()
-            .id(null)
-            .name(entity.getName())
-            .description(entity.getDescription())
-            .price(entity.getPrice())
-            .stock(entity.getStock())
-            .createdAt(null)
-            .productId(entity.getId())
+    public Product toProduct (){
+        return Product.builder()
+        .id(this.getId())
+        .name(this.getName())
+        .description(this.getDescription())
+        .price(this.getPrice())
+        .stock(this.getStock())
+        .categories(null)
+        .categoriesIds(this.getCategoriesIds())
+        .shopingCartsIds(this.getShopingCartsIds())
+        .ordersIds(this.getOrdersIds())
         .build();
 
     }
+    
 }
