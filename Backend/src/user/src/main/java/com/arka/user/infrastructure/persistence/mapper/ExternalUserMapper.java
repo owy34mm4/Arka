@@ -3,14 +3,14 @@ package com.arka.user.infrastructure.persistence.mapper;
 import org.springframework.stereotype.Component;
 
 import com.arka.shared.application.ports.out.user.UserInfo;
-import com.arka.shared.infrastructure.infoMapper.gateway.IInfoMapper;
+import com.arka.shared.infrastructure.externalMapper.gateway.IExternalMapper;
 import com.arka.user.domain.model.User;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class ExternalUserMapper implements IInfoMapper<UserInfo,User> {
+public class ExternalUserMapper implements IExternalMapper<UserInfo,User> {
 
     @Override
     public User toDomain(UserInfo info) {

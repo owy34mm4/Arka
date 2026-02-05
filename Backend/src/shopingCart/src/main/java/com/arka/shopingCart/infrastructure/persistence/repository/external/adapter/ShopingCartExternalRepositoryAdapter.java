@@ -5,8 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
+import com.arka.shared.domain.exceptions.NotFoundException;
 import com.arka.shopingCart.domain.model.ShopingCart;
-import com.arka.shopingCart.infrastructure.infoMapper.ShopingCartInfoMapper;
+import com.arka.shopingCart.infrastructure.infoMapper.ExternalShopingCartMapper;
 import com.arka.shopingCart.infrastructure.persistence.mapper.PersistanceShopingCartMapper;
 import com.arka.shopingCart.infrastructure.persistence.repository.external.gateway.IShopingCartExternalRepository;
 import com.arka.shopingCart.infrastructure.persistence.repository.internal.gateway.IJPAShopingCart;
@@ -21,7 +22,7 @@ public class ShopingCartExternalRepositoryAdapter implements IShopingCartExterna
 
     private final PersistanceShopingCartMapper persistanceShopingCartMapper;
 
-    private final ShopingCartInfoMapper shopingCartInfoMapper;
+    private final ExternalShopingCartMapper shopingCartInfoMapper;
 
  
     @Override
@@ -32,7 +33,7 @@ public class ShopingCartExternalRepositoryAdapter implements IShopingCartExterna
 
     @Override
     public ShopingCartInfo findById(Long Id) {
-       var entity=shopingCartRepository.findById(Id).get();
+       var entity=shopingCartRepository.findById(Id).orElseThrow(()->new NotFoundException("ShopingCart "));
        var model =persistanceShopingCartMapper.toDomain(entity);
        return shopingCartInfoMapper.toInfo(model);
 
