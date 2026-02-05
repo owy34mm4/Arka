@@ -3,7 +3,7 @@ package com.arka.product.infrastructure.persistence.repository.internal.adapter;
 
 import org.springframework.stereotype.Repository;
 
-import com.arka.product.application.port.out.IProductHistoryPort;
+import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
 import com.arka.product.domain.model.ProductHistory;
 
 
@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductHistoryRespositoryAdapter implements IProductHistoryPort{
+public class ProductHistoryRespositoryAdapter implements IProductHistoryRepositoryPort{
 
     
     private final IJPAProductHistoryRespository jpaProductHistory;

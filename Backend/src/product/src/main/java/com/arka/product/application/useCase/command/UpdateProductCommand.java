@@ -11,11 +11,13 @@ import lombok.Getter;
 @Builder
 @AllArgsConstructor
 public class UpdateProductCommand {
+    Long requesterId;
     Long productId;
     Integer newStock;
 
     public static UpdateProductCommand createFromRequest(RequestUpdateStockProduct request){
         return UpdateProductCommand.builder()
+            .requesterId(request.getRequester_id())
             .productId(request.getProduct_id())
             .newStock(request.getNew_stock())
             .build();

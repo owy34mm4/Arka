@@ -10,6 +10,7 @@ import com.arka.product.domain.model.Product;
 import com.arka.product.infrastructure.persistence.entity.ProductTable;
 import com.arka.product.infrastructure.persistence.mapper.adapter.PersistanceProductMapper;
 import com.arka.product.infrastructure.persistence.repository.internal.gateway.IJPAProductRepository;
+import com.arka.shared.domain.exceptions.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,7 +35,7 @@ public class ProductRepositoryAdapter implements IProductRepositoryPort{
     @Override
     public Product findById(Long id) {
         if (id==null) return null;
-        ProductTable entity = jpaProduct.findById(id).get();
+        ProductTable entity = jpaProduct.findById(id).orElseThrow(()-> new NotFoundException("Product"));
         Product model = persistanceMapper.toDomain(entity);
         return model;
     }

@@ -39,6 +39,12 @@ public class ProductHistory {
 
     private Date createdAt;
 
+    private Long createdById;
+
+    private UserInfo createdBy;
+
+    private Date modifiedAt;
+
     private Long modifiedById; 
 
     private UserInfo modifiedBy;

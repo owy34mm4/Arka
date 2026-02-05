@@ -37,13 +37,19 @@ public class ProductHistoryTable {
 
     private Date createdAt;
 
+    @Column(name= "createdBy")
+    private Long createdById;
+
+    private Date modifiedAt;
+
+    @Column(name = "modifiedBy")
     private Long modifiedById;
     
     @Column(name = "product_id")
     private Long productId;
 
-    @PrePersist
-    protected void onCreate(){
-        this.createdAt = Date.from(Instant.now());
-    }
+    // @PrePersist
+    // protected void onCreate(){
+    //     this.createdAt = Date.from(Instant.now());
+    // }
 }

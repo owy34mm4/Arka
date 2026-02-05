@@ -1,6 +1,8 @@
 package com.arka.product.application.useCase.handler;
 
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 
@@ -15,10 +17,11 @@ import lombok.RequiredArgsConstructor;
 
 import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
 import com.arka.product.application.port.in.ICreateProductUseCase;
-import com.arka.product.application.port.out.IProductHistoryPort;
+import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
 import com.arka.product.application.port.out.IProductRepositoryPort;
 import com.arka.product.application.useCase.command.CreateProductCommand;
 import com.arka.product.domain.model.Product;
+import com.arka.product.domain.model.ProductHistory;
 
 
 
@@ -33,14 +36,16 @@ public class CreateProductHandler implements ICreateProductUseCase {
     
     private final IProductRepositoryPort productRepository ;
 
-    private final IProductHistoryPort productHistoryRepository;
+    private final IProductHistoryRepositoryPort productHistoryRepository;
 
     private final IUserExternalRepository userRepository;
 
     @Override
     public Product execute(CreateProductCommand cmd) throws BusinessRuleException {
         //Validar privilegios de accion -> Min empleado
-        if(!userRepository.isClient(cmd.getRequesterId()) || !userRepository.isAdmin(cmd.getRequesterId())){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
+
+            //Leer ley de Morgan en operaciones booleanas
+            if(!userRepository.isEmploye(cmd.getRequesterId()) && !userRepository.isAdmin(cmd.getRequesterId())){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
 
         //Obtener las categorias de su repositorio
         List <CategoryInfo> categories = categoryRepository.findAllById(cmd.getCategories());
@@ -56,9 +61,19 @@ public class CreateProductHandler implements ICreateProductUseCase {
 
         //Inyectamos Categorias(Validacion en Dominio)
         model.inyectCategories(categories);
+        
+        //History Record
+            ProductHistory pH = model.toProductHistory();
+            
+            //Sets De MetaData
 
-        //Guardar historyRecord
-        productHistoryRepository.save(model.toProductHistory());
+                //TimeStamp de Creacion
+                pH.setCreatedAt(Date.from(Instant.now()));
+                //Marca de Responsabilidad
+                pH.setCreatedById(cmd.getRequesterId());
+            
+            //Guardar -- No retorna nada. Solo persiste para Log
+                productHistoryRepository.save(pH);
         
         return model;
         

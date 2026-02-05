@@ -72,11 +72,12 @@ public class Product {
 
    public ProductHistory toProductHistory(){
     return ProductHistory.builder()
-        .id(this.getId())
+        .id(null)
         .name(this.getName())
         .description(this.getDescription())
         .price(this.getPrice())
         .stock(this.getStock())
+        .productId(this.getId())
         .categoriesIds(this.getCategoriesIds())
         .categories(this.getCategories())
         .shopingCartsIds(this.getShopingCartsIds())

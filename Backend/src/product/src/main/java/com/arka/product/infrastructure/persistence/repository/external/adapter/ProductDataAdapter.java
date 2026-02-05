@@ -44,8 +44,7 @@ public class ProductDataAdapter implements IProductExternalRepository {
     public List<ProductInfo> findAllById(List<Long> productsIds) {
        return productsIds.stream()
             .filter(pId -> pId!=null)
-            .map(pId -> productRepository.findById(pId))
-            .map(Optional::get)
+            .map(pId -> productRepository.findById(pId).orElseThrow(()-> new NotFoundException("Product")))
             .map(p -> ProductInfo.create(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStock()))
             .toList()
             ;

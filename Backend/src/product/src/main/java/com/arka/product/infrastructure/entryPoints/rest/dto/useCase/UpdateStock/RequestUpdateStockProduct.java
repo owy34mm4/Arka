@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Builder @Getter @AllArgsConstructor @NoArgsConstructor
 public class RequestUpdateStockProduct {
+    Long requester_id;
     Long product_id;
     int new_stock;
 }

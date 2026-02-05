@@ -5,7 +5,7 @@ import com.arka.product.domain.model.ProductHistory;
 
 
 
-public interface IProductHistoryPort {
+public interface IProductHistoryRepositoryPort {
     ProductHistory save(ProductHistory productToRecord);
     ProductHistory findById(Long id);
     

@@ -20,6 +20,9 @@ public class PersistanceProductHistoryMapper implements IPersistanceMapper< Prod
             .price(entity.getPrice())
             .stock(entity.getStock())
             .createdAt(entity.getCreatedAt())
+            .createdById(entity.getCreatedById())
+            .modifiedAt(entity.getModifiedAt())
+            .modifiedById(entity.getModifiedById())
             .productId(entity.getProductId())
         .build();
     }
@@ -33,7 +36,10 @@ public class PersistanceProductHistoryMapper implements IPersistanceMapper< Prod
             .description(model.getDescription())
             .price(model.getPrice())
             .stock(model.getStock())
-            .createdAt(null)
+            .createdAt(model.getCreatedAt())
+            .createdById(model.getCreatedById())
+            .modifiedAt(model.getModifiedAt())
+            .modifiedById(model.getModifiedById())
             .productId(model.getProductId())
         .build();
     }

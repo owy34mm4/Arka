@@ -52,8 +52,8 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             //Validar el OwnerId con el Id del requester
             if (sc.getOwnerId()!=cmd.getRequesterId()){ throw new BusinessRuleException("Accion no permitida");}
 
-        //Validar disponibilidad del Stock
-
+        //Validar disponibilidad del Stock 
+            ///....
 
 
         //Crear Dominio
@@ -69,6 +69,11 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             //Cambiamos la flag del carrito
             scModel.setOrdered(true);
 
+        //Reducir Stock > Reducir el Stock de los productos ( Restar la cantidad ordenada al stock)
+
+            ///.....IJPAOrderRepository
+            
+        
         //Persistir
 
             //Guardamos carrito con Flag modificada -> Actualizamos registro viejo
