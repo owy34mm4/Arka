@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMapper;
 import com.arka.user.domain.model.User;
+import com.arka.user.domain.model.enums.Role;
 import com.arka.user.infrastructure.persistence.entity.UserTable;
 
 @Component
@@ -18,11 +19,17 @@ public class PersistenceUserMapper implements IPersistanceMapper< User, UserTabl
                     .lastName(c.getLastName())
                     .firstSurname(c.getFirstSurname())
                     .lastSurname(c.getLastSurname())
+                    .email(c.getEmail())
                     .username(c.getUsername())
                     .password(c.getPassword())
                     .isActive(c.isActive())
                     .lastLogin(c.getLastLogin())
                     .createdAt(c.getCreatedAt())
+                    .role(Role.valueOf(c.getRole().name()))
+                    //Mantener nulos. No hay Origen desde Peristencia
+                    .shoppingCartsIds(null)
+                    .ordersIds(null)
+                    .shopingCarts(null)
                 
                 .build();
     }
@@ -34,12 +41,13 @@ public class PersistenceUserMapper implements IPersistanceMapper< User, UserTabl
                     .lastName(c.getLastName())
                     .firstSurname(c.getFirstSurname())
                     .lastSurname(c.getLastSurname())
+                    .email(c.getEmail())
                     .username(c.getUsername())
                     .password(c.getPassword())
                     .isActive(c.isActive())
                     .lastLogin(c.getLastLogin())
                     .createdAt(c.getCreatedAt())
-                    
+                    .role(com.arka.user.infrastructure.persistence.entity.enums.Role.valueOf(c.getRole().name()))
                 .build();
     }
 }

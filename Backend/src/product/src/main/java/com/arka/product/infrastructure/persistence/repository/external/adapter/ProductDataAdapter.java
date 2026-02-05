@@ -11,6 +11,7 @@ import com.arka.product.infrastructure.persistence.repository.external.gateway.I
 import com.arka.product.infrastructure.persistence.repository.internal.gateway.IJPAProductRepository;
 
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.domain.exceptions.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +27,7 @@ public class ProductDataAdapter implements IProductExternalRepository {
 
     @Override
     public ProductInfo findById(Long productIds) {
-        ProductTable productEntity = productRepository.findById(productIds).get();
+        ProductTable productEntity = productRepository.findById(productIds).orElseThrow( ()->new NotFoundException("Producto") );
 
         Product productModel = persistanceProductMapper.toDomain(productEntity);
 
@@ -52,8 +53,7 @@ public class ProductDataAdapter implements IProductExternalRepository {
 
     @Override
     public boolean existsById(Long Id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existsById'");
+        return productRepository.existsById(Id);
     }
     
 }

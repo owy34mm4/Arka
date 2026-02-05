@@ -1,5 +1,7 @@
 package com.arka.user.infrastructure.entryPoints.rest.dto.useCase.CreateUser;
 
+
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +17,9 @@ public class RequestCreateUser {
     private String last_name;
     private String first_surname;
     private String last_surname;
+    @Email
+    private String email;
     private String username;
     private String password;
 
-    
 }

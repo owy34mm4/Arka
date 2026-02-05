@@ -7,9 +7,12 @@ import com.arka.user.infrastructure.persistence.entity.UserTable;
 
 
 
+
+
 @Repository
 public interface IJPAUserRepository extends JpaRepository<UserTable,Long> {
     
     boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
     boolean existsById(Long id);
 }

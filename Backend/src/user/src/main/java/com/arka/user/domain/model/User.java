@@ -7,6 +7,7 @@ import java.util.List;
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
 import com.arka.user.domain.model.enums.Role;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,7 @@ public class User {
     private String lastName;
     private String firstSurname;
     private String lastSurname;
+    private String email;
     private String username;
     private String password;    
     private boolean isActive;

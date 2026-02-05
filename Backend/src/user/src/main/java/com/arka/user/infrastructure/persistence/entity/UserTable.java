@@ -14,8 +14,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import jakarta.persistence.PrePersist;
+// import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,6 +48,9 @@ public class UserTable {
     @Column(name = "last_surname")
     private String lastSurname;
 
+    @Column(name = "email")
+    private String email;
+
     @NotNull
     private String username;
 
@@ -67,9 +71,10 @@ public class UserTable {
     private Role role;
 
     
-    @PrePersist  
-    protected void onCreate() {  
-        createdAt = LocalDateTime.now();  
-        isActive = true;
-    }
+    // Dejó de Funcionar -> Incluso con Transaccional en el metodo save en el adaptador
+    // @PrePersist  
+    // public void onCreate() {  
+    //     this.createdAt = LocalDateTime.now();  
+    //     this.isActive = true;
+    // }
 }

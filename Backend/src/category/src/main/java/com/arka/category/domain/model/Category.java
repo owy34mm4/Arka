@@ -20,7 +20,6 @@ public class Category {
     public static Category create(Long id, String name, List<Long> products) throws InvalidPropertiesGiven {
         validateName(name);
         
-
         return Category.builder()
                         .id(id)
                         .name(name)
@@ -28,12 +27,10 @@ public class Category {
                         .products(null)
                 .build();
 
-    }
-
-    
+    }    
 
     private static void validateName(String nameToCheck) throws InvalidPropertiesGiven{
-        if(nameToCheck.strip().isBlank() || nameToCheck ==null) throw new InvalidPropertiesGiven();
+        if(nameToCheck.strip().isBlank() || nameToCheck ==null) throw new InvalidPropertiesGiven("Category");
     }
 
     

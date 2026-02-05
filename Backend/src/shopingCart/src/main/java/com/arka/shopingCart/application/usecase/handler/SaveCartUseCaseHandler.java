@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.arka.shared.application.ports.out.product.IProductDataPort;
+import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductExternalRepository;
+
 import com.arka.shared.application.ports.out.product.ProductInfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
+import com.arka.shared.domain.exceptions.NotFoundException;
 import com.arka.shopingCart.application.port.in.ISaveCartUseCase;
 import com.arka.shopingCart.application.port.out.IShopingCartRepository;
 import com.arka.shopingCart.application.usecase.command.SaveShopingCartCommand;
@@ -20,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class SaveCartUseCaseHandler implements ISaveCartUseCase{
 
-private final IProductDataPort productRepository;
+private final IProductExternalRepository productRepository;
 
 private final IShopingCartRepository shopingCartRepository;
 
@@ -29,6 +31,8 @@ private final IUserExternalRepository userRepository;
 
     @Override
     public ShopingCart execute(SaveShopingCartCommand cmd) {
+        //Validar Usuario Proporcionado
+        if(!userRepository.existsById(cmd.getOwnerId())){ throw new NotFoundException("User"); }
 
         //Mapemos de ProductIds a ProductsInfos
         List<ProductInfo> productsToOrder = productRepository.findAllById(cmd.getProductsIds());

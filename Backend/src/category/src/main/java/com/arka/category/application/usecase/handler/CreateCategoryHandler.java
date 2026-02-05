@@ -8,8 +8,10 @@ import com.arka.category.application.port.in.ICreateCategoryUseCase;
 import com.arka.category.application.port.out.ICategoryRepository;
 import com.arka.category.application.usecase.command.CreateCategoryCommand;
 
+
+import com.arka.shared.domain.exceptions.BusinessRuleException;
+
 import com.arka.category.domain.model.Category;
-import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
 import lombok.RequiredArgsConstructor;;
@@ -25,12 +27,12 @@ public class CreateCategoryHandler implements ICreateCategoryUseCase {
     private final IUserExternalRepository userRepository;
 
     @Override
-    public Category execute (CreateCategoryCommand cmd) throws InvalidPropertiesGiven{
-        //Validar que el solicitante sea un id Real
-        if (!userRepository.existsById(cmd.getRequesterId())){return Category.builder().build();}
+    public Category execute (CreateCategoryCommand cmd) throws BusinessRuleException{
+        //Validar que el solicitante tenga permisos de acción para este evento
+        if (!userRepository.isAdmin(cmd.getRequesterId())){throw new BusinessRuleException("Permisos Insuficientes para esta acción");}
 
         //Validar existencia antes de intentar crear
-        if (categoryRepository.existsByName(cmd.getName())){return Category.builder().build();}       
+        if (categoryRepository.existsByName(cmd.getName())){throw new BusinessRuleException("Categoria ya exitente");}       
         
         //Dumpeamos de command a modelo
         Category c = cmd.toModel();     

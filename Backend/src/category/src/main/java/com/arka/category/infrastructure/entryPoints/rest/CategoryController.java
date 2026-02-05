@@ -8,6 +8,7 @@ import com.arka.category.infrastructure.entryPoints.rest.dto.useCase.createCateg
 import com.arka.category.infrastructure.entryPoints.rest.dto.useCase.createCategory.ResponseCreateCategory;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,7 @@ public class CategoryController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseCreateCategory> createCategoty( @RequestBody RequestCreateCategory request) throws InvalidPropertiesGiven {
+    public ResponseEntity<ResponseCreateCategory> createCategoty( @RequestBody RequestCreateCategory request) throws InvalidPropertiesGiven, NotFoundException {
        //Generar el command
        var cmd = CreateCategoryCommand.createFromRequest(request);
 

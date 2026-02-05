@@ -1,6 +1,7 @@
 package com.arka.order.application.usecase.command;
 
 
+import com.arka.order.domain.model.Order;
 import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.RegisterOrder.RequestRegisterOrder;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,15 @@ public class RegisterOrderCommand {
         .shopingCartId(request.getShoping_cart_id())
         .build();
             
+    }
 
+    public Order toModel(){
+        return  Order.builder()
+            .id(this.id)
+            .ownerId(this.requesterId)
+            .state(null)
+            .productsIds(null)
+            .products(null)
+        .build();
     }
 }

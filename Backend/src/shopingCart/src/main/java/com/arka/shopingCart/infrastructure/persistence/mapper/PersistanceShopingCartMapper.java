@@ -12,7 +12,7 @@ public class PersistanceShopingCartMapper implements IPersistanceMapper<ShopingC
     
     public ShopingCart toDomain (ShopingCartTable sc){
         if (sc==null) return null;
-        return com.arka.shopingCart.domain.model.ShopingCart.builder()
+        return ShopingCart.builder()
         .id(sc.getId())
         .createdAt(sc.getCreatedAt())
         .ownerId(sc.getOwnerId())

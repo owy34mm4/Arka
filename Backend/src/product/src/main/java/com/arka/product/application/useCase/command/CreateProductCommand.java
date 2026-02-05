@@ -14,22 +14,18 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateProductCommand {
     
-    Long requester_id;
-    
+    Long requesterId;
     Long id;
-
     String name;
-
     String description;
-   
-    Integer price;
-   
+    Integer price;  
     Integer stock;
     
     List<Long> categories;
 
     public static CreateProductCommand createFromRequest(RequestCreateProduct request){
         return CreateProductCommand.builder()
+            .requesterId(request.getRequester_id())
             .id(null)
             .name(request.getName())
             .description(request.getDescription())

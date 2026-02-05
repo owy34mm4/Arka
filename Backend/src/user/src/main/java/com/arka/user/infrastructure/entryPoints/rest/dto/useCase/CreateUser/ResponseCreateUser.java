@@ -1,5 +1,6 @@
 package com.arka.user.infrastructure.entryPoints.rest.dto.useCase.CreateUser;
 
+
 import com.arka.user.domain.model.User;
 
 import lombok.Builder;
@@ -13,9 +14,11 @@ public class ResponseCreateUser {
     private String lastName;
     private String firstSurname;
     private String lastSurname;
+    private String email;
     private String username;
     private String password;    
     private boolean isActive;
+    private String role;
     private String message;
 
 
@@ -26,9 +29,11 @@ public class ResponseCreateUser {
             .lastName(model.getLastName())
             .firstSurname(model.getFirstSurname())
             .lastSurname(model.getLastSurname())
+            .email(model.getEmail())
             .username(model.getUsername())
             .password(model.getPassword())
             .isActive(model.isActive())
+            .role(model.getRole().toString())
             .message(msg)
 
         .build();

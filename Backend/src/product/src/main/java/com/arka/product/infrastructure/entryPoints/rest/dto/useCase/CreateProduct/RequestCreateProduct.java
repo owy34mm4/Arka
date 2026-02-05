@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 public class RequestCreateProduct {
+    Long requester_id;
     @NotBlank(message = "Name cannot be blank")
     String name;
     @NotBlank(message = "Description cannot be blank")

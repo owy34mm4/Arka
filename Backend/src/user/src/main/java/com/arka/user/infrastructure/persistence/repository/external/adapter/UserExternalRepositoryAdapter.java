@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.arka.shared.application.ports.out.user.Roleinfo;
+
 import com.arka.shared.application.ports.out.user.UserInfo;
+import com.arka.shared.domain.exceptions.NotFoundException;
 import com.arka.user.domain.model.User;
 import com.arka.user.infrastructure.persistence.entity.UserTable;
+import com.arka.user.infrastructure.persistence.entity.enums.Role;
 import com.arka.user.infrastructure.persistence.mapper.ExternalUserMapper;
 import com.arka.user.infrastructure.persistence.mapper.PersistenceUserMapper;
 import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
@@ -30,10 +32,10 @@ public class UserExternalRepositoryAdapter implements IUserExternalRepository{
     }
 
     @Override
-    public UserInfo findById(Long Id) {
+    public UserInfo findById(Long Id) throws NotFoundException {
         return externalUserMapper.toInfo(
             persistanceUserMapper.toDomain(
-                userRepository.findById(Id).get()
+                userRepository.findById(Id).orElseThrow(()-> new NotFoundException("User"))
             )
         );
     }
@@ -50,24 +52,24 @@ public class UserExternalRepositoryAdapter implements IUserExternalRepository{
     }
 
     @Override
-    public boolean isAdmin(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isAdmin'");
+    public boolean isAdmin(Long id){
+       UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
+       Role entitytRol = entity.getRole();
+       return entitytRol==Role.Administrador;
     }
 
     @Override
-    public boolean isClient(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isClient'");
+    public boolean isClient(Long id){
+        UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
+        Role entitytRol = entity.getRole();
+        return entitytRol==Role.Cliente;
     }
 
     @Override
-    public boolean isEmploye(Long id) {
-        UserTable e = userRepository.findById(id).get();
-        return true;
-        
-        //if (e.getRole()==Roleinfo.Empleado){return true;};
-        
+    public boolean isEmploye(Long id){
+        UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
+        Role entitytRol = entity.getRole();
+        return entitytRol==Role.Empleado;
     }
 
 
