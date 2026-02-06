@@ -3,9 +3,14 @@ package com.arka.order.infrastructure.entryPoints.rest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.arka.order.application.port.in.IModifyOrderUseCase;
+import com.arka.order.application.port.in.IRegisterOrderUseCase;
+import com.arka.order.application.usecase.command.ModifyOrderCommand;
 import com.arka.order.application.usecase.command.RegisterOrderCommand;
-import com.arka.order.application.usecase.handler.RegisterOrderHandler;
+
 import com.arka.order.domain.model.Order;
+import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.ModifyOrder.RequestModifyOrder;
+import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.ModifyOrder.ResponseModifyOrder;
 import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.RegisterOrder.RequestRegisterOrder;
 import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.RegisterOrder.ResponseRegisterOrder;
 
@@ -14,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
+
+
 
 
 @RestController
@@ -21,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final  RegisterOrderHandler registerOrderUseCase;
+    private final  IRegisterOrderUseCase registerOrderUseCase;
+
+    private final IModifyOrderUseCase modifyOrderUseCase;
 
     @PostMapping("/register")
     public ResponseEntity<ResponseRegisterOrder> registerOrder(@RequestBody RequestRegisterOrder request) {
@@ -30,12 +40,20 @@ public class OrderController {
         Order orderResult =registerOrderUseCase.execute(cmd);
         
         //CrearResponse 
-
-        var response = ResponseRegisterOrder.createFromModel(orderResult, "Exito");
+        ResponseRegisterOrder response = ResponseRegisterOrder.createFromModel(orderResult, "Exito");
 
         return ResponseEntity.ok(response);
+    }
 
-        
+    @PutMapping("/modify")
+    public ResponseEntity<ResponseModifyOrder> modifyOrder( @RequestBody RequestModifyOrder request) {
+        ModifyOrderCommand cmd = ModifyOrderCommand.createFromRequest(request);
+
+        Order orderResult = modifyOrderUseCase.execute(cmd);
+
+        ResponseModifyOrder response = ResponseModifyOrder.createFromModel(orderResult, "Orden Actualizada con Exito");
+
+        return ResponseEntity.ok(response);
     }
     
     

@@ -109,7 +109,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
                     ProductInfo pInfo = productRepository.findById(productId);
                     Product p = externalProductMapper.toDomain(pInfo);
                     //Validacion en dominio
-                    p.setStock(pInfo.getStock() - Math.toIntExact(quantity) );
+                    p.updateStock(pInfo.getStock() - Math.toIntExact(quantity) );
                     pInfo = externalProductMapper.toInfo(p);
 
                     //Persistir(Actualizar Stock) - Persistir ProductHistory Record
@@ -137,7 +137,8 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
         //Retornar
 
             //Preparar inyeccion para el retorno del objeto
-            o.setProducts(scModel.getProducts());
+            o.setProducts(productRepository.findAllById(scModel.getProductsIds()) );
+            o.setOwner(userRepository.findById(cmd.getRequesterId()));
 
             return o;
 

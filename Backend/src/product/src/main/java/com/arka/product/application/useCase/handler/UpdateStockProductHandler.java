@@ -51,7 +51,7 @@ public class UpdateStockProductHandler implements IUpdateStocktUseCase{
         //Preparar Respuesta
         
         //Checkeamos la instancia
-        modelToModify.checkIstance();
+        // modelToModify.checkIstance();
 
         //Guardar
         Product savedModel = productRepository.save(modelToModify);
@@ -73,6 +73,7 @@ public class UpdateStockProductHandler implements IUpdateStocktUseCase{
             
             //Persistir -- No retorna. Solo persiste
                 productHisotryRepository.save(pH);
+
 
 
         return savedModel;

@@ -25,24 +25,4 @@ public class Order {
     List<Long> productsIds;
     List<ProductInfo> products;
 
-    
-    public void checkInstance(){
-        validateOwnership();
-    }
-
-    private void validateOwnership(){
-         
-    }
-
-    private void validateProductsStock(List<ProductInfo> productsToValidate){
-
-    }
-
-    public void inyectProductsInOrder(List<ProductInfo> productsToInyect){
-        validateProductsStock(productsToInyect);
-
-        this.setProducts(productsToInyect);
-    }
-
-
 }

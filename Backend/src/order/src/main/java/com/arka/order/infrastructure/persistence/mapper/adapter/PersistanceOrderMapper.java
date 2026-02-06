@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Component;
 
 import com.arka.order.domain.model.Order;
+import com.arka.order.domain.model.enums.OrderState;
 import com.arka.order.infrastructure.persistence.entity.OrderTable;
 
 @Component
@@ -16,6 +17,7 @@ public class PersistanceOrderMapper {
         return  com.arka.order.domain.model.Order.builder()
                 .id(o.getId())
                 .ownerId(o.getOwnerId())
+                .state(OrderState.valueOf(o.getState().name()))
                 .productsIds(new ArrayList<>(o.getProductsIds()))
                 .build();
     }
@@ -25,6 +27,7 @@ public class PersistanceOrderMapper {
         return OrderTable.builder()
         .id(o.getId())
         .ownerId(o.getOwnerId())
+        .state(com.arka.order.infrastructure.persistence.entity.enums.OrderState.valueOf(o.getState().name()))
         .productsIds(new ArrayList<>(o.getProductsIds()))
         .build();
 

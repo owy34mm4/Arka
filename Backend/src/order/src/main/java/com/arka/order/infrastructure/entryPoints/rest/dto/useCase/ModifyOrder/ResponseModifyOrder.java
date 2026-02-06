@@ -1,21 +1,18 @@
-package com.arka.order.infrastructure.entryPoints.rest.dto.useCase.RegisterOrder;
-
-
+package com.arka.order.infrastructure.entryPoints.rest.dto.useCase.ModifyOrder;
 
 import java.util.List;
 
 import com.arka.order.domain.model.Order;
 import com.arka.order.domain.model.enums.OrderState;
+
 import com.arka.shared.application.ports.out.product.ProductInfo;
-
-
 
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
-public class ResponseRegisterOrder {
+@Builder
+public class ResponseModifyOrder {
     Long id;
     Long owner_id;
     String owner_username;
@@ -23,8 +20,8 @@ public class ResponseRegisterOrder {
     List<ProductInfo> products;
     String message;
 
-    public static ResponseRegisterOrder createFromModel(Order o, String msg){
-        return ResponseRegisterOrder.builder()
+    public static ResponseModifyOrder createFromModel(Order o, String msg){
+        return ResponseModifyOrder.builder()
         .id(o.getId())
         .owner_id(o.getOwner().getId())
         .owner_username(o.getOwner().getUsername())
