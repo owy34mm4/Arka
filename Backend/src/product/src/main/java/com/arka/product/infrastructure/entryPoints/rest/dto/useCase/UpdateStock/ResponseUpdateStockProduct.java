@@ -20,6 +20,7 @@ public class ResponseUpdateStockProduct {
     String description;
     Integer stock;
     Integer price;
+    String currency;
     List<CategoryInfo> categories;
     String message;
 
@@ -30,6 +31,7 @@ public class ResponseUpdateStockProduct {
             .description(model.getDescription().getValue())
             .stock(model.getStock().getValue())
             .price(model.getPrice().getValue())
+            .currency(model.getPrice().getCurrency())
             .categories(model.getCategories())
             .message(message)
         .build();

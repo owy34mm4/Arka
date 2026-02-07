@@ -14,6 +14,8 @@ public class ResponseCreateProduct {
     Long id;
     String name;
     String description;
+    Integer stock;
+    String currency;
     Integer price;
     List<CategoryInfo> categories;
     String message;
@@ -23,7 +25,9 @@ public class ResponseCreateProduct {
             .id(model.getId())
             .name(model.getName().getValue())
             .description(model.getDescription().getValue())
+            .stock(model.getStock().getValue())
             .price(model.getPrice().getValue())
+            .currency(model.getPrice().getCurrency())
             .categories(model.getCategories())
             .message(message)
         .build();
