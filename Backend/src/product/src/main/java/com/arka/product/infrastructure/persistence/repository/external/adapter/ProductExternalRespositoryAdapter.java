@@ -36,10 +36,12 @@ public class ProductExternalRespositoryAdapter implements IProductExternalReposi
 
         return ProductInfo.create(
             productModel.getId(),
-            productModel.getName(),
-            productModel.getDescription(),
-            productModel.getPrice(),
-            productModel.getStock()
+            productModel.getName().getValue(),
+            productModel.getDescription().getValue(),
+            productModel.getPrice().getValue(),
+            productModel.getPrice().getCurrency(),
+            productModel.getStock().getValue(),
+            productModel.getCategoriesIds().getValues()
         );
     }
 
@@ -48,7 +50,7 @@ public class ProductExternalRespositoryAdapter implements IProductExternalReposi
        return productsIds.stream()
             .filter(pId -> pId!=null)
             .map(pId -> productRepository.findById(pId).orElseThrow(()-> new NotFoundException("Product")))
-            .map(p -> ProductInfo.create(p.getId(), p.getName(), p.getDescription(), p.getPrice(), p.getStock()))
+            .map(p -> ProductInfo.create(p.getId(), p.getName(), p.getDescription(), p.getPrice(),p.getCurrency(), p.getStock(), p.getCategoriesId()))
             .toList()
             ;
     }

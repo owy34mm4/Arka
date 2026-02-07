@@ -18,6 +18,8 @@ public class ProductHisotryInfo {
 
     private Integer price;
 
+    private String currency;
+
     private Integer stock;
 
     private Date createdAt;

@@ -12,13 +12,15 @@ public class ErrorResponse {
     private String message;
     private LocalDateTime timeStamp;
     private String path;
+    private Exception exception;
 
-    public static ErrorResponse of(String code, String message, String path) {  
+    public static ErrorResponse of(String code, String message, String path, Exception exception) {  
         return ErrorResponse.builder()  
             .statusCode(code)  
             .message(message)  
             .timeStamp(LocalDateTime.now())  
             .path(path)  
+            .exception(exception)
             .build();  
     }
 

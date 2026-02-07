@@ -3,6 +3,11 @@ package com.arka.product.domain.model;
 import java.util.Date;
 import java.util.List;
 
+import com.arka.product.domain.valueObjects.ProductCategoriesIds;
+import com.arka.product.domain.valueObjects.ProductDescription;
+import com.arka.product.domain.valueObjects.ProductName;
+import com.arka.product.domain.valueObjects.ProductPrice;
+import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
 
@@ -21,17 +26,17 @@ public class ProductHistory {
     
     private Long id;
 
-    private String name;
+    private ProductName name;
 
-    private String description;
+    private ProductDescription description;
 
-    private Integer price;
+    private ProductPrice price;
 
-    private Integer stock;
+    private ProductStock stock;
 
     private List<CategoryInfo> categories;
 
-    private List<Long> categoriesIds;
+    private ProductCategoriesIds categoriesIds;
 
     private List<Long> shopingCartsIds;
 

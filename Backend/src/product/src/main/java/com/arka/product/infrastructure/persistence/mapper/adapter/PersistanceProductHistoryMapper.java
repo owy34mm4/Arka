@@ -3,6 +3,10 @@ package com.arka.product.infrastructure.persistence.mapper.adapter;
 import org.springframework.stereotype.Component;
 
 import com.arka.product.domain.model.ProductHistory;
+import com.arka.product.domain.valueObjects.ProductDescription;
+import com.arka.product.domain.valueObjects.ProductName;
+import com.arka.product.domain.valueObjects.ProductPrice;
+import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.product.infrastructure.persistence.entity.ProductHistoryTable;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMapper;
 
@@ -15,10 +19,10 @@ public class PersistanceProductHistoryMapper implements IPersistanceMapper< Prod
         if (entity ==null) return null;
         return ProductHistory.builder()
             .id(entity.getId())
-            .name(entity.getName())
-            .description(entity.getDescription())
-            .price(entity.getPrice())
-            .stock(entity.getStock())
+            .name(new ProductName(entity.getName()))
+            .description(new ProductDescription(entity.getDescription()))
+            .price(new ProductPrice(entity.getPrice() , entity.getCurrency()))
+            .stock(new ProductStock(entity.getStock()))
             .createdAt(entity.getCreatedAt())
             .createdById(entity.getCreatedById())
             .modifiedAt(entity.getModifiedAt())
@@ -32,10 +36,11 @@ public class PersistanceProductHistoryMapper implements IPersistanceMapper< Prod
         if (model ==null) return null;
         return ProductHistoryTable.builder()
             .id(model.getId())
-            .name(model.getName())
-            .description(model.getDescription())
-            .price(model.getPrice())
-            .stock(model.getStock())
+            .name(model.getName().getValue())
+            .description(model.getDescription().getValue())
+            .price(model.getPrice().getValue())
+            .currency(model.getPrice().getCurrency())
+            .stock(model.getStock().getValue())
             .createdAt(model.getCreatedAt())
             .createdById(model.getCreatedById())
             .modifiedAt(model.getModifiedAt())

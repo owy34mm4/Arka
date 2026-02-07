@@ -21,9 +21,12 @@ public class GlobalExceptionHandler {
         InvalidPropertiesGiven ex,
         HttpServletRequest request
     ){
-        ErrorResponse error = ErrorResponse.of(ex.getCode(),
-        ex.getMessage(),
-        request.getRequestURI());
+        ErrorResponse error = ErrorResponse.of(
+            ex.getCode(),
+            ex.getMessage(),
+            request.getRequestURI(),
+            ex
+            );
 
         return ResponseEntity.status(HttpStatusCode.valueOf(426)).body(error);
     }
@@ -38,7 +41,9 @@ public class GlobalExceptionHandler {
         ErrorResponse error = ErrorResponse.of(  
             ex.getCode(),  
             ex.getMessage(),  
-            request.getRequestURI()  
+            request.getRequestURI(),
+            ex
+
         );  
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);  
     }  
@@ -53,7 +58,8 @@ public class GlobalExceptionHandler {
         ErrorResponse error = ErrorResponse.of(  
             ex.getCode(),  
             ex.getMessage(),  
-            request.getRequestURI()  
+            request.getRequestURI(),
+            ex
         );  
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);  
     }  
@@ -68,7 +74,8 @@ public class GlobalExceptionHandler {
         ErrorResponse error = ErrorResponse.of(  
             "INTERNAL_ERROR",  
             "Error interno del servidor",  
-            request.getRequestURI()  
+            request.getRequestURI(),
+            ex
         );  
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);  
     }

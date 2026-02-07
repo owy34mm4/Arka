@@ -2,6 +2,12 @@ package com.arka.product.infrastructure.persistence.mapper.adapter;
 
 import org.springframework.stereotype.Component;
 
+import com.arka.product.domain.model.Product;
+import com.arka.product.domain.valueObjects.ProductCategoriesIds;
+import com.arka.product.domain.valueObjects.ProductDescription;
+import com.arka.product.domain.valueObjects.ProductName;
+import com.arka.product.domain.valueObjects.ProductPrice;
+import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.product.infrastructure.persistence.entity.ProductTable;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMapper;
 
@@ -9,31 +15,32 @@ import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMap
 
 
 @Component
-public class PersistanceProductMapper implements IPersistanceMapper < com.arka.product.domain.model.Product , ProductTable > {
+public class PersistanceProductMapper implements IPersistanceMapper < Product , ProductTable > {
 
-    public ProductTable toEntity(com.arka.product.domain.model.Product p){
+    public ProductTable toEntity(Product p){
         if (p==null) return null;
-        return com.arka.product.infrastructure.persistence.entity.ProductTable.builder()
+        return ProductTable.builder()
                 .id(p.getId())
-                .name(p.getName())
-                .description(p.getDescription())
-                .price(p.getPrice())
-                .stock(p.getStock())
-                .categoriesId(p.getCategoriesIds())
+                .name(p.getName().getValue())
+                .description(p.getDescription().getValue())
+                .price(p.getPrice().getValue())
+                .currency(p.getPrice().getCurrency())
+                .stock(p.getStock().getValue())
+                .categoriesId(p.getCategoriesIds().getValues())
             .build();
     }
 
-    public  com.arka.product.domain.model.Product toDomain (ProductTable p){
+    public  Product toDomain (ProductTable p){
 
         if (p==null) return null;
 
-        return com.arka.product.domain.model.Product.builder()
+        return Product.builder()
         .id(p.getId())
-        .name(p.getName())
-        .description(p.getDescription())
-        .price(p.getPrice())
-        .stock(p.getStock())
-        .categoriesIds(p.getCategoriesId())
+        .name(new ProductName(p.getName()))
+        .description(new ProductDescription(p.getDescription()))
+        .price(new ProductPrice(p.getPrice(), p.getCurrency()) )
+        .stock(new ProductStock(p.getStock()))
+        .categoriesIds(new ProductCategoriesIds(p.getCategoriesId()))
         .shopingCartsIds(null)
         .ordersIds(null)
         .build();

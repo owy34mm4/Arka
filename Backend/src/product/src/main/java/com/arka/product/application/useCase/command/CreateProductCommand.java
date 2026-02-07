@@ -3,6 +3,11 @@ package com.arka.product.application.useCase.command;
 import java.util.List;
 
 import com.arka.product.domain.model.Product;
+import com.arka.product.domain.valueObjects.ProductCategoriesIds;
+import com.arka.product.domain.valueObjects.ProductDescription;
+import com.arka.product.domain.valueObjects.ProductName;
+import com.arka.product.domain.valueObjects.ProductPrice;
+import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.product.infrastructure.entryPoints.rest.dto.useCase.CreateProduct.RequestCreateProduct;
 
 import lombok.AllArgsConstructor;
@@ -38,11 +43,11 @@ public class CreateProductCommand {
     public Product toModel(){
         return Product.builder()
         .id(this.id)
-        .name(this.name)
-        .description(this.description)
-        .price(this.price)
-        .stock(this.stock)
-        .categoriesIds(this.categories)
+        .name(new ProductName(this.name))
+        .description(new ProductDescription(this.description))
+        .price(new ProductPrice(this.price, "cop"))
+        .stock(new ProductStock(this.stock))
+        .categoriesIds(new ProductCategoriesIds(this.categories))
         .build();
     }
 }

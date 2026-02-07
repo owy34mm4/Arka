@@ -33,6 +33,8 @@ public class ProductHistoryTable {
 
     private Integer price;
 
+    private String currency;
+
     private Integer stock;
 
     private Date createdAt;

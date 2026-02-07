@@ -21,9 +21,9 @@ public class ResponseCreateProduct {
     public static ResponseCreateProduct createFromModel(Product model, String message){
         return ResponseCreateProduct.builder()
             .id(model.getId())
-            .name(model.getName())
-            .description(model.getDescription())
-            .price(model.getPrice())
+            .name(model.getName().getValue())
+            .description(model.getDescription().getValue())
+            .price(model.getPrice().getValue())
             .categories(model.getCategories())
             .message(message)
         .build();

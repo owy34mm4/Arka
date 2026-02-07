@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 
 import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
-import com.arka.product.application.port.in.IUpdateStocktUseCase;
+import com.arka.product.application.port.in.IUpdateStockUseCase;
+
 import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
 import com.arka.product.application.port.out.IProductRepositoryPort;
 import com.arka.product.application.useCase.command.UpdateProductCommand;
 import com.arka.product.domain.model.Product;
 import com.arka.product.domain.model.ProductHistory;
+import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
@@ -25,7 +27,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class UpdateStockProductHandler implements IUpdateStocktUseCase{
+public class UpdateStockProductHandler implements IUpdateStockUseCase{
 
     private final ICategoryExternalRepository categoryRepository;
 
@@ -41,40 +43,35 @@ public class UpdateStockProductHandler implements IUpdateStocktUseCase{
         //Validar Permisos de Accion
             if( !( userRepository.isAdmin(cmd.getRequesterId()) || userRepository.isEmploye(cmd.getRequesterId()) ) ){throw new BusinessRuleException("No permitido");}
 
-
         //Obtenemos la entidad que vamos a modificar
         Product modelToModify = productRepository.findById(cmd.getProductId());
 
-        //Actualizamos el stock (Validacion en Dominio)
-        modelToModify.updateStock(cmd.getNewStock());
-
-        //Preparar Respuesta
+        //Actualizamos el stock (Validacion en Dominio-ValueObject)
+        modelToModify.setStock(new ProductStock(cmd.getNewStock()));
         
-        //Checkeamos la instancia
-        // modelToModify.checkIstance();
 
-        //Guardar
-        Product savedModel = productRepository.save(modelToModify);
+        //Persistir
+
+            //Guardar Entidad
+            Product savedModel = productRepository.save(modelToModify);       
+
+            //History Record
+                ProductHistory pH = savedModel.toProductHistory();
+
+                //Setear MetaData
+                    //TimeStamp Modificacion
+                    pH.setModifiedAt(Date.from(Instant.now()));
+                    //Flag de Responsabilidad
+                    pH.setModifiedById(cmd.getRequesterId());
+                
+                //Persistir ProducthistoryRecord -- No retorna. Solo persiste
+                    productHisotryRepository.save(pH);
 
         //Buscar categorias, con su propio repositorio
-        List<CategoryInfo> categories = categoryRepository.findAllById(modelToModify.getCategoriesIds());
+        List<CategoryInfo> categories = categoryRepository.findAllById(modelToModify.getCategoriesIds().getValues());
 
         //Inyectamos el CategoryInfo a model.categories
         savedModel.inyectCategories(categories);
-
-        //History Record
-            ProductHistory pH = savedModel.toProductHistory();
-
-            //Setear MetaData
-                //TimeStamp Modificacion
-                pH.setModifiedAt(Date.from(Instant.now()));
-                //Flag de Responsabilidad
-                pH.setModifiedById(cmd.getRequesterId());
-            
-            //Persistir -- No retorna. Solo persiste
-                productHisotryRepository.save(pH);
-
-
 
         return savedModel;
     }

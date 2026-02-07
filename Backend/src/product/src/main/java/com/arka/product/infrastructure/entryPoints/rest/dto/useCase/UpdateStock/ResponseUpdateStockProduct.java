@@ -26,9 +26,10 @@ public class ResponseUpdateStockProduct {
     public static ResponseUpdateStockProduct createFromModel(Product model, String message){
         return ResponseUpdateStockProduct.builder()
             .id(model.getId())
-            .name(model.getName())
-            .description(model.getDescription())
-            .price(model.getPrice())
+            .name(model.getName().getValue())
+            .description(model.getDescription().getValue())
+            .stock(model.getStock().getValue())
+            .price(model.getPrice().getValue())
             .categories(model.getCategories())
             .message(message)
         .build();

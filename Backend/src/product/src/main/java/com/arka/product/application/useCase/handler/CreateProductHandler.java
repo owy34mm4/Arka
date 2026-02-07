@@ -43,37 +43,38 @@ public class CreateProductHandler implements ICreateProductUseCase {
     @Override
     public Product execute(CreateProductCommand cmd) throws BusinessRuleException {
         //Validar privilegios de accion -> Min empleado
-
             //Leer ley de Morgan en operaciones booleanas
             if(!userRepository.isEmploye(cmd.getRequesterId()) && !userRepository.isAdmin(cmd.getRequesterId())){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
 
-        //Obtener las categorias de su repositorio
-        List <CategoryInfo> categories = categoryRepository.findAllById(cmd.getCategories());
-        
         //Generamos modelo 
         Product model = cmd.toModel();
+
+        //Buscar Categorias - Criterio Aceptacion
+            //Obtener las categorias de su repositorio -- Error 404 si no existe
+            List <CategoryInfo> categories = categoryRepository.findAllById(cmd.getCategories());
         
-        //Checkear el modelo
-        model.checkIstance();
+        //Persistir
+      
+            //Guardamos Producto
+            model = productRepository.save(model);
 
-        //guardamos Producto
-        model = productRepository.save(model);
+            //History Record
+                ProductHistory pH = model.toProductHistory();
+                
+                //Sets De MetaData
 
-        //Inyectamos Categorias(Validacion en Dominio)
-        model.inyectCategories(categories);
-        
-        //History Record
-            ProductHistory pH = model.toProductHistory();
+                    //TimeStamp de Creacion
+                    pH.setCreatedAt(Date.from(Instant.now()));
+                    //Marca de Responsabilidad
+                    pH.setCreatedById(cmd.getRequesterId());
+                
+                //Guardar -- No retorna nada. Solo persiste para Log
+                    productHistoryRepository.save(pH);
+
+        //Inyectar para respuesta 
             
-            //Sets De MetaData
-
-                //TimeStamp de Creacion
-                pH.setCreatedAt(Date.from(Instant.now()));
-                //Marca de Responsabilidad
-                pH.setCreatedById(cmd.getRequesterId());
-            
-            //Guardar -- No retorna nada. Solo persiste para Log
-                productHistoryRepository.save(pH);
+            //Inyectamos Categorias(Validacion en Dominio)
+            model.inyectCategories(categories);
         
         return model;
         

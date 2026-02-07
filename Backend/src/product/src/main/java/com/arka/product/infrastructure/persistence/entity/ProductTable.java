@@ -41,6 +41,8 @@ public class ProductTable{
 
     private Integer price;
 
+    private String currency;
+
     private Integer stock;
 
    @ElementCollection
@@ -65,8 +67,6 @@ public class ProductTable{
     @Column(name = "order_id")  
     private List<Long> ordersIds;
 
-    @Column(name = "modified_by")
-    private Long modifiedById;
 
    
     
