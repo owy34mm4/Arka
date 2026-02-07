@@ -67,7 +67,7 @@ public class ModifyOrderHanlder implements IModifyOrderUseCase {
             //Contar ocurrencias de cada ID y almacenar en estructuras de datos  // Resultado: {productId1=3, productId2=1, productId5=2}
 
                 //Contar la cantidad de productos en la Orden Vieja
-                Map<Long, Long> oldOrderCountById = newOrder.getProductsIds().stream()  
+                Map<Long, Long> oldOrderCountById = o.getProductsIds().stream()  
                     .collect(Collectors.groupingBy(  
                                 Function.identity(),  
                                 Collectors.counting()  
@@ -92,7 +92,6 @@ public class ModifyOrderHanlder implements IModifyOrderUseCase {
         // Actualizar Orden - Gestionar cambios en stock 
 
             
-            
             //Persistir
 
                 //Liberar Stock antes de Recapturar con la Orden Nueva
@@ -101,8 +100,11 @@ public class ModifyOrderHanlder implements IModifyOrderUseCase {
                     p.setStock(p.getStock() + Math.toIntExact(quantity) );
                     //Guardar nuevo stock
                     p = productRepository.save(p);
-
-                    //ProductHistory Record
+                });
+                    
+                    //Persistir ProductHistory Record
+                    oldOrderCountById.forEach((productId, quantity) ->{
+                        ProductInfo p = productRepository.findById(productId);
                         Product product = externalProductMapper.toDomain(p);
                         ProductHisotryInfo pHI= externalProductHisotoryMapper.toInfo(product.toProductHistory() ) ;
                         //Setear metadatada necesaria
@@ -112,13 +114,42 @@ public class ModifyOrderHanlder implements IModifyOrderUseCase {
                             pHI.setModifiedById(cmd.getRequesterId());
 
                             productHistoryExternalRepository.save(pHI);
-
-                });
+                    });
+                       
 
                 //Insertar el nuevo detalle de productos a la instancia de orden vieja
                 o.setProductsIds(newOrder.getProductsIds());
                 //Actualizar Orden
                 o = orderRepository.save(o);
+                //Descontar stock nuevo en product
+
+                    //Contar la cantidad de productos en la Orden Nueva
+                        Map<Long, Long> udpatedOrderCountById = o.getProductsIds().stream()  
+                            .collect(Collectors.groupingBy(  
+                                        Function.identity(),  
+                                        Collectors.counting()  
+                                    ));
+
+                    //Recorrer estructura que contiene la informacion que necesitamos = pID:quantityOrdered
+                     udpatedOrderCountById.forEach((productId, quantity)->{
+                            //Logica de Descuento de Stock
+                                ProductInfo p = productRepository.findById(productId);
+                                p.setStock(p.getStock() - Math.toIntExact(quantity));
+                                productRepository.save(p);
+                                
+                                
+                            //Persistir Product History   
+                                Product product = externalProductMapper.toDomain(p);
+                                ProductHisotryInfo pHI = externalProductHisotoryMapper.toInfo(product.toProductHistory());
+                                //Setear metadatada necesaria
+                                    //TomeStamp de modificacion
+                                    pHI.setModifiedAt(Date.from(Instant.now()));
+                                    //Flag de Responsabilidad
+                                    pHI.setModifiedById(cmd.getRequesterId());
+
+                            productHistoryExternalRepository.save(pHI);
+                        
+                        });
 
 
                 //Inyeccion de Objetos internos de Orden
