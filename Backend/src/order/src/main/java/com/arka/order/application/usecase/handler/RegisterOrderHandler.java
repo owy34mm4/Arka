@@ -21,6 +21,7 @@ import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProduc
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductMapper;
 import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductExternalRepository;
 import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductHistoryExternalRepository;
+import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
@@ -55,13 +56,15 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
     private final ExternalProductHistoryMapper externalProductHistoryMapper;
 
+    private final IEmailNotificationPort emailPort;
+
     @Override
     public Order execute(RegisterOrderCommand cmd) {
         //Validar usuario
             if (!userRepository.existsById(cmd.getRequesterId())){ throw new BusinessRuleException("Solicitante Invalido");}
 
         //Validar propiedad del carrito
-            System.out.println(1);
+            
             //Obtener el objeto ShopingCart ->  (Clonar, apagar flag de Ordenada, Guardar)
             ShopingCartInfo sc = shopingCartRepository.findById(cmd.getShopingCartId());
 
@@ -73,7 +76,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
 
         //Validar disponibilidad del Stock 
-            System.out.println(2);
+            
             //Contar ocurrencias de cada ID  // Resultado: {productId1=3, productId2=1, productId5=2}
             Map<Long, Long> countById = sc.getProductsIds().stream()  
                 .collect(Collectors.groupingBy(  
@@ -89,7 +92,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
 
         //Crear Dominio 
-            System.out.println(3);
+            
             //Dump del Comand a Model
             Order o = cmd.toModel();
             //Seteos de data del UseCase
@@ -103,7 +106,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
             
         //Reducir Stock > Reducir el Stock de los productos ( Restar la cantidad ordenada al stock)
-            System.out.println(4);
+            
             //Logica de Implementacion
                 countById.forEach((productId,quantity)->{
                     ProductInfo pInfo = productRepository.findById(productId);
@@ -127,18 +130,22 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
                 });
             
         //Persistir
-            System.out.println(5);
+            
             //Guardamos carrito con Flag modificada -> Actualizamos registro viejo
             shopingCartRepository.save(scModel);
                 
             //Guardamos la orden
             o = orderRepository.save(o);
-
+        
+            
         //Retornar
 
             //Preparar inyeccion para el retorno del objeto
             o.setProducts(productRepository.findAllById(scModel.getProductsIds()) );
             o.setOwner(userRepository.findById(cmd.getRequesterId()));
+
+            //Notificar al cliente
+            emailPort.send(o.getOwner().getEmail(), "OrdenRegistrada", "La orden # "+o.getId()+" fue creada");
 
             return o;
 

@@ -3,7 +3,7 @@ package com.arka.user.infrastructure.persistence.mapper;
 import org.springframework.stereotype.Component;
 
 import com.arka.shared.application.ports.out.user.UserInfo;
-import com.arka.shared.infrastructure.externalMapper.gateway.IExternalMapper;
+import com.arka.shared.infrastructure.persistence.mapper.gateway.IExternalMapper;
 import com.arka.user.domain.model.User;
 
 import lombok.RequiredArgsConstructor;

@@ -15,8 +15,10 @@ Backend/src/HELP.md
 Backend/src/.gradle
 Backend/src/build/
 Backend/src/!gradle/wrapper/gradle-wrapper.jar
-Backend/src/!**/src/main/**/build/
-Backend/src/!**/src/test/**/build/Backend/src
+
+Backend/src/!**/src/!main/**/build/
+Backend/src/!**/src/!test/**/build/
+
 Backend/src/### STS ###
 Backend/src/.apt_generated
 Backend/src/.classpath
@@ -27,7 +29,9 @@ Backend/src/.springBeans
 Backend/src/.sts4-cache
 Backend/src/bin/
 Backend/src/!**/src/main/**/bin/
+Backend/src/!**/src/main/**/build/
 Backend/src/!**/src/test/**/bin/
+Backend/src/!**/src/test/**/build/
 
 Backend/src/### IntelliJ IDEA ###
 Backend/src/.idea
@@ -35,8 +39,8 @@ Backend/src/*.iws
 Backend/src/*.iml
 Backend/src/*.ipr
 Backend/src/out/
-Backend/src/!**/src/main/**/out/
-Backend/src/!**/src/test/**/out/
+Backend/src/!**/src/!main/**/out/
+Backend/src/!**/src/!test/**/out/
 
 Backend/src/### NetBeans ###
 Backend/src//nbproject/private/
@@ -51,42 +55,3 @@ Backend/src/.vscode
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
-frontend/node_modules
-frontend/.pnp
-frontend/.pnp.*
-frontend/.yarn/*
-frontend/!.yarn/patches
-frontend/!.yarn/plugins
-frontend/!.yarn/releases
-frontend/!.yarn/versions
-
-frontend/# testing
-frontend/coverage
-
-frontend/# next.js
-frontend/.next/
-frontend/out/
-
-frontend/# production
-frontend/build
-
-frontend/# misc
-frontend/.DS_Store
-frontend/*.pem
-
-frontend/# debug
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-frontend/.pnpm-debug.log*
-
-frontend/# env files (can opt-in for committing if needed)
-frontend/.env*
-
-frontend/# vercel
-frontend/.vercel
-
-frontend/# typescript
-frontend/*.tsbuildinfo
-frontend/next-env.d.ts

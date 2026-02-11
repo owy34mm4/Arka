@@ -1,0 +1,26 @@
+FROM eclipse-temurin:21-jdk AS builder
+
+ENV TZ=America/Bogota
+
+WORKDIR /workspace
+
+COPY Backend/src .
+
+EXPOSE 8080
+
+
+RUN chmod +x gradlew
+RUN ./gradlew bootstrap:bootJar
+
+FROM amazoncorretto:21-alpine AS runner
+
+WORKDIR /app
+
+COPY --from=builder /workspace/bootstrap/build/libs/*.jar app.jar
+
+EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
+
+
+

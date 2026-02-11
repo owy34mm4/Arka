@@ -8,7 +8,7 @@ import com.arka.product.domain.valueObjects.ProductName;
 import com.arka.product.domain.valueObjects.ProductPrice;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
-import com.arka.shared.infrastructure.externalMapper.gateway.IExternalMapper;
+import com.arka.shared.infrastructure.persistence.mapper.gateway.IExternalMapper;
 
 @Component
 public class ExternalProductHistoryMapper implements IExternalMapper<ProductHisotryInfo, ProductHistory>{

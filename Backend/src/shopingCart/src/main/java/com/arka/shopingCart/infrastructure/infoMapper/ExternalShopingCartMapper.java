@@ -3,7 +3,7 @@ package com.arka.shopingCart.infrastructure.infoMapper;
 import org.springframework.stereotype.Component;
 
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
-import com.arka.shared.infrastructure.externalMapper.gateway.IExternalMapper;
+import com.arka.shared.infrastructure.persistence.mapper.gateway.IExternalMapper;
 import com.arka.shopingCart.domain.model.ShopingCart;
 
 import lombok.RequiredArgsConstructor;

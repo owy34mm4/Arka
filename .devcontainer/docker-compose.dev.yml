@@ -28,19 +28,20 @@ services:
       - Data-DataManager
       - Data-DataInit
 
-  db-init:  
-    image: mysql:8.4  
-    container_name: MYSQLInit
-    env_file:  
-      - ./.env.db  
-    depends_on:  
-      db:  
-        condition: service_healthy  
-    entrypoint: sh -c "mysql -hdb -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE < /init.sql"  
-    volumes:  
-      - ./init.sql:/init.sql  
-    networks:  
-      - Data-DataInit
+  # Este servicio se encarga de inicializar la estructura SQL, está pensado para que el ORM no tenga esa responsabilidad -> ORM se acopla al SQL, no al revés
+  # db-init:  
+  #   image: mysql:8.4  
+  #   container_name: MYSQLInit
+  #   env_file:  
+  #     - ./.env.db  
+  #   depends_on:  
+  #     db:  
+  #       condition: service_healthy  
+  #   entrypoint: sh -c "mysql -hdb -uroot -p$$MYSQL_ROOT_PASSWORD $$MYSQL_DATABASE < /init.sql"  
+  #   volumes:  
+  #     - ./init.sql:/init.sql  
+  #   networks:  
+  #     - Data-DataInit
 
   phpmyadmin: 
     container_name: PHPMyAdmin_Arka_Dev
@@ -50,7 +51,8 @@ services:
     ports:  
       - "127.0.0.1:749:80" 
     environment:  
-      - PMA_HOST=db # nombre del servicio MySQL en el Docker-Compose -> resolucion de host
+      # - PMA_HOST=database-1.cd6eqmkqul7e.us-east-2.rds.amazonaws.com # <- AWS RDS DB
+      - PMA_HOST=db #nombre del servicio MySQL en el Docker-Compose -> resolucion de host
       - PMA_PORT=3306
     depends_on:  
       db:
@@ -64,10 +66,8 @@ services:
       dockerfile: Dockerfile.dev
     mem_limit: 6g
     cpus: "6"
-    #network_mode: host # -> Means container will use the host network || DID -> Solve DockerNetworkIssue
     container_name: Backend_Arka
     working_dir: /workspace
-    #Deprecated due to ->dockerfile< ENTRYPOINT [] > -> command: bash -lc "./gradlew bootstrap:bootRun --continuous"  
     depends_on:
       db:
         condition: service_healthy
@@ -85,8 +85,8 @@ services:
       timeout: 10s 
       retries: 2
       start_period : 20s
-    # security_opt:
-    #   - no-new-privileges:true
+    security_opt:
+      - no-new-privileges:true
     networks:
       - Data-Back
       - Back-BackAuth

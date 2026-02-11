@@ -1,6 +1,12 @@
 // ═══════════════════════════════════════════════════════════════
 // settings.gradle (raíz)
 // ═══════════════════════════════════════════════════════════════
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+    }
+}
+
 
 rootProject.name = 'arka'
 
