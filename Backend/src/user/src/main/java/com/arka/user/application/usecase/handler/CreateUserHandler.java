@@ -1,10 +1,11 @@
 package com.arka.user.application.usecase.handler;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
-
+import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.user.application.port.in.ICreateUserUseCase;
 import com.arka.user.application.port.out.IUserRepository;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class CreateUserHandler implements ICreateUserUseCase {
 
     private final IUserRepository userRepository;
+
+    private final IEmailNotificationPort emailPort;
 
     @Override
     public User execute(CreateUserCommand cmd) {
@@ -41,7 +44,14 @@ public class CreateUserHandler implements ICreateUserUseCase {
 
         //Guardamos y sobreescribimos referencia
         u = userRepository.save(u);
-
+        
+        //Notificar al cliente
+            Map<String,String> variablesHtml = Map.of(
+                "company_name","Arka",
+                "customer_name",u.getFirstName()+" "+u.getFirstSurname(),
+                "customer_email",u.getEmail()
+            );
+            emailPort.sendHtml(u.getEmail(), "Usuario Creado Exitosamente", "welcome", variablesHtml );
         return u;
 
         

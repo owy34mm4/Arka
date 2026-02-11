@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.arka.shared.domain.exceptions.BusinessRuleException;
+import com.arka.shared.domain.exceptions.EmailSendingException;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 import com.arka.shared.domain.exceptions.NotFoundException;
 import com.arka.shared.infrastructure.entryPoints.rest.dto.error.ErrorResponse;
@@ -64,6 +65,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);  
     }  
 
+    @ExceptionHandler(EmailSendingException.class)  
+    public ResponseEntity<ErrorResponse> hanldeEmailSendingEx(  
+            EmailSendingException ex,  
+            HttpServletRequest request) {  
+          
+        ErrorResponse error = ErrorResponse.of(  
+            ex.getCode(),  
+            ex.getMessage(),  
+            request.getRequestURI(),
+            ex
+        );  
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);  
+    }  
 
       
     @ExceptionHandler(Exception.class)  

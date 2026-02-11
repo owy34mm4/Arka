@@ -1,9 +1,12 @@
 package com.arka.shared.infrastructure.notification.email.ses.adapter;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
+import com.arka.shared.infrastructure.notification.email.template.EmailTemplateLoader;
 
 import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.services.ses.SesClient;
@@ -14,27 +17,42 @@ import software.amazon.awssdk.services.ses.model.SendEmailRequest;
 public class SesEmailAdapter implements IEmailNotificationPort{
 
     private final SesClient sesClient;
-
+    private final EmailTemplateLoader templateLoader;
     @Value ("${cloud-provider.aws.ses.sender}")
     private String senderEmail;
 
+    /**
+     * (String to, String subject, String body)
+     */
     @Override
     public void send(String to, String subject, String body) {System.out.println("Sendinf email");
         SendEmailRequest request = SendEmailRequest.builder()  
             .destination(d -> d.toAddresses(to))  
             .message(m -> m  
-                .subject(s -> s.data(subject))  
-                .body(b -> b.text(t -> t.data(body))))  
+                .subject(s -> s.data(subject).charset("UTF-8"))  
+                .body(b -> b.text(t -> t.data(body).charset("UTF-8"))))  
             .source(senderEmail)  
             .build();  
           
         sesClient.sendEmail(request);
     }
 
-    @Override
-    public void sendHtml(String to, String subject, String htmlBody) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sendHtml'");
+    /**
+     * Recibe (String to, String subject, String templateName, Map<String, String> variables)
+     */
+    @Override  
+    public void sendHtml(String to, String subject, String templateName, Map<String, String> variables) {  
+        String htmlBody = templateLoader.load(templateName, variables);  
+          
+        SendEmailRequest request = SendEmailRequest.builder()  
+            .source(senderEmail)  
+            .destination(d -> d.toAddresses(to))  
+            .message(m -> m  
+                .subject(s -> s.data(subject).charset("UTF-8"))  
+                .body(b -> b.html(h -> h.data(htmlBody).charset("UTF-8"))))  
+            .build();  
+  
+        sesClient.sendEmail(request);  
     }
 
     

@@ -144,8 +144,13 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             o.setProducts(productRepository.findAllById(scModel.getProductsIds()) );
             o.setOwner(userRepository.findById(cmd.getRequesterId()));
 
-            //Notificar al cliente
-            emailPort.send(o.getOwner().getEmail(), "OrdenRegistrada", "La orden # "+o.getId()+" fue creada");
+            // //Notificar al cliente
+            // Map<String,String> variablesHtml = Map.of(
+            //     "company_name","Arka",
+            //     "customer_name",o.getOwner().getFirstName()+" "+o.getOwner().getFirstSurname(),
+            //     "customer_email",o.getOwner().getEmail()
+            // );
+            // emailPort.sendHtml(o.getOwner().getEmail(), "Orden # "+o.getId()+" Registrada", "welcome", variablesHtml );
 
             return o;
 
