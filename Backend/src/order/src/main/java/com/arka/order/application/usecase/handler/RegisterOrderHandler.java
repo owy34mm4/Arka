@@ -5,17 +5,21 @@ package com.arka.order.application.usecase.handler;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.arka.order.application.port.in.IRegisterOrderUseCase;
 import com.arka.order.application.port.out.IOrderRepository;
 import com.arka.order.application.usecase.command.RegisterOrderCommand;
 import com.arka.order.domain.model.Order;
 import com.arka.order.domain.model.enums.OrderState;
+import com.arka.order.domain.valueObjects.OrderSubtotal;
+import com.arka.order.domain.valueObjects.OrderTotal;
 import com.arka.product.domain.model.Product;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductHistoryMapper;
@@ -32,7 +36,7 @@ import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.shopingCart.domain.model.ShopingCart;
 import com.arka.shopingCart.infrastructure.infoMapper.ExternalShopingCartMapper;
 import com.arka.shopingCart.infrastructure.persistence.repository.external.gateway.IShopingCartExternalRepository;
-import com.arka.user.domain.model.User;
+
 import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -62,6 +66,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
     private final IEmailNotificationPort emailPort;
 
     @Override
+    @Transactional
     public Order execute(RegisterOrderCommand cmd) {
         //Validar usuario
             if (!userRepository.existsById(cmd.getRequesterId())){ throw new BusinessRuleException("Solicitante Invalido");}
@@ -72,10 +77,10 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             ShopingCartInfo sc = shopingCartRepository.findById(cmd.getShopingCartId());
 
             //Validacion del useCase -> Si ya fue ordenado, frenar ejecucion
-            if (sc.isOrdered() == true){throw new BusinessRuleException("Carrito Ya Ordenado");}
+            if (sc.isOrdered()){throw new BusinessRuleException("Carrito Ya Ordenado");}
 
             //Validar el OwnerId con el Id del requester
-            if (sc.getOwnerId()!=cmd.getRequesterId()){ throw new BusinessRuleException("Accion no permitida");}
+            if (!sc.getOwnerId().equals(cmd.getRequesterId())){ throw new BusinessRuleException("Accion no permitida");}
 
 
         //Validar disponibilidad del Stock 
@@ -109,7 +114,9 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
             
         //Reducir Stock > Reducir el Stock de los productos ( Restar la cantidad ordenada al stock)
-            
+            //Map para almacenar los subtotales
+            Map<Object, Long> totalPerProduct = new HashMap<>();
+
             //Logica de Implementacion
                 countById.forEach((productId,quantity)->{
                     ProductInfo pInfo = productRepository.findById(productId);
@@ -117,6 +124,9 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
                     //Validacion en dominio
                     p.setStock( new ProductStock( pInfo.getStock() - Math.toIntExact(quantity) ) );
                     pInfo = externalProductMapper.toInfo(p);
+
+                    //Guardamos que productId tiene que costo -> Si hay 4 productos iguales me guarda el id y el valor de esos 4 -> price*quantity
+                    totalPerProduct.put(productId, quantity*p.getPrice().getValue());
 
                     //Persistir(Actualizar Stock) - Persistir ProductHistory Record
                         productRepository.save(pInfo);
@@ -131,6 +141,15 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
                         productHistoryRepository.save(pHI);
                         
                 });
+        //Contar total de dinero
+            
+            //Implementacion
+           int subTotal = totalPerProduct.values().stream()  
+            .mapToInt(Math::toIntExact)  
+            .sum();
+
+            o.setSubtotal(new OrderSubtotal("COP",subTotal));
+            o.setTotal(new OrderTotal("COP", subTotal));
             
         //Persistir
             
@@ -151,17 +170,20 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
             //Notificar al cliente
                 //Generar mapa de variables 
-                Map<String,Object> variablesHtml = Map.of(
-                    "customer",Map.of(
-                        "name",owner.getFirstName()+" "+owner.getFirstSurname(),
-                        "email",owner.getEmail()                    
-                        ),
-                    "orderDateTime",LocalDateTime.now(),
-                    "products",o.getProducts()
-
+                Map<Object, Object> ownerMap =Map.of(
+                    "name",owner.getFirstName()+" "+owner.getFirstSurname(),
+                    "email", owner.getEmail()
                 );
-                //Digerir el Html con nuestra herramienta
-                
+
+                Map<String, Object> variablesHtml = new HashMap<>();  
+                variablesHtml.put("customer", ownerMap);
+                variablesHtml.put("orderId", o.getId());  
+                variablesHtml.put("orderStatus", o.getState().name());  
+                variablesHtml.put("orderDateTime", LocalDateTime.now());  
+                variablesHtml.put("products", o.getProducts());  
+                variablesHtml.put("subtotal", o.getSubtotal().getValue());  
+                variablesHtml.put("total", o.getTotal().getValue());
+
             emailPort.sendHtml(o.getOwner().getEmail(), "Orden # "+o.getId()+" Registrada", "orderDetail", variablesHtml );
 
             return o;

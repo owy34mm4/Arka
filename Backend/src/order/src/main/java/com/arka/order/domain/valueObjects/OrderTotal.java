@@ -5,11 +5,11 @@ import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 import lombok.Getter;
 
 @Getter
-public class OrderSubtotal {
+public class OrderTotal {
     String currency;
     Integer value;
 
-    public OrderSubtotal(String currency, Integer value){
+    public OrderTotal(String currency, Integer value){
         if(!currency.equalsIgnoreCase("COP") && !currency.equalsIgnoreCase("USD")) {throw new InvalidPropertiesGiven("Order");}
         if(value<0){throw new InvalidPropertiesGiven("Order");}
 
@@ -17,5 +17,4 @@ public class OrderSubtotal {
         this.value=value;
 
     }
-
 }

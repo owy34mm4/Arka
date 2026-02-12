@@ -55,6 +55,10 @@ public class OrderTable {
     @Column(name = "state")
     private OrderState state;
 
+    private String currency;
+
+    private Integer price;
+
 
     @PrePersist
     private void onCreate(){

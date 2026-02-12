@@ -1,3 +1,17 @@
+<!-- Variables de template
+ - customer{ .name & .email}
+ - orderId
+ - orderStatus
+ - orderDateTime
+ - products{ .name & .price}
+ - subtotal
+ - discount - Optional
+ - shiping - Optional
+ - taxes - Optional
+ - total
+-->
+
+
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -15,7 +29,7 @@
                     <tr>
                         <td style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center;">
                             <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;">ARKA</h1>
-                            <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 14px;">Confirmación de Orden</p>
+                            <p style="color: rgba(255,255,255,0.9); margin: 10px 0 0 0; font-size: 14px;">Registro de Orden</p>
                         </td>
                     </tr>
 
@@ -27,6 +41,10 @@
                                     <td>
                                         <p style="margin: 0; color: #6c757d; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Orden</p>
                                         <p style="margin: 5px 0 0 0; color: #333; font-size: 24px; font-weight: 700;" th:text="'#' + ${orderId}">#</p>
+                                    </td>
+                                    <td>
+                                        <p style="margin: 0; color: #6c757d; font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Estado</p>
+                                        <p style="margin: 5px 0 0 0; color: #333; font-size: 24px; font-weight: 700;" th:text="'' + ${orderStatus}"></p>
                                     </td>
                                     <td align="right">
                                         <span th:text="${orderStatus}" 
@@ -131,7 +149,7 @@
                                         <p style="margin: 0; color: #28a745; font-size: 14px;" th:text="'-$' + ${#numbers.formatDecimal(discount, 1, 2)}">-$0.00</p>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${shipping>0}">
                                     <td style="padding: 8px 0;">
                                         <p style="margin: 0; color: #6c757d; font-size: 14px;">Envío</p>
                                     </td>
@@ -139,7 +157,7 @@
                                         <p style="margin: 0; color: #333; font-size: 14px;" th:text="${shipping == 0} ? 'GRATIS' : '$' + ${#numbers.formatDecimal(shipping, 1, 2)}">$0.00</p>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${taxes>0}">
                                     <td style="padding: 8px 0;">
                                         <p style="margin: 0; color: #6c757d; font-size: 14px;">Impuestos (IVA)</p>
                                     </td>

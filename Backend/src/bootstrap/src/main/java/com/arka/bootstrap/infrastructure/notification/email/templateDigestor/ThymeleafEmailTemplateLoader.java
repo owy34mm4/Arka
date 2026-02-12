@@ -1,4 +1,4 @@
-package com.arka.bootstrap.infrastructure.notification.email.template;
+package com.arka.bootstrap.infrastructure.notification.email.templateDigestor;
 
 import java.util.Map;
 
