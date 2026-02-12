@@ -3,9 +3,11 @@ package com.arka.order.infrastructure.entryPoints.rest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arka.order.application.port.in.IModifyOrderUseCase;
+import com.arka.order.application.port.in.IModifyOrderByCustomerUseCase;
+
 import com.arka.order.application.port.in.IRegisterOrderUseCase;
-import com.arka.order.application.usecase.command.ModifyOrderCommand;
+import com.arka.order.application.usecase.command.ModifyOrderByCustomerCommand;
+
 import com.arka.order.application.usecase.command.RegisterOrderCommand;
 
 import com.arka.order.domain.model.Order;
@@ -31,7 +33,7 @@ public class OrderController {
 
     private final  IRegisterOrderUseCase registerOrderUseCase;
 
-    private final IModifyOrderUseCase modifyOrderUseCase;
+    private final IModifyOrderByCustomerUseCase modifyOrderUseCase;
 
     @PostMapping("/register")
     public ResponseEntity<ResponseRegisterOrder> registerOrder(@RequestBody RequestRegisterOrder request) {
@@ -45,9 +47,9 @@ public class OrderController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/modify")
-    public ResponseEntity<ResponseModifyOrder> modifyOrder( @RequestBody RequestModifyOrder request) {
-        ModifyOrderCommand cmd = ModifyOrderCommand.createFromRequest(request);
+    @PutMapping("/modifyByCustomer")
+    public ResponseEntity<ResponseModifyOrder> modifyOrderByCustomer( @RequestBody RequestModifyOrder request) {
+        ModifyOrderByCustomerCommand cmd = ModifyOrderByCustomerCommand.createFromRequest(request);
 
         Order orderResult = modifyOrderUseCase.execute(cmd);
 

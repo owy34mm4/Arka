@@ -5,9 +5,9 @@
  - orderDateTime
  - products{ .name & .price}
  - subtotal
- - discount
- - shiping
- - taxes
+ - discount - Optional
+ - shiping - Optional
+ - taxes - Optional
  - total
 -->
 
@@ -149,7 +149,7 @@
                                         <p style="margin: 0; color: #28a745; font-size: 14px;" th:text="'-$' + ${#numbers.formatDecimal(discount, 1, 2)}">-$0.00</p>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${shipping>0}">
                                     <td style="padding: 8px 0;">
                                         <p style="margin: 0; color: #6c757d; font-size: 14px;">Envío</p>
                                     </td>
@@ -157,7 +157,7 @@
                                         <p style="margin: 0; color: #333; font-size: 14px;" th:text="${shipping == 0} ? 'GRATIS' : '$' + ${#numbers.formatDecimal(shipping, 1, 2)}">$0.00</p>
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${taxes>0}">
                                     <td style="padding: 8px 0;">
                                         <p style="margin: 0; color: #6c757d; font-size: 14px;">Impuestos (IVA)</p>
                                     </td>

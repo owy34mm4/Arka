@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class ModifyOrderCommand {
+public class ModifyOrderByCustomerCommand {
     private Long requesterId;
 
     private Long orderId;
@@ -20,8 +20,8 @@ public class ModifyOrderCommand {
     private List<Long> productsIds;
     
 
-    public static ModifyOrderCommand createFromRequest(RequestModifyOrder request){
-        return ModifyOrderCommand.builder()
+    public static ModifyOrderByCustomerCommand createFromRequest(RequestModifyOrder request){
+        return ModifyOrderByCustomerCommand.builder()
         .requesterId(request.getRequester_id())
         .orderId(request.getOrder_id())
         .productsIds(request.getProducts_ids())

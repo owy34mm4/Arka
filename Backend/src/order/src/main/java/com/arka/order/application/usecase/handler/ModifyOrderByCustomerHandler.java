@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.arka.order.application.port.in.IModifyOrderUseCase;
+import com.arka.order.application.port.in.IModifyOrderByCustomerUseCase;
+
 import com.arka.order.application.port.out.IOrderRepository;
-import com.arka.order.application.usecase.command.ModifyOrderCommand;
+import com.arka.order.application.usecase.command.ModifyOrderByCustomerCommand;
+
 import com.arka.order.domain.model.Order;
 import com.arka.order.domain.model.enums.OrderState;
 import com.arka.product.domain.model.Product;
@@ -28,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ModifyOrderHanlder implements IModifyOrderUseCase {
+public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCase {
 
     private final IUserExternalRepository userRepository;
 
@@ -43,7 +45,7 @@ public class ModifyOrderHanlder implements IModifyOrderUseCase {
     private final ExternalProductHistoryMapper externalProductHisotoryMapper;
 
     @Override
-    public Order execute(ModifyOrderCommand cmd) {
+    public Order execute(ModifyOrderByCustomerCommand cmd) {
         //Validar permisos de accion
             //Validar existencia del usuario solicitante
             if (! userRepository.existsById(cmd.getRequesterId())){throw new BusinessRuleException("Accion no permitida");}
@@ -108,7 +110,7 @@ public class ModifyOrderHanlder implements IModifyOrderUseCase {
                         Product product = externalProductMapper.toDomain(p);
                         ProductHisotryInfo pHI= externalProductHisotoryMapper.toInfo(product.toProductHistory() ) ;
                         //Setear metadatada necesaria
-                            //TomeStamp de modificacion
+                            //TimeStamp de modificacion
                             pHI.setModifiedAt(Date.from(Instant.now()));
                             //Flag de Responsabilidad
                             pHI.setModifiedById(cmd.getRequesterId());
