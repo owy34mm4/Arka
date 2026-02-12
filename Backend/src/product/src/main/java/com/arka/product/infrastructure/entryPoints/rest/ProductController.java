@@ -23,6 +23,12 @@ import com.arka.product.infrastructure.entryPoints.rest.dto.useCase.UpdateStock.
 
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +39,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("api/v0/product")
 @RequiredArgsConstructor
+@Tag(name = "Productos", description = "Gestion de Productos")
+
 public class ProductController {
     
     private final CreateProductHandler createUseCase ;
@@ -40,6 +48,22 @@ public class ProductController {
     private final UpdateStockProductHandler updateStockUseCase;
    
 
+    @Operation(
+        summary = "Crea un cliente nuevo",
+        description = "Genera un cliente nuevo, sin privilegios remarcados -> Cliente"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "Cluiente clreado exitosamente",
+            content = @Content(
+                mediaType = "application/json",
+                schema = @Schema(implementation = ResponseCreateProduct.class)
+                )
+            )
+        }
+    )
+    
 
     @PostMapping("/create")
     public ResponseEntity<ResponseCreateProduct> createProductRoute(@RequestBody RequestCreateProduct request) throws InvalidPropertiesGiven {

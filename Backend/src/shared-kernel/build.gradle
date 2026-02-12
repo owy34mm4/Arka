@@ -2,15 +2,13 @@
 // shared-kernel/build.gradle
 // ═══════════════════════════════════════════════════════════════
 
-//Dependencia de Spring-SpringSecurity, debido a la implementacion de JWT en el aplicativo.
-//Normalmente deberia ser solo JAVA Puro y validaciones
+//Shared-kernel contiene todo aquel algoritmo que se recicle continuamente en el aplicativo, o aquel acceso a la informacion que es global para la modularizacion
 
 plugins {  
     id 'java-library'  
 }
 
 dependencies {
-    // Solo validación básica (opcional)
 
     //SpringWeb
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -23,6 +21,5 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'  
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
-    //AWS SES 
-    implementation "software.amazon.awssdk:ses"
+
 }

@@ -4,5 +4,5 @@ import java.util.Map;
 
 public interface IEmailNotificationPort {
     void send (String to , String subject,  String body);
-    void sendHtml(String to, String subject, String templateName, Map<String, String> variables);
+    void sendHtml(String to, String subject, String templateName, Map<String, Object> variables);
 }

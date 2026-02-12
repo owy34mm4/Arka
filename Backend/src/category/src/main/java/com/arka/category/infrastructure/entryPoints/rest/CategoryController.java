@@ -8,6 +8,9 @@ import com.arka.category.infrastructure.entryPoints.rest.dto.useCase.createCateg
 import com.arka.category.infrastructure.entryPoints.rest.dto.useCase.createCategory.ResponseCreateCategory;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,11 +26,12 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/v0/category")
 @RequiredArgsConstructor
+@Tag(name = "Category", description = "Gestion de Categorias")
 public class CategoryController {
     
     private final CreateCategoryHandler createCategoryUseCase;
 
-
+    @Operation(summary = "Crear Categoria")
     @PostMapping("/create")
     public ResponseEntity<ResponseCreateCategory> createCategoty( @RequestBody RequestCreateCategory request) throws InvalidPropertiesGiven, NotFoundException {
        //Generar el command

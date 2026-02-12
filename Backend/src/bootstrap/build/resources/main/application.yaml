@@ -72,3 +72,14 @@ cloud-provider:
           templateHtml: ${S3_BUCKET_NAME:my-bucket}
     ses:
       sender: ${SES_SENDER_EMAIL}
+
+springdoc:  
+  api-docs:  
+    path: /v3/api-docs  
+  swagger-ui:  
+    path: /swagger-ui.html  
+    groups-order: ASC  
+  packages-to-scan:  
+    - com.arka.category.infrastructure.entryPoints.rest  
+    - com.arka.product.infrastructure.entryPoints.rest  
+    - com.arka.order.infrastructure.entryPoints.rest

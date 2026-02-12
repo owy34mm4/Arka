@@ -1,8 +1,10 @@
 package com.arka.order.domain.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.arka.order.domain.model.enums.OrderState;
+import com.arka.order.domain.valueObjects.OrderSubtotal;
 import com.arka.shared.application.ports.out.product.ProductInfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
 
@@ -24,5 +26,8 @@ public class Order {
     OrderState state;
     List<Long> productsIds;
     List<ProductInfo> products;
+    Date timeStamp;
+    OrderSubtotal subtotal;
+    
 
 }

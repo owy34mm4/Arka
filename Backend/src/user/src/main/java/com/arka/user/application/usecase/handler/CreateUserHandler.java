@@ -46,12 +46,12 @@ public class CreateUserHandler implements ICreateUserUseCase {
         u = userRepository.save(u);
         
         //Notificar al cliente
-            Map<String,String> variablesHtml = Map.of(
+            Map<String,Object> variablesHtml = Map.of(
                 "company_name","Arka",
                 "customer_name",u.getFirstName()+" "+u.getFirstSurname(),
                 "customer_email",u.getEmail()
             );
-            emailPort.sendHtml(u.getEmail(), "Usuario Creado Exitosamente", "welcome", variablesHtml );
+            emailPort.sendHtml(u.getEmail(), "Usuario Creado Exitosamente", "welcome.html", variablesHtml );
         return u;
 
         

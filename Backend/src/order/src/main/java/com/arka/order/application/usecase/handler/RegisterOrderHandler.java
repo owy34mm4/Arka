@@ -3,6 +3,7 @@ package com.arka.order.application.usecase.handler;
 
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
@@ -25,11 +26,13 @@ import com.arka.shared.application.ports.out.notification.email.IEmailNotificati
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
+import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 
 import com.arka.shopingCart.domain.model.ShopingCart;
 import com.arka.shopingCart.infrastructure.infoMapper.ExternalShopingCartMapper;
 import com.arka.shopingCart.infrastructure.persistence.repository.external.gateway.IShopingCartExternalRepository;
+import com.arka.user.domain.model.User;
 import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -144,13 +147,22 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             o.setProducts(productRepository.findAllById(scModel.getProductsIds()) );
             o.setOwner(userRepository.findById(cmd.getRequesterId()));
 
-            // //Notificar al cliente
-            // Map<String,String> variablesHtml = Map.of(
-            //     "company_name","Arka",
-            //     "customer_name",o.getOwner().getFirstName()+" "+o.getOwner().getFirstSurname(),
-            //     "customer_email",o.getOwner().getEmail()
-            // );
-            // emailPort.sendHtml(o.getOwner().getEmail(), "Orden # "+o.getId()+" Registrada", "welcome", variablesHtml );
+            UserInfo owner = o.getOwner();
+
+            //Notificar al cliente
+                //Generar mapa de variables 
+                Map<String,Object> variablesHtml = Map.of(
+                    "customer",Map.of(
+                        "name",owner.getFirstName()+" "+owner.getFirstSurname(),
+                        "email",owner.getEmail()                    
+                        ),
+                    "orderDateTime",LocalDateTime.now(),
+                    "products",o.getProducts()
+
+                );
+                //Digerir el Html con nuestra herramienta
+                
+            emailPort.sendHtml(o.getOwner().getEmail(), "Orden # "+o.getId()+" Registrada", "orderDetail", variablesHtml );
 
             return o;
 
