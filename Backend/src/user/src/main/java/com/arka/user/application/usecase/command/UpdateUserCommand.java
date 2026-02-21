@@ -5,7 +5,6 @@ import com.arka.user.domain.model.enums.Role;
 
 import com.arka.user.infrastructure.entryPoints.rest.dto.useCase.EditUser.RequestUpdateUser;
 
-import jakarta.validation.constraints.Email;
 import lombok.Builder;
 import lombok.Getter;
 

@@ -19,6 +19,6 @@ public class ThymeleafEmailTemplateLoader {
     public String load(String templateName, Map<String, Object> variables) {  
         Context context = new Context();  
         context.setVariables(variables);  
-        return templateEngine.process("email/" + templateName.replace(".html", ""), context);  
+        return templateEngine.process("email/" + templateName.replace(".html", ""), context);
     }
 }

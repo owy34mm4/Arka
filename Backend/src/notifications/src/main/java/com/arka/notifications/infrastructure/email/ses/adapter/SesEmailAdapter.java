@@ -1,11 +1,11 @@
-package com.arka.bootstrap.infrastructure.notification.email.ses.adapter;
+package com.arka.notifications.infrastructure.email.ses.adapter;
 
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.arka.bootstrap.infrastructure.notification.email.templateDigestor.ThymeleafEmailTemplateLoader;
+import com.arka.notifications.infrastructure.email.templateDigestor.ThymeleafEmailTemplateLoader;
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
 
 import lombok.RequiredArgsConstructor;

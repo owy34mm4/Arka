@@ -1,4 +1,4 @@
-package com.arka.bootstrap.infrastructure.notification.email.ses.config;
+package com.arka.notifications.infrastructure.email.ses.config;
 
 
 import org.springframework.context.annotation.Bean;

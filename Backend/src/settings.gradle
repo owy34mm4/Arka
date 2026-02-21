@@ -18,6 +18,7 @@ include 'order'
 include 'category'
 include 'shopingCart'
 include 'bootstrap'
+include 'notifications'
 
 
 project(":shared-kernel").projectDir = file("./shared-kernel")
@@ -27,3 +28,4 @@ project(":order").projectDir = file("./order")
 project(":category").projectDir = file("./category")
 project(":shopingCart").projectDir = file("./shopingCart")
 project(":bootstrap").projectDir = file("./bootstrap")
+project(":notifications").projectDir = file("./notifications")

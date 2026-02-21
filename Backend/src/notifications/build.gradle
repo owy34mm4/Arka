@@ -1,0 +1,12 @@
+//Notifications
+
+dependencies{
+    implementation project (':shared-kernel')
+
+    
+    //AWS SES 
+    implementation "software.amazon.awssdk:ses"
+
+    //Motor de HTMLTemplates dinamicas
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+}
