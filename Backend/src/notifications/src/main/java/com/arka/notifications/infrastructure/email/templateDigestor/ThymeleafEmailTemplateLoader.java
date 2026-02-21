@@ -1,4 +1,4 @@
-package com.arka.bootstrap.infrastructure.notification.email.templateDigestor;
+package com.arka.notifications.infrastructure.email.templateDigestor;
 
 import java.util.Map;
 
@@ -8,7 +8,8 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import lombok.RequiredArgsConstructor;
 
-//Reminder -> Al parecer esta libreria se apoya mucho en la estructura suministrada por el HTML, no hay validaciones antes o despues. Solo inyecte y ponga. Muy propensa al fallo, pero muy util -> Requiere Test
+//Reminder -> Al parecer esta libreria se apoya mucho en la estructura suministrada por el HTML,
+//  no hay validaciones antes o despues. Solo inyecte y ponga. Muy propensa al fallo, pero muy util -> Requiere Test
 @Component
 @RequiredArgsConstructor
 public class ThymeleafEmailTemplateLoader {

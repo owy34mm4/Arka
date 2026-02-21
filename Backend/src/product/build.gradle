@@ -3,7 +3,7 @@
 
 dependencies {
     implementation project(':shared-kernel')
-    implementation project(':category')
+    // implementation project(':category')
     implementation project (':user')
     //implementation project(':shopingCart')
     //implementation project(':order')

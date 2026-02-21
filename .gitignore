@@ -19,6 +19,7 @@ Backend/src/!**/src/!main/**/build/
 Backend/src/!**/src/!test/**/build/
 
 Backend/src/### STS ###
+Backend/src/**/**.class**
 Backend/src/.apt_generated
 Backend/src/.classpath
 Backend/src/.factorypath

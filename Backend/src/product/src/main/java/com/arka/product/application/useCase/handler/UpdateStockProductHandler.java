@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 
-import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
+// import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
 import com.arka.product.application.port.in.IUpdateStockUseCase;
 
 import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
@@ -17,6 +17,7 @@ import com.arka.product.domain.model.Product;
 import com.arka.product.domain.model.ProductHistory;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
+import com.arka.shared.application.ports.out.category.ICategoryDataPort;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
@@ -29,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UpdateStockProductHandler implements IUpdateStockUseCase{
 
-    private final ICategoryExternalRepository categoryRepository;
+    private final ICategoryDataPort categoryRepository;
 
     private final IProductRepositoryPort productRepository ;
 
