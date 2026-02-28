@@ -7,7 +7,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.arka.category.CategoryModuleConfig;
 import com.arka.notifications.NotificationsModuleConfig;
+import com.arka.order.OrderModuleConfig;
+import com.arka.product.ProductModuleConfig;
+import com.arka.shared.SharedKernelConfigurationModule;
+import com.arka.shopingCart.ShopingCartConfigurationModule;
+import com.arka.user.UserModuleConfig;
 
 @SpringBootApplication(scanBasePackages = "com.arka")
 @EntityScan(basePackages = "com.arka")  
@@ -19,7 +25,14 @@ import com.arka.notifications.NotificationsModuleConfig;
 } )
 
 @Import({
-	NotificationsModuleConfig.class
+	NotificationsModuleConfig.class,
+	OrderModuleConfig.class,
+	CategoryModuleConfig.class,
+	ProductModuleConfig.class,
+	SharedKernelConfigurationModule.class,
+	ShopingCartConfigurationModule.class,
+	UserModuleConfig.class
+
 })
 
 public class ArkaAplication {
