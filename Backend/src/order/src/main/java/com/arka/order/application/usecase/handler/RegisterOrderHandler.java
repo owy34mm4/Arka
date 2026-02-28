@@ -65,6 +65,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
     private final IEmailNotificationPort emailPort;
 
+
     @Override
     @Transactional
     public Order execute(RegisterOrderCommand cmd) {
@@ -77,26 +78,15 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             ShopingCartInfo sc = shopingCartRepository.findById(cmd.getShopingCartId());
 
             //Validacion del useCase -> Si ya fue ordenado, frenar ejecucion
-            if (sc.isOrdered()){throw new BusinessRuleException("Carrito Ya Ordenado");}
-
+            if (sc.isOrdered() || sc.getProductsIds().isEmpty()){ System.out.println("SC Ordenado"); throw new BusinessRuleException("Carrito Ya Ordenado o vacio");}
+            System.out.println("SC sin ordenar");
             //Validar el OwnerId con el Id del requester
             if (!sc.getOwnerId().equals(cmd.getRequesterId())){ throw new BusinessRuleException("Accion no permitida");}
 
 
         //Validar disponibilidad del Stock 
             
-            //Contar ocurrencias de cada ID  // Resultado: {productId1=3, productId2=1, productId5=2}
-            Map<Long, Long> countById = sc.getProductsIds().stream()  
-                .collect(Collectors.groupingBy(  
-                            Function.identity(),  
-                            Collectors.counting()  
-                        ));
-                        
-            //Logica de Validacion
-            countById.forEach((productId, quantity)->{
-                ProductInfo p = productRepository.findById(productId);
-                if(p.getStock()<quantity){throw new BusinessRuleException("Stock no Disponible para la compra");}
-            });
+            Map<Long, Long> countById = getCountById(sc);
 
 
         //Crear Dominio 
@@ -154,7 +144,8 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
         //Persistir
             
             //Guardamos carrito con Flag modificada -> Actualizamos registro viejo
-            shopingCartRepository.save(scModel);
+            var scResult = shopingCartRepository.save(scModel);
+            System.out.println(scResult.isOrdered());
                 
             //Guardamos la orden
             o = orderRepository.save(o);
@@ -189,6 +180,23 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             return o;
 
         
+    }
+
+
+    private Map<Long, Long> getCountById(ShopingCartInfo sc) {
+        //Contar ocurrencias de cada ID  // Resultado: {productId1=3, productId2=1, productId5=2}
+        Map<Long, Long> countById = sc.getProductsIds().stream()  
+            .collect(Collectors.groupingBy(  
+                        Function.identity(),  
+                        Collectors.counting()  
+                    ));
+                    
+        //Logica de Validacion
+        countById.forEach((productId, quantity)->{
+            ProductInfo p = productRepository.findById(productId);
+            if(p.getStock()<quantity){throw new BusinessRuleException("Stock no Disponible para la compra");}
+        });
+        return countById;
     }
     
 }

@@ -50,7 +50,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
             //Validar existencia del usuario solicitante
             if (! userRepository.existsById(cmd.getRequesterId())){throw new BusinessRuleException("Accion no permitida");}
             //Comprobar que el solicitante sea el dueño de la orden a modificar
-            if ( orderRepository.findById(cmd.getOrderId()).getOwnerId() != cmd.getRequesterId() ){throw new BusinessRuleException("Accion no permitida");}
+            if (!orderRepository.findById(cmd.getOrderId()).getOwnerId().equals(cmd.getRequesterId()) ){throw new BusinessRuleException("Accion no permitida");}
         
         //Obtener la Order Vieja a Modificar
             Order o = orderRepository.findById(cmd.getOrderId());
@@ -88,7 +88,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
                 newOrderCountById.forEach((productId, quantity)->{
                     ProductInfo p = productRepository.findById(productId);
                     //Si el stockDisponible actual + el stock que ya está retenido en la Orden Vieja, es menor al nuevo stock de orden. Levanta excepcion
-                    if(p.getStock()+oldOrderCountById.get(productId) < quantity){throw new BusinessRuleException("Stock no Disponible para la compra");}
+                    if(p.getStock()+oldOrderCountById.getOrDefault(productId,0L) < quantity){throw new BusinessRuleException("Stock no Disponible para la compra");}
                 });
 
         // Actualizar Orden - Gestionar cambios en stock 

@@ -23,6 +23,7 @@ public class PersistanceOrderMapper {
                 .productsIds(new ArrayList<>(o.getProductsIds()))
                 .subtotal(new OrderSubtotal(o.getCurrency(), o.getPrice()))
                 .total(new OrderTotal(o.getCurrency(), o.getPrice()))
+                .timeStamp(o.getCreatedAt())
                 .build();
     }
 
@@ -35,6 +36,7 @@ public class PersistanceOrderMapper {
         .currency(o.getSubtotal().getCurrency())
         .price(o.getSubtotal().getValue())
         .productsIds(new ArrayList<>(o.getProductsIds()))
+        .createdAt(o.getTimeStamp())
         .build();
 
     }

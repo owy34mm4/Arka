@@ -7,7 +7,10 @@ import com.arka.user.infrastructure.persistence.entity.enums.Role;
 
 import lombok.Builder;
 import lombok.Getter;
-
+/**
+ * 
+ * 
+ */
 @Getter
 @Builder
 public class CreateUserCommand {

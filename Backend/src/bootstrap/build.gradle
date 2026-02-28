@@ -12,7 +12,7 @@ dependencies {
     implementation project(':order')
     implementation project(':product')
     implementation project(':shopingCart')
-    
+    implementation project(':notifications')
     // Configuración global
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

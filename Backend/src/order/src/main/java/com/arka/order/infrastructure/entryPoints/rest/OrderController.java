@@ -40,7 +40,7 @@ public class OrderController {
         RegisterOrderCommand cmd = RegisterOrderCommand.createFromRequest(request);
         
         Order orderResult =registerOrderUseCase.execute(cmd);
-        System.out.println("out usecase");
+      
         //CrearResponse 
         ResponseRegisterOrder response = ResponseRegisterOrder.createFromModel(orderResult, "Exito");
 
