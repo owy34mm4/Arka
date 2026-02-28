@@ -3,7 +3,7 @@ package com.arka.order.application.usecase.command;
 import java.util.List;
 
 import com.arka.order.domain.model.Order;
-import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.ModifyOrder.RequestModifyOrder;
+import com.arka.order.infrastructure.entryPoints.rest.dto.useCase.ModifyOrder.RequestModifyOrderByCustomer;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public class ModifyOrderByCustomerCommand {
     private List<Long> productsIds;
     
 
-    public static ModifyOrderByCustomerCommand createFromRequest(RequestModifyOrder request){
+    public static ModifyOrderByCustomerCommand createFromRequest(RequestModifyOrderByCustomer request){
         return ModifyOrderByCustomerCommand.builder()
         .requesterId(request.getRequester_id())
         .orderId(request.getOrder_id())

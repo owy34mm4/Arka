@@ -12,7 +12,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class ResponseModifyOrder {
+public class ResponseModifyOrderByCustomer {
     Long id;
     Long owner_id;
     String owner_username;
@@ -20,8 +20,8 @@ public class ResponseModifyOrder {
     List<ProductInfo> products;
     String message;
 
-    public static ResponseModifyOrder createFromModel(Order o, String msg){
-        return ResponseModifyOrder.builder()
+    public static ResponseModifyOrderByCustomer createFromModel(Order o, String msg){
+        return ResponseModifyOrderByCustomer.builder()
         .id(o.getId())
         .owner_id(o.getOwner().getId())
         .owner_username(o.getOwner().getUsername())

@@ -1,8 +1,9 @@
 package com.arka.order.infrastructure.persistence.entity.enums;
 
 public enum OrderState {
-    ACTIVO,  
-    INACTIVO,  
     PENDIENTE,  
+    CONFIRMADO,
+    EN_DESPACHO,
+    ENTREGADO,
     CANCELADO
 }

@@ -4,7 +4,8 @@ dependencies {
     implementation project(':shared-kernel')
     implementation project (':shopingCart')
     implementation project(':product')  // Si order necesita product
-    implementation project(':user')   // Si order necesita client
+    // implementation project(':user')   // Si order necesita client
+    
     
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'

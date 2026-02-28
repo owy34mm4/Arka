@@ -26,13 +26,13 @@ public class CreateUserHandler implements ICreateUserUseCase {
     @Override
     public User execute(CreateUserCommand cmd) {
         //Checkear si ya existe alguien con el username del request
-        // if (userRepository.alreadyExists(cmd.getUsername())){
-        //    throw new BusinessRuleException("Usuario ya existe");
-        // }
-        // //Validamos que el email no esté asignado a otro usuario 
-        // if (userRepository.existsByEmail(cmd.getEmail())){
-        //     throw new BusinessRuleException("Correo Asignado a otro Usuario");
-        // }
+        if (userRepository.alreadyExists(cmd.getUsername())){
+           throw new BusinessRuleException("Usuario ya existe");
+        }
+        //Validamos que el email no esté asignado a otro usuario 
+        if (userRepository.existsByEmail(cmd.getEmail())){
+            throw new BusinessRuleException("Correo Asignado a otro Usuario");
+        }
 
         //Creamos el ModelDomain para trabajar
         User u = cmd.toModel();

@@ -23,8 +23,9 @@ import com.arka.product.infrastructure.persistence.repository.external.gateway.I
 import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductHistoryExternalRepository;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
-import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
+// import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCase {
 
-    private final IUserExternalRepository userRepository;
+    private final IUserDataPort userRepository;
 
     private final IOrderRepository orderRepository;
 

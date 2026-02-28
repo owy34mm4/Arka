@@ -30,6 +30,7 @@ import com.arka.shared.application.ports.out.notification.email.IEmailNotificati
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
+import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 
@@ -37,7 +38,7 @@ import com.arka.shopingCart.domain.model.ShopingCart;
 import com.arka.shopingCart.infrastructure.infoMapper.ExternalShopingCartMapper;
 import com.arka.shopingCart.infrastructure.persistence.repository.external.gateway.IShopingCartExternalRepository;
 
-import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
+// import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,7 +53,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
     private final IProductExternalRepository productRepository;
 
-    private final IUserExternalRepository userRepository;
+    private final IUserDataPort userRepository;
 
     private final IProductHistoryExternalRepository productHistoryRepository;
 
