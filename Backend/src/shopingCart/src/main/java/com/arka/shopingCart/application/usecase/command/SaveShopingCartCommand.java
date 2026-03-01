@@ -26,7 +26,7 @@ public class SaveShopingCartCommand {
 
     public ShopingCart toDomain(SaveShopingCartCommand cmd){
         return ShopingCart.builder()
-            .id(null)
+            .id(cmd.getId())
             .ownerId(this.getOwnerId())
             .productsIds(productsIds)
             .products(null)

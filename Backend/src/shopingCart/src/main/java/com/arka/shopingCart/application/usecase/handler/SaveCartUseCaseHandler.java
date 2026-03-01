@@ -1,5 +1,6 @@
 package com.arka.shopingCart.application.usecase.handler;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -7,9 +8,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductExternalRepository;
 
+import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 
@@ -18,7 +20,7 @@ import com.arka.shopingCart.application.port.out.IShopingCartRepository;
 import com.arka.shopingCart.application.usecase.command.SaveShopingCartCommand;
 import com.arka.shopingCart.domain.model.ShopingCart;
 
-import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,11 +28,11 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class SaveCartUseCaseHandler implements ISaveCartUseCase{
 
-private final IProductExternalRepository productRepository;
+private final IProductDataPort productRepository;
 
 private final IShopingCartRepository shopingCartRepository;
 
-private final IUserExternalRepository userRepository;
+private final IUserDataPort userRepository;
 
 
     @Override
@@ -59,14 +61,17 @@ private final IUserExternalRepository userRepository;
 
         //Crear Dominio
             ShopingCart sc = cmd.toDomain(cmd);
-
+            sc.setProductsIds(cmd.getProductsIds());
+            
+            
         //Persistir
             sc = shopingCartRepository.save(sc);
 
-        //Inyeccion de Objetos de Dominio
-        sc.setProducts(productsToOrder);
-        UserInfo owner = userRepository.findById(cmd.getOwnerId());
-        sc.setOwner(owner);
+            //Inyeccion de Objetos de Dominio
+            UserInfo owner = userRepository.findById(cmd.getOwnerId());
+
+            sc.setOwner(owner);
+            sc.setProducts(productsToOrder);
 
         return sc;
 

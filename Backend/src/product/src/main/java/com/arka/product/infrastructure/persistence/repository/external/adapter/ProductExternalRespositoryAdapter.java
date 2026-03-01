@@ -1,6 +1,6 @@
 package com.arka.product.infrastructure.persistence.repository.external.adapter;
 import java.util.List;
-
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +8,8 @@ import com.arka.product.domain.model.Product;
 import com.arka.product.infrastructure.persistence.entity.ProductTable;
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductMapper;
 import com.arka.product.infrastructure.persistence.mapper.adapter.PersistanceProductMapper;
-import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductExternalRepository;
 import com.arka.product.infrastructure.persistence.repository.internal.gateway.IJPAProductRepository;
-
+import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.ProductInfo;
 import com.arka.shared.domain.exceptions.NotFoundException;
 
@@ -18,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Repository
-public class ProductExternalRespositoryAdapter implements IProductExternalRepository {
+public class ProductExternalRespositoryAdapter implements IProductDataPort {
 
     private final IJPAProductRepository productRepository;
 

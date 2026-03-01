@@ -16,6 +16,7 @@ import com.arka.user.infrastructure.persistence.entity.enums.Role;
 import com.arka.user.infrastructure.persistence.mapper.PersistenceUserMapper;
 import com.arka.user.infrastructure.persistence.repository.internal.gateway.IJPAUserRepository;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -75,6 +76,13 @@ public class UserRepositoryAdapter implements IUserRepository{
         UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
         Role entitytRol = entity.getRole();
         return entitytRol==Role.Empleado;
+    }
+
+
+    @Override
+    public User findById(@NonNull Long id) {
+        return persistanceUserMapper.toDomain(userRepository.findById(id).orElseThrow(()-> new NotFoundException("User")));
+        
     }
 
     

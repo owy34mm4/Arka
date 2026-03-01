@@ -3,6 +3,7 @@ package com.arka.product.application.useCase.handler;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.category.ICategoryDataPort;
+import com.arka.shared.application.ports.out.user.IUserDataPort;
+import com.arka.shared.application.ports.out.user.Roleinfo;
+import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
-import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,13 +43,14 @@ public class CreateProductHandler implements ICreateProductUseCase {
 
     private final IProductHistoryRepositoryPort productHistoryRepository;
 
-    private final IUserExternalRepository userRepository;
+    private final IUserDataPort userRepository;
 
     @Override
     public Product execute(CreateProductCommand cmd) throws BusinessRuleException {
         //Validar privilegios de accion -> Min empleado
             //Leer ley de Morgan en operaciones booleanas
-            if(!userRepository.isEmploye(cmd.getRequesterId()) && !userRepository.isAdmin(cmd.getRequesterId())){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
+            UserInfo requester = userRepository.findById(cmd.getRequesterId());
+            if(requester.getRole().name() != Roleinfo.Empleado.name() && requester.getRole().name() != Roleinfo.Administrador.name()){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
 
         //Generamos modelo 
         Product model = cmd.toModel();

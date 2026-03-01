@@ -1,20 +1,22 @@
 package com.arka.product.infrastructure.persistence.repository.external.adapter;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductHistoryMapper;
 import com.arka.product.infrastructure.persistence.mapper.adapter.PersistanceProductHistoryMapper;
-import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductHistoryExternalRepository;
+
 import com.arka.product.infrastructure.persistence.repository.internal.gateway.IJPAProductHistoryRespository;
+import com.arka.shared.application.ports.out.product.IProductHistoryDataPort;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 
 import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class ProductHistoryExternalRepositoryAdapter implements IProductHistoryExternalRepository{
+public class ProductHistoryExternalRepositoryAdapter implements IProductHistoryDataPort{
 
     private final IJPAProductHistoryRespository productHistoryRepository;
 

@@ -24,7 +24,7 @@ public class UpdateUserHandler implements IUpdateUserUsecase{
         if (cmd.getRequesterId() != cmd.getIdToModify() ){
             throw new BusinessRuleException("Accion no permitida");
         }
-
+        User oldUser = userRepository.findById(cmd.getIdToModify());
         User u = cmd.toModel();
 
         //Accion de Admin -> Cambiar al role especificado
@@ -33,7 +33,10 @@ public class UpdateUserHandler implements IUpdateUserUsecase{
         }
         //Eliminar despues de crear un administrador en sistema
         u.setRole(cmd.getRole());
-
+        u.setCreatedAt(oldUser.getCreatedAt());
+        u.setLastLogin(oldUser.getLastLogin());
+        u.setActive(oldUser.isActive());
+        
         u = userRepository.save(u);
 
         return u;

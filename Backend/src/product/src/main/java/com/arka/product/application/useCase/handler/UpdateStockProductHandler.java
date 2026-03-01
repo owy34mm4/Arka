@@ -2,7 +2,10 @@ package com.arka.product.application.useCase.handler;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+
+
 
 import org.springframework.stereotype.Service;
 
@@ -18,9 +21,14 @@ import com.arka.product.domain.model.ProductHistory;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.category.ICategoryDataPort;
+import com.arka.shared.application.ports.out.shoppingCart.IShopingCartDataPort;
+import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
+import com.arka.shared.application.ports.out.user.IUserDataPort;
+import com.arka.shared.application.ports.out.user.Roleinfo;
+import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
-import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
+
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,13 +44,15 @@ public class UpdateStockProductHandler implements IUpdateStockUseCase{
 
     private final IProductHistoryRepositoryPort productHisotryRepository;
 
-    private final IUserExternalRepository userRepository;
+    private final IUserDataPort userRepository;
 
+    // private final IShopingCartDataPort shopingcartRepository;
     
     @Override
     public Product execute(UpdateProductCommand cmd) throws InvalidPropertiesGiven {
         //Validar Permisos de Accion
-            if( !( userRepository.isAdmin(cmd.getRequesterId()) || userRepository.isEmploye(cmd.getRequesterId()) ) ){throw new BusinessRuleException("No permitido");}
+            UserInfo requester = userRepository.findById(cmd.getRequesterId());
+            if( !(requester.getRole().name() == Roleinfo.Administrador.name() || requester.getRole().name() == Roleinfo.Empleado.name() ) ){throw new BusinessRuleException("No permitido");}
 
         //Obtenemos la entidad que vamos a modificar
         Product modelToModify = productRepository.findById(cmd.getProductId());
@@ -69,10 +79,12 @@ public class UpdateStockProductHandler implements IUpdateStockUseCase{
                     productHisotryRepository.save(pH);
 
         //Buscar categorias, con su propio repositorio
-        List<CategoryInfo> categories = categoryRepository.findAllById(modelToModify.getCategoriesIds().getValues());
+        List<CategoryInfo> categories = categoryRepository.findAllById(savedModel.getCategoriesIds().getValues());
+        
 
         //Inyectamos el CategoryInfo a model.categories
         savedModel.inyectCategories(categories);
+        
 
         return savedModel;
     }

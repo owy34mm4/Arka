@@ -8,6 +8,8 @@ public interface IUserRepository {
     
     public User save(User user);
 
+    User findById(Long id);
+
     boolean alreadyExists(String username);
 
     boolean existsByEmail (String email);

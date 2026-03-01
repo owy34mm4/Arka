@@ -1,7 +1,9 @@
 package com.arka.order.domain.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.arka.order.domain.model.enums.OrderState;
 import com.arka.order.domain.valueObjects.OrderSubtotal;
@@ -14,12 +16,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+
 
 @Builder @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Order {
     Long id;
     Long ownerId;
@@ -27,9 +28,20 @@ public class Order {
     OrderState state;
     List<Long> productsIds;
     List<ProductInfo> products;
-    Date timeStamp;
+    LocalDateTime timeStamp;
     OrderSubtotal subtotal;
     OrderTotal total;
+
+
+    public void updateProductsIds(List<Long> newProductsIds) {    
+        if (this.productsIds == null) this.productsIds = new java.util.ArrayList<>();  
+    this.productsIds.clear();    
+    if (newProductsIds != null) {  
+        this.productsIds.addAll(newProductsIds);    
+    }
+    }
+    
+
     
 
 }

@@ -53,19 +53,19 @@ public class ProductTable{
     @Column(name = "category_id")
     private List<Long> categoriesId;
 
-    @ElementCollection
-        @CollectionTable(name = "shoping_carts_detail",
-            joinColumns = @JoinColumn(name = "product_id")
-        )
-    @Column(name = "shoping_cart_id")
-    private List<Long> shopingCartId;
+    // @ElementCollection
+    //     @CollectionTable(name = "shoping_carts_detail",
+    //         joinColumns = @JoinColumn(name = "product_id")
+    //     )
+    // @Column(name = "shoping_cart_id")
+    // private List<Long> shopingCartId;
 
-    @ElementCollection
-        @CollectionTable(name = "order_detail",
-            joinColumns = @JoinColumn(name = "product_id")
-        )
-    @Column(name = "order_id")  
-    private List<Long> ordersIds;
+    // @ElementCollection
+    //     @CollectionTable(name = "order_detail",
+    //         joinColumns = @JoinColumn(name = "product_id")
+    //     )
+    // @Column(name = "order_id")  
+    // private List<Long> ordersIds;
 
 
    

@@ -1,6 +1,7 @@
 package com.arka.order.application.usecase.handler;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +73,7 @@ public class UpdateOrderStatusHandler implements IUpdateOrderStatus{
                 variablesHtml.put("orderId", oldOrder.getId());
                 variablesHtml.put("orderStatus", oldOrder.getState().name());
                 variablesHtml.put("orderDateTime", LocalDateTime.now());
-                variablesHtml.put("products", productRepository.findAllById(oldOrder.getProductsIds()));
+                variablesHtml.put("products", productRepository.findAllById(new ArrayList<>(oldOrder.getProductsIds())));
                 variablesHtml.put("subtotal", oldOrder.getSubtotal().getValue());
                 variablesHtml.put("total", oldOrder.getTotal().getValue());
                 

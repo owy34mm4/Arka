@@ -1,15 +1,15 @@
 package com.arka.category.infrastructure.persistence.repository.external.adapter;
 
 import java.util.List;
-
-
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
 import com.arka.category.infrastructure.persistence.entity.CategoryTable;
-import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
+
 import com.arka.category.infrastructure.persistence.repository.internal.gateway.IJPACategoryRepository;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
+import com.arka.shared.application.ports.out.category.ICategoryDataPort;
 import com.arka.shared.domain.exceptions.NotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Repository
 @RequiredArgsConstructor
-public class CategoryExternalRepositoryAdapter implements ICategoryExternalRepository {
+public class CategoryExternalRepositoryAdapter implements ICategoryDataPort {
 
     
     private final IJPACategoryRepository repository;
@@ -45,6 +45,12 @@ public class CategoryExternalRepositoryAdapter implements ICategoryExternalRepos
     public boolean existsById(Long Id) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'existsById'");
+    }
+
+    @Override
+    public CategoryInfo save(CategoryInfo data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'save'");
     }
 
 

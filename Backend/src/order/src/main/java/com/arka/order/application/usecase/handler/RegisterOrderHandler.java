@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -24,11 +25,13 @@ import com.arka.product.domain.model.Product;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductHistoryMapper;
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductMapper;
-import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductExternalRepository;
-import com.arka.product.infrastructure.persistence.repository.external.gateway.IProductHistoryExternalRepository;
+
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
+import com.arka.shared.application.ports.out.product.IProductDataPort;
+import com.arka.shared.application.ports.out.product.IProductHistoryDataPort;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.shoppingCart.IShopingCartDataPort;
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.UserInfo;
@@ -36,7 +39,7 @@ import com.arka.shared.domain.exceptions.BusinessRuleException;
 
 import com.arka.shopingCart.domain.model.ShopingCart;
 import com.arka.shopingCart.infrastructure.infoMapper.ExternalShopingCartMapper;
-import com.arka.shopingCart.infrastructure.persistence.repository.external.gateway.IShopingCartExternalRepository;
+
 
 // import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
@@ -49,13 +52,13 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
     private final IOrderRepository orderRepository;
 
-    private final IShopingCartExternalRepository shopingCartRepository;
+    private final IShopingCartDataPort shopingCartRepository;
 
-    private final IProductExternalRepository productRepository;
+    private final IProductDataPort productRepository;
 
     private final IUserDataPort userRepository;
 
-    private final IProductHistoryExternalRepository productHistoryRepository;
+    private final IProductHistoryDataPort productHistoryRepository;
 
 
     private final ExternalShopingCartMapper externalShopingCartMapper;
@@ -80,7 +83,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
             //Validacion del useCase -> Si ya fue ordenado, frenar ejecucion
             if (sc.isOrdered() || sc.getProductsIds().isEmpty()){ System.out.println("SC Ordenado"); throw new BusinessRuleException("Carrito Ya Ordenado o vacio");}
-            System.out.println("SC sin ordenar");
+           
             //Validar el OwnerId con el Id del requester
             if (!sc.getOwnerId().equals(cmd.getRequesterId())){ throw new BusinessRuleException("Accion no permitida");}
 
@@ -96,7 +99,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             Order o = cmd.toModel();
             //Seteos de data del UseCase
                 o.setState(OrderState.PENDIENTE);
-                o.setProductsIds(sc.getProductsIds());
+                o.updateProductsIds(sc.getProductsIds());
 
             //Convertimos de Info a Domain
             ShopingCart scModel = externalShopingCartMapper.toDomain(sc);
@@ -145,7 +148,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
         //Persistir
             
             //Guardamos carrito con Flag modificada -> Actualizamos registro viejo
-            var scResult = shopingCartRepository.save(scModel);
+            var scResult = shopingCartRepository.save(externalShopingCartMapper.toInfo(scModel));
             System.out.println(scResult.isOrdered());
                 
             //Guardamos la orden
@@ -155,7 +158,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
         //Retornar
 
             //Preparar inyeccion para el retorno del objeto
-            o.setProducts(productRepository.findAllById(scModel.getProductsIds()) );
+            o.setProducts(productRepository.findAllById(scModel.getProductsIds()));
             o.setOwner(userRepository.findById(cmd.getRequesterId()));
 
             UserInfo owner = o.getOwner();

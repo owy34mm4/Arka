@@ -1,0 +1,224 @@
+Necesito ajustar el tempate , para incluir la informacion de Producto mas vendido, y Cliente mas frecuente
+
+<!-- Variables HTML
+
+weekStart (Dia inicio del resumen de Ventas)
+weekEnd ( Dia Final del resumen de Ventas)
+
+recipientName
+totalOrders
+totalRevenue
+pendingOrders
+Orders (Lista de Order {orderId , price, status, timestamp})
+dashboardUrl
+supportEmail
+currentYear
+
+
+ 
+
+
+-->
+
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Ventas Semanal</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f4f4;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f4f4;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+                <table role="presentation" width="620" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 30px 40px; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 26px;" >Arka</h1>
+                            <p style="color: #e0e7ff; margin: 8px 0 0 0; font-size: 14px;">Resumen Semanal de Ventas</p>
+                            <p style="color: #c7d2fe; margin: 6px 0 0 0; font-size: 13px;">
+                                Semana del <span th:text="${weekStart}">01 Feb 2026</span> al <span th:text="${weekEnd}">07 Feb 2026</span>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="padding: 30px 40px 10px 40px;">
+                            <h2 style="color: #1f2937; margin: 0 0 8px 0; font-size: 20px;">
+                                Hola, <span th:text="${recipientName}">Admin</span> 👋
+                            </h2>
+                            <p style="color: #6b7280; font-size: 14px; margin: 0;">
+                                Aquí tienes el resumen de órdenes de la semana.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Summary Cards -->
+                    <tr>
+                        <td style="padding: 20px 40px;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <!-- Total Órdenes -->
+                                    <td width="33%" style="padding: 4px;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="background-color: #ede9fe; border-radius: 8px; padding: 16px; text-align: center;">
+                                                    <p style="color: #7c3aed; font-size: 22px; font-weight: bold; margin: 0;" th:text="${totalOrders}">24</p>
+                                                    <p style="color: #6d28d9; font-size: 11px; margin: 4px 0 0 0;">Total Órdenes</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!-- Total Ingresos -->
+                                    <td width="33%" style="padding: 4px;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="background-color: #d1fae5; border-radius: 8px; padding: 16px; text-align: center;">
+                                                    <p style="color: #065f46; font-size: 22px; font-weight: bold; margin: 0;" th:text="'$' + ${totalRevenue}">$1,240.00</p>
+                                                    <p style="color: #047857; font-size: 11px; margin: 4px 0 0 0;">Ingresos Totales</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!-- Pendientes -->
+                                    <td width="33%" style="padding: 4px;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="background-color: #fef3c7; border-radius: 8px; padding: 16px; text-align: center;">
+                                                    <p style="color: #92400e; font-size: 22px; font-weight: bold; margin: 0;" th:text="${pendingOrders}">3</p>
+                                                    <p style="color: #b45309; font-size: 11px; margin: 4px 0 0 0;">Pendientes</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Orders List -->
+                    <tr>
+                        <td style="padding: 10px 40px 30px 40px;">
+                            <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 14px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                                📋 Detalle de Órdenes
+                            </h3>
+
+                            <!-- Order Item — se repite con th:each -->
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" th:each="order : ${orders}">
+                                <tr>
+                                    <td style="padding: 12px 16px; margin-bottom: 8px; background-color: #f9fafb; border-radius: 8px; border-left: 4px solid #6366f1; margin: 0 0 8px 0; display: block;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <!-- Orden # y Timestamp -->
+                                                <td style="vertical-align: top; width: 60%;">
+                                                    <p style="margin: 0; font-size: 14px; font-weight: bold; color: #1f2937;">
+                                                        # <span th:text="${order.orderId}">ORD-00123</span>
+                                                    </p>
+                                                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af;" th:text="${order.timestamp}">2026-02-03 14:32:10</p>
+                                                </td>
+                                                <!-- Precio y Estatus -->
+                                                <td style="vertical-align: top; text-align: right; width: 40%;">
+                                                    <p style="margin: 0; font-size: 15px; font-weight: bold; color: #1f2937;" th:text="'$' + ${order.price}">$59.99</p>
+                                                    <!-- Estatus badge — usa th:switch para el color -->
+                                                    <span th:switch="${order.status}">
+                                                        <span th:case="'COMPLETADO'" style="display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; background-color: #d1fae5; color: #065f46;">✔ COMPLETADO</span>
+                                                        <span th:case="'PENDIENTE'" style="display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; background-color: #fef3c7; color: #92400e;">⏳ PENDIENTE</span>
+                                                        <span th:case="'CANCELADO'" style="display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; background-color: #fee2e2; color: #991b1b;">✖ CANCELADO</span>
+                                                        <span th:case="*" style="display: inline-block; margin-top: 4px; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; background-color: #e5e7eb; color: #374151;" th:text="${order.status}">OTRO</span>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <!-- Spacer entre items -->
+                                <tr><td style="height: 8px;"></td></tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <!-- Highlights: Producto + Cliente -->
+                    <tr>
+                        <td style="padding: 0 40px 30px 40px;">
+                            <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 14px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                                🏆 Destacados de la Semana
+                            </h3>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <!-- Producto más vendido -->
+                                    <td width="50%" style="padding: 4px;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="background-color: #f0fdf4; border-radius: 8px; padding: 18px; border-left: 4px solid #22c55e;">
+                                                    <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: bold; color: #15803d; text-transform: uppercase; letter-spacing: 1px;">🥇 Producto más vendido</p>
+                                                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: bold; color: #1f2937;" th:text="${topProduct.name}">Curso de Python Pro</p>
+                                                    <p style="margin: 0 0 2px 0; font-size: 12px; color: #6b7280;">
+                                                        Unidades: <strong th:text="${topProduct.unitsSold}">18</strong>
+                                                    </p>
+                                                    <p style="margin: 0; font-size: 12px; color: #6b7280;">
+                                                        Ingresos: <strong th:text="'$' + ${topProduct.revenue}">$540.00</strong>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <!-- Cliente más frecuente -->
+                                    <td width="50%" style="padding: 4px;">
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="background-color: #eff6ff; border-radius: 8px; padding: 18px; border-left: 4px solid #3b82f6;">
+                                                    <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: bold; color: #1d4ed8; text-transform: uppercase; letter-spacing: 1px;">⭐ Cliente más frecuente</p>
+                                                    <p style="margin: 0 0 4px 0; font-size: 15px; font-weight: bold; color: #1f2937;" th:text="${topCustomer.name}">Carlos Méndez</p>
+                                                    <p style="margin: 0 0 2px 0; font-size: 12px; color: #6b7280;">
+                                                        Órdenes: <strong th:text="${topCustomer.orderCount}">5</strong>
+                                                    </p>
+                                                    <p style="margin: 0; font-size: 12px; color: #6b7280;">
+                                                        Total gastado: <strong th:text="'$' + ${topCustomer.totalSpent}">$320.00</strong>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- CTA -->
+                    <!-- <tr>
+                        <td style="padding: 0 40px 30px 40px; text-align: center;">
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto;">
+                                <tr>
+                                    <td style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); border-radius: 6px;">
+                                        <a th:href="${dashboardUrl}"  target="_blank" style="display: inline-block; padding: 13px 30px; color: #ffffff; text-decoration: none; font-size: 15px; font-weight: bold;">
+                                            Ver Dashboard Completo →
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr> -->
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #1f2937; padding: 25px 40px; text-align: center;">
+                            <p style="color: #9ca3af; font-size: 13px; margin: 0 0 8px 0;">
+                                ¿Tienes preguntas? <a th:href="'mailto:' + ${supportEmail}" style="color: #8b5cf6;" th:text="${supportEmail}"></a>
+                            </p>
+                            <p style="color: #6b7280; font-size: 12px; margin: 0;">
+                                © <span th:text="${currentYear}">2026</span> <span>Arka</span>. Todos los derechos reservados.
+                            </p>
+                            
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.arka.shopingCart.infrastructure.persistence.entity.ShopingCartDetailTable;
 
 public interface IJPAShopingCartDetail extends JpaRepository<ShopingCartDetailTable,Long>{
-    List<ShopingCartDetailTable> findByShopingCartId(Long cartId);  
+    List<ShopingCartDetailTable> findByShopingCartId_Id(Long cartId);  
     List<ShopingCartDetailTable> findByProductId(Long productId);
 }

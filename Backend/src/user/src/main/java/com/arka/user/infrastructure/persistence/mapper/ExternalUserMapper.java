@@ -2,9 +2,11 @@ package com.arka.user.infrastructure.persistence.mapper;
 
 import org.springframework.stereotype.Component;
 
+import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IExternalMapper;
 import com.arka.user.domain.model.User;
+import com.arka.user.domain.model.enums.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,7 +28,7 @@ public class ExternalUserMapper implements IExternalMapper<UserInfo,User> {
         .isActive(info.isActive())
         .lastLogin(info.getLastLogin())
         .createdAt(info.getCreatedAt())
-        .role(null)
+        .role(Role.valueOf(info.getRole().name()))
         .shoppingCartsIds(info.getShoppingCartsIds())
         .shopingCarts(info.getShopingCarts())
         .ordersIds(info.getOrdersIds())
@@ -47,7 +49,7 @@ public class ExternalUserMapper implements IExternalMapper<UserInfo,User> {
         .isActive(domain.isActive())
         .lastLogin(domain.getLastLogin())
         .createdAt(domain.getCreatedAt())
-        .role(null)
+        .role(Roleinfo.valueOf(domain.getRole().name()))
         .shoppingCartsIds(domain.getShoppingCartsIds())
         .shopingCarts(domain.getShopingCarts())
         .ordersIds(domain.getOrdersIds())
