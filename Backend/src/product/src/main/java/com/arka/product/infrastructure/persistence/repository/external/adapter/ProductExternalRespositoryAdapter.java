@@ -4,8 +4,11 @@ import org.springframework.stereotype.Repository;
 
 import com.arka.product.application.port.out.IProductRepositoryPort;
 import com.arka.product.infrastructure.persistence.mapper.adapter.ExternalProductMapper;
+import com.arka.product.infrastructure.persistence.repository.auxiliarObjects.LowStockProductDTOMapper;
 import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.product.dtos.LowStockProductDTOInfo;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -15,6 +18,8 @@ public class ProductExternalRespositoryAdapter implements IProductDataPort {
     private final IProductRepositoryPort innerRepository;
 
     private final ExternalProductMapper externalProductMapper;
+
+    private final LowStockProductDTOMapper lowStockProductDTOMapper;
 
 
 
@@ -43,7 +48,13 @@ public class ProductExternalRespositoryAdapter implements IProductDataPort {
             )
         );
 
-		
 	}
+
+    @Override
+    public List<LowStockProductDTOInfo> findProductsBelowStock() {
+        return innerRepository.findProductsBelowStock(10).stream().map(
+            p -> lowStockProductDTOMapper.toInfo(p)
+        ).toList();
+    }
     
 }
