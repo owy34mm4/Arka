@@ -1,7 +1,7 @@
 package com.arka.shopingCart.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 import java.util.List;
 
 import com.arka.shared.application.ports.out.product.ProductInfo;

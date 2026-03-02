@@ -20,6 +20,7 @@ import com.arka.shared.application.ports.out.order.dtos.TopProductDTOInfo;
 import com.arka.shared.application.ports.out.order.enums.OrderStateInfo;
 import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
@@ -39,6 +40,8 @@ public class GenerateWeeklyReportHandler implements IGenerateWeeklySaleReportUse
 
     private final IProductDataPort productRepository;
 
+    private final IAuthenticateUserPort authenticateUserPort;
+
 
 
     @Value ("${cloud-provider.aws.ses.sender}")
@@ -49,7 +52,7 @@ public class GenerateWeeklyReportHandler implements IGenerateWeeklySaleReportUse
     public void execute(GenerateWeeklyReportCommand cmd) {
         //Validamos permisos de Ejecucion
         
-            UserInfo requester = userRepository.findById(cmd.getRequesterId());
+            UserInfo requester = userRepository.findById(authenticateUserPort.getUserId());
            
             if(requester.getRole().name() != Roleinfo.Administrador.name()){throw new BusinessRuleException("Permisos insuficientes");}
 

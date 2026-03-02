@@ -20,6 +20,7 @@ import com.arka.product.domain.model.ProductHistory;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.category.ICategoryDataPort;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
@@ -43,12 +44,15 @@ public class UpdateStockProductHandler implements IUpdateStockUseCase{
 
     private final IUserDataPort userRepository;
 
-    // private final IShopingCartDataPort shopingcartRepository;
+     private final IAuthenticateUserPort authenticateUserPort;
+
+
     
     @Override
     public Product execute(UpdateProductCommand cmd) throws InvalidPropertiesGiven {
         //Validar Permisos de Accion
-            UserInfo requester = userRepository.findById(cmd.getRequesterId());
+            UserInfo requester = userRepository.findById(authenticateUserPort.getUserId());
+            
             if( !(requester.getRole().name() == Roleinfo.Administrador.name() || requester.getRole().name() == Roleinfo.Empleado.name() ) ){throw new BusinessRuleException("No permitido");}
 
         //Obtenemos la entidad que vamos a modificar

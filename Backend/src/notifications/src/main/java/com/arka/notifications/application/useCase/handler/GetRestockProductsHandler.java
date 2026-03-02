@@ -1,7 +1,6 @@
 package com.arka.notifications.application.useCase.handler;
 
 
-
 import java.time.LocalDateTime;
 
 import java.time.format.DateTimeFormatter;
@@ -17,6 +16,7 @@ import com.arka.notifications.application.useCase.command.GetRestockProductsComm
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
 import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.dtos.LowStockProductDTOInfo;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
@@ -28,20 +28,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class GetRestockProductsHandler implements IGetRestockProductsUseCase{
 
-    private final IUserDataPort userRepository;
-
     private final IProductDataPort productRepository;
+
+    private final IUserDataPort userRepository;
 
     private final IEmailNotificationPort notificationAgent;
 
     @Value ("${cloud-provider.aws.ses.sender}")
     private String senderEmail;
 
+    private final IAuthenticateUserPort authenticateUserPort;
+
     @Override
     public void execute(GetRestockProductsCommand cmd) {
         //Validar Permisos De accion
-            UserInfo requester = userRepository.findById(cmd.getRequesterId());
-
+            UserInfo requester = userRepository.findById(authenticateUserPort.getUserId());
             if (requester.getRole().name() != Roleinfo.Administrador.name()){throw new BusinessRuleException("Permisos Insuficientes");}
 
         //Obtener la data de Productos bajops en stock

@@ -1,7 +1,10 @@
 package com.arka.user.infrastructure.persistence.repository.internal.gateway;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 
 import com.arka.user.infrastructure.persistence.entity.UserTable;
 
@@ -15,4 +18,5 @@ public interface IJPAUserRepository extends JpaRepository<UserTable,Long> {
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
     boolean existsById(Long id);
+    Optional<UserTable> findByUsername(String username);
 }

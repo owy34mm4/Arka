@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.category.ICategoryDataPort;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
@@ -44,13 +45,14 @@ public class CreateProductHandler implements ICreateProductUseCase {
     private final IProductHistoryRepositoryPort productHistoryRepository;
 
     private final IUserDataPort userRepository;
+    
+    private final IAuthenticateUserPort authenticateUserPort;
 
     @Override
     public Product execute(CreateProductCommand cmd) throws BusinessRuleException {
         //Validar privilegios de accion -> Min empleado
-            //Leer ley de Morgan en operaciones booleanas
-            UserInfo requester = userRepository.findById(cmd.getRequesterId());
-            if(requester.getRole().name() != Roleinfo.Empleado.name() && requester.getRole().name() != Roleinfo.Administrador.name()){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
+            UserInfo requester =  userRepository.findById(authenticateUserPort.getUserId());
+            if(requester.getRole().name().equals( Roleinfo.Empleado.name() )&& authenticateUserPort.getRole().equals( Roleinfo.Administrador.name())){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
 
         //Generamos modelo 
         Product model = cmd.toModel();

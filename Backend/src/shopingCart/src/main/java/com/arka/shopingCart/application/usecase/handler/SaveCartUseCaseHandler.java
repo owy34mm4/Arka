@@ -1,6 +1,6 @@
 package com.arka.shopingCart.application.usecase.handler;
 
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
@@ -34,12 +35,15 @@ private final IShopingCartRepository shopingCartRepository;
 
 private final IUserDataPort userRepository;
 
+private final IAuthenticateUserPort authenticateUserPort;
+
 
     @Override
     public ShopingCart execute(SaveShopingCartCommand cmd) {
-        //Validar Usuario Proporcionado
-            if(!userRepository.existsById(cmd.getOwnerId())){ throw new BusinessRuleException("No autorizado"); }
+        //Validar criterio
 
+        if (authenticateUserPort.getUserId() != cmd.getOwnerId()){throw new BusinessRuleException("No puedes Asignar propiedad a entidades ajenas");}
+        
         //Mapemos de ProductIds a ProductsInfos
         List<ProductInfo> productsToOrder = productRepository.findAllById(cmd.getProductsIds());
 

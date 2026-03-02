@@ -31,6 +31,7 @@ import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.IProductHistoryDataPort;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.shoppingCart.IShopingCartDataPort;
 import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
@@ -67,12 +68,14 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
     private final IEmailNotificationPort emailPort;
 
+    private final IAuthenticateUserPort authenticateUserPort;
+
 
     @Override
     @Transactional
     public Order execute(RegisterOrderCommand cmd) {
         //Validar usuario
-            if (!userRepository.existsById(cmd.getRequesterId())){ throw new BusinessRuleException("Solicitante Invalido");}
+            if (!userRepository.existsById(authenticateUserPort.getUserId())){ throw new BusinessRuleException("Solicitante Invalido");}
 
         //Validar propiedad del carrito
             
@@ -80,10 +83,10 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             ShopingCartInfo sc = shopingCartRepository.findById(cmd.getShopingCartId());
 
             //Validacion del useCase -> Si ya fue ordenado, frenar ejecucion
-            if (sc.isOrdered() || sc.getProductsIds().isEmpty()){ System.out.println("SC Ordenado"); throw new BusinessRuleException("Carrito Ya Ordenado o vacio");}
+            if (sc.isOrdered() || sc.getProductsIds().isEmpty()){ throw new BusinessRuleException("Carrito Ya Ordenado o vacio");}
            
             //Validar el OwnerId con el Id del requester
-            if (!sc.getOwnerId().equals(cmd.getRequesterId())){ throw new BusinessRuleException("Accion no permitida");}
+            if (!sc.getOwnerId().equals(authenticateUserPort.getUserId())){ throw new BusinessRuleException("Accion no permitida");}
 
 
         //Validar disponibilidad del Stock 

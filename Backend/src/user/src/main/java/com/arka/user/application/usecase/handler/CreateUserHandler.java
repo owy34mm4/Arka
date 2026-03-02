@@ -3,9 +3,12 @@ package com.arka.user.application.usecase.handler;
 import java.time.LocalDateTime;
 import java.util.Map;
 
+
 import org.springframework.stereotype.Service;
 
+
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
+import com.arka.shared.application.ports.out.security.IPasswordEncoderPort;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.user.application.port.in.ICreateUserUseCase;
 import com.arka.user.application.port.out.IUserRepository;
@@ -23,6 +26,8 @@ public class CreateUserHandler implements ICreateUserUseCase {
 
     private final IEmailNotificationPort emailPort;
 
+    private final IPasswordEncoderPort passwordEncoder;
+
     @Override
     public User execute(CreateUserCommand cmd) {
         //Checkear si ya existe alguien con el username del request
@@ -38,6 +43,7 @@ public class CreateUserHandler implements ICreateUserUseCase {
         User u = cmd.toModel();
         
         //Sets propios del useCase
+        u.setPassword(passwordEncoder.encode(u.getPassword()));
         u.setRole(Role.Cliente);
         u.setCreatedAt(LocalDateTime.now());
         u.setActive(true);

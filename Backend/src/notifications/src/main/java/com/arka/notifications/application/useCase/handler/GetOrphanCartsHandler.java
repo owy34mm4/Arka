@@ -11,6 +11,7 @@ import com.arka.notifications.application.port.in.IGetOrphanCartsUseCase;
 import com.arka.notifications.application.useCase.command.GetOrphanCartsCommand;
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
 import com.arka.shared.application.ports.out.product.IProductDataPort;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.shoppingCart.IShopingCartDataPort;
 import com.arka.shared.application.ports.out.shoppingCart.dtos.CartProductInfo;
 import com.arka.shared.application.ports.out.shoppingCart.dtos.PendingCartDTOInfo;
@@ -33,10 +34,12 @@ public class GetOrphanCartsHandler implements IGetOrphanCartsUseCase{
 
     private final IProductDataPort productRepository;
 
+    private final IAuthenticateUserPort authenticateUserPort;
+
     @Override
     public void execute(GetOrphanCartsCommand cmd) {
         //Validamos permisos de Accion
-            UserInfo requester = userRepository.findById(cmd.getRequesterId());
+            UserInfo requester = userRepository.findById(authenticateUserPort.getUserId());
 
             if(requester.getRole().name() != Roleinfo.Administrador.name()){throw new BusinessRuleException("Accion no permitida");}
 

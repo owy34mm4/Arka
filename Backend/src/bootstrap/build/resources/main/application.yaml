@@ -56,9 +56,9 @@ spring:
         dialect : org.hibernate.dialect.MySQLDialect
   
 
-jwt-provider:
-  expiration-date : 3600000
-  secret: "sM|<EjC=de:|TC/(/ldr)ELFeqV$}dDwqn}/mZ5A2ug"
+jwt:
+  expiration : 3600000
+  secret: "nCUuBFc4yhjZzb6JvFKFC7jumi90S2ufaK0n021XRaE="
   password-rest:
     token-expiration-minutes: 30
 

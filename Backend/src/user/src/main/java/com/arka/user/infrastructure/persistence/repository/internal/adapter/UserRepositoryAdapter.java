@@ -1,6 +1,8 @@
 package com.arka.user.infrastructure.persistence.repository.internal.adapter;
 
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
 
@@ -35,7 +37,6 @@ public class UserRepositoryAdapter implements IUserRepository{
 
     }
 
-    
     @Override
     public boolean alreadyExists(String usernameToCheck){
         return userRepository.existsByUsername(usernameToCheck);
@@ -53,11 +54,17 @@ public class UserRepositoryAdapter implements IUserRepository{
 
     }
     
-
-
     @Override
     public User findById(@NonNull Long id) {
         return persistanceUserMapper.toDomain(userRepository.findById(id).orElseThrow(()-> new NotFoundException("User")));
+        
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return persistanceUserMapper.toDomain(
+            userRepository.findByUsername(username).orElseThrow(()-> new NotFoundException("User"))
+        );
         
     }
 

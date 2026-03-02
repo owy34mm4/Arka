@@ -13,6 +13,7 @@ import com.arka.order.application.usecase.command.UpdateOrderStatusCommand;
 import com.arka.order.domain.model.Order;
 import com.arka.shared.application.ports.out.notification.email.IEmailNotificationPort;
 import com.arka.shared.application.ports.out.product.IProductDataPort;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
@@ -31,15 +32,17 @@ public class UpdateOrderStatusHandler implements IUpdateOrderStatus{
     private final IProductDataPort productRepository;
 
     private final IEmailNotificationPort notificationAgent;
+
+    private final IAuthenticateUserPort authenticateUserPort;
     
     @Override
     public Order execute(UpdateOrderStatusCommand cmd) {
         //Validamos criterios de ejecucion
+            UserInfo requester = userRepository.findById(authenticateUserPort.getUserId());
 
             //Solicitante tenga privilegios de ejecucion
-                UserInfo requester = userRepository.findById(cmd.getRequesterId());
-
-                if (requester.getRole()== Roleinfo.Cliente) { throw new BusinessRuleException("Permisos Insuficientes");}
+                
+                if (requester.getRole().name() == Roleinfo.Cliente.name()) { throw new BusinessRuleException("Permisos Insuficientes");}
 
             //Orden si es del dueño
 

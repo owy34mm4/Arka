@@ -24,6 +24,7 @@ import com.arka.shared.application.ports.out.product.IProductDataPort;
 import com.arka.shared.application.ports.out.product.IProductHistoryDataPort;
 import com.arka.shared.application.ports.out.product.ProductHisotryInfo;
 import com.arka.shared.application.ports.out.product.ProductInfo;
+import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 
@@ -46,6 +47,8 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
 
     private final ExternalProductHistoryMapper externalProductHistoryMapper;
 
+    private final IAuthenticateUserPort authenticateUserPort;
+
     @Override  
     public Order execute(ModifyOrderByCustomerCommand cmd) {  
   
@@ -53,10 +56,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
         Order o = orderRepository.findById(cmd.getOrderId());  
   
         // Validar permisos  
-        if (!o.getOwnerId().equals(cmd.getRequesterId())) {  
-            throw new BusinessRuleException("Accion no permitida");  
-        }  
-        if (!userRepository.existsById(cmd.getRequesterId())) {  
+        if (!o.getOwnerId().equals(authenticateUserPort.getUserId())) {  
             throw new BusinessRuleException("Accion no permitida");  
         }  
   
