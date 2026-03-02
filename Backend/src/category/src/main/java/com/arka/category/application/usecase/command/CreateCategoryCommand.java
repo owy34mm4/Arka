@@ -26,14 +26,12 @@ import lombok.Setter;
 public class CreateCategoryCommand {
     Long id;
     String name;
-    Long requesterId;
 
     
     public static CreateCategoryCommand createFromRequest(RequestCreateCategory request){
         return CreateCategoryCommand.builder()
         .id(null)
         .name(request.getName())
-        .requesterId(request.getRequester_id())
         .build();
     }
 

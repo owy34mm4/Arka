@@ -30,7 +30,6 @@ public class CreateProductCommand {
 
     public static CreateProductCommand createFromRequest(RequestCreateProduct request){
         return CreateProductCommand.builder()
-            .requesterId(request.getRequester_id())
             .id(null)
             .name(request.getName())
             .description(request.getDescription())

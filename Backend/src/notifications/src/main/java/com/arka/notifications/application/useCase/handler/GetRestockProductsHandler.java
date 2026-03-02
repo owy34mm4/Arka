@@ -60,7 +60,7 @@ public class GetRestockProductsHandler implements IGetRestockProductsUseCase{
                 variablesHtml.put("currentYear", LocalDateTime.now().getYear());
         
             notificationAgent.sendHtml(senderEmail, "Productos Bajo Stock", "restockProductReport", variablesHtml);
-            notificationAgent.sendHtml(cmd.getEmailToSend(), "Productos Bajo Stock", "restockProductReport", variablesHtml);
+            notificationAgent.sendHtml(requester.getEmail(), "Productos Bajo Stock", "restockProductReport", variablesHtml);
             
                
 

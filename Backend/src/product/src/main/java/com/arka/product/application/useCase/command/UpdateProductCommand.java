@@ -17,7 +17,6 @@ public class UpdateProductCommand {
 
     public static UpdateProductCommand createFromRequest(RequestUpdateStockProduct request){
         return UpdateProductCommand.builder()
-            .requesterId(request.getRequester_id())
             .productId(request.getProduct_id())
             .newStock(request.getNew_stock())
             .build();

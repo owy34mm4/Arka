@@ -7,6 +7,5 @@ import lombok.Getter;
 public class RequestCreateCategory {
     @NotBlank
     String name;
-    @NotBlank
-    Long requester_id;
+
 }

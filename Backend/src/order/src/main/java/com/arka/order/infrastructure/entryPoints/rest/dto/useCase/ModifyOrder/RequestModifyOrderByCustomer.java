@@ -6,7 +6,6 @@ import lombok.Getter;
 
 @Getter
 public class RequestModifyOrderByCustomer {
-    private Long requester_id;
 
     private Long order_id;
 

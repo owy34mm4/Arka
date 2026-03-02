@@ -66,6 +66,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
         }  
   
         Order newOrder = cmd.toDomain();  
+        newOrder.setOwnerId(authenticateUserPort.getUserId());
   
         // Contar productos vieja y nueva orden  
         Map<Long, Long> oldOrderCountById = o.getProductsIds().stream()  
@@ -93,7 +94,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
             Product product = externalProductMapper.toDomain(pActualizado);  
             ProductHisotryInfo pHI = externalProductHistoryMapper.toInfo(product.toProductHistory());  
             pHI.setModifiedAt(Date.from(Instant.now()));  
-            pHI.setModifiedById(cmd.getRequesterId());  
+            pHI.setModifiedById(authenticateUserPort.getUserId());  
             productHistoryExternalRepository.save(pHI);  
         });  
   
@@ -110,7 +111,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
             Product product = externalProductMapper.toDomain(p);  
             ProductHisotryInfo pHI = externalProductHistoryMapper.toInfo(product.toProductHistory());  
             pHI.setModifiedAt(Date.from(Instant.now()));  
-            pHI.setModifiedById(cmd.getRequesterId());  
+            pHI.setModifiedById(authenticateUserPort.getUserId());  
             productHistoryExternalRepository.save(pHI);  
         });  
   
@@ -119,7 +120,7 @@ public class ModifyOrderByCustomerHandler implements IModifyOrderByCustomerUseCa
   
         // Inyección de objetos de respuesta  
         o.setProducts(productRepository.findAllById(cmd.getProductsIds()));
-        o.setOwner(userRepository.findById(cmd.getRequesterId()));  
+        o.setOwner(userRepository.findById(authenticateUserPort.getUserId()));  
   
         return o;  
     }

@@ -8,13 +8,13 @@ import lombok.Getter;
 @Builder
 @Getter
 public class GetOrphanCartsCommand {
-    private Long requesterId;
+
     private String receiverEmail;
     private boolean sendNotification;
 
     public static GetOrphanCartsCommand createFromRequest(RequestGetOprhanCarts request){
         return GetOrphanCartsCommand.builder()
-        .requesterId(request.getRequester_id())
+
         .receiverEmail(request.getEmail())
         .sendNotification(request.isSend_notification())
         .build();

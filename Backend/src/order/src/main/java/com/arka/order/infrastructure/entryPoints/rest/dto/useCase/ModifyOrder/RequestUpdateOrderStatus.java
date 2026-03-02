@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public class RequestUpdateOrderStatus {
     private Long order_id;
-    private Long owner_id;
-    private Long requester_id;   
+    private Long owner_id;  
     private OrderState state; 
 }

@@ -14,7 +14,6 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ModifyOrderByCustomerCommand {
-    private Long requesterId;
 
     private Long orderId;
 
@@ -23,7 +22,6 @@ public class ModifyOrderByCustomerCommand {
 
     public static ModifyOrderByCustomerCommand createFromRequest(RequestModifyOrderByCustomer request){
         return ModifyOrderByCustomerCommand.builder()
-        .requesterId(request.getRequester_id())
         .orderId(request.getOrder_id())
         .productsIds(request.getProducts_ids())
         .build();
@@ -32,7 +30,7 @@ public class ModifyOrderByCustomerCommand {
     public Order toDomain(){
         return Order.builder()
         .id(this.getOrderId())
-        .ownerId(this.getRequesterId())
+        .ownerId(null)
         .owner(null)
         .state(null)
         .productsIds(this.getProductsIds())

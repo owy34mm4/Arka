@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UpdateUserCommand {
-    private Long requesterId;
+
 
     private Long idToModify;
 
@@ -26,7 +26,6 @@ public class UpdateUserCommand {
 
     public static UpdateUserCommand createFromRequest(RequestUpdateUser request){
         return UpdateUserCommand.builder()
-        .requesterId(request.getRequester_id())
         .idToModify(request.getId_to_modify())
         .first_name(request.getFirst_name())
         .last_name(request.getLast_name())

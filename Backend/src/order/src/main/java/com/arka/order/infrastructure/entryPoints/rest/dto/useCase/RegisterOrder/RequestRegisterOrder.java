@@ -6,6 +6,5 @@ import lombok.Getter;
 
 @Getter
 public class RequestRegisterOrder {
-    Long requester_id;
     Long shoping_cart_id;
 }

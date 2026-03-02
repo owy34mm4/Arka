@@ -99,6 +99,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
             //Dump del Comand a Model
             Order o = cmd.toModel();
             //Seteos de data del UseCase
+                o.setOwnerId(authenticateUserPort.getUserId());
                 o.setState(OrderState.PENDIENTE);
                 o.updateProductsIds(sc.getProductsIds());
 
@@ -131,7 +132,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
                             //TimeStamp de Actualizacion
                             pHI.setModifiedAt(Date.from(Instant.now()));
                             //Flag de Responsabilidad
-                            pHI.setModifiedById(cmd.getRequesterId());
+                            pHI.setModifiedById(authenticateUserPort.getUserId());
 
                         productHistoryRepository.save(pHI);
                         
@@ -160,7 +161,7 @@ public class RegisterOrderHandler implements IRegisterOrderUseCase{
 
             //Preparar inyeccion para el retorno del objeto
             o.setProducts(productRepository.findAllById(scModel.getProductsIds()));
-            o.setOwner(userRepository.findById(cmd.getRequesterId()));
+            o.setOwner(userRepository.findById(authenticateUserPort.getUserId()));
 
             UserInfo owner = o.getOwner();
 

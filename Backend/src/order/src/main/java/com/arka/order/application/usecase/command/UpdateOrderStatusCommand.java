@@ -12,7 +12,6 @@ import lombok.Getter;
 public class UpdateOrderStatusCommand {
     private Long orderId;
     private Long ownerId;    
-    private Long requesterId;
     private OrderState orderStatus;
     
 
@@ -20,7 +19,6 @@ public class UpdateOrderStatusCommand {
         return UpdateOrderStatusCommand.builder()
         .orderId(request.getOrder_id())
         .ownerId(request.getOwner_id())
-        .requesterId(request.getRequester_id())
         .orderStatus(OrderState.valueOf(request.getState().name()))
         .build();
     }

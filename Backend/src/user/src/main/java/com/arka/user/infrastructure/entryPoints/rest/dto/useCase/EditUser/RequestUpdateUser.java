@@ -7,8 +7,6 @@ import lombok.Getter;
 
 @Getter
 public class RequestUpdateUser {
-    @NotBlank
-    private Long requester_id;
 
     @NotBlank
     private Long id_to_modify;

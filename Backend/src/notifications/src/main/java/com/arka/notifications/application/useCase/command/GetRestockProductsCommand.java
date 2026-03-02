@@ -10,12 +10,10 @@ import lombok.Setter;
 @Setter
 @Builder
 public class GetRestockProductsCommand {
-    private Long requesterId;
     private String emailToSend;
 
     public static GetRestockProductsCommand createFromRequest(RequestGetRestockProducts request){
         return GetRestockProductsCommand.builder()
-            .requesterId(request.getRequester_id())
             .emailToSend(request.getEmail_to_Send())
         .build();
     }

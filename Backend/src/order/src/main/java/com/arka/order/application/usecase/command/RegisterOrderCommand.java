@@ -13,14 +13,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class RegisterOrderCommand {
     Long id;
-    Long requesterId;
     Long shopingCartId;
     
 
     public static RegisterOrderCommand createFromRequest(RequestRegisterOrder request){
         return RegisterOrderCommand.builder()
         .id(null)
-        .requesterId(request.getRequester_id())
         .shopingCartId(request.getShoping_cart_id())
         .build();
             
@@ -29,7 +27,7 @@ public class RegisterOrderCommand {
     public Order toModel(){
         return  Order.builder()
             .id(this.id)
-            .ownerId(this.requesterId)
+            .ownerId(null)
             .state(null)
             .productsIds(null)
             .products(null)
