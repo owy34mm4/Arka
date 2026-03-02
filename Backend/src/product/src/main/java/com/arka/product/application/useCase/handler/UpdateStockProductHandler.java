@@ -2,7 +2,6 @@ package com.arka.product.application.useCase.handler;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -21,8 +20,6 @@ import com.arka.product.domain.model.ProductHistory;
 import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.category.ICategoryDataPort;
-import com.arka.shared.application.ports.out.shoppingCart.IShopingCartDataPort;
-import com.arka.shared.application.ports.out.shoppingCart.ShopingCartInfo;
 import com.arka.shared.application.ports.out.user.IUserDataPort;
 import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;

@@ -1,9 +1,6 @@
 package com.arka.user.infrastructure.persistence.repository.internal.adapter;
 
 
-
-
-
 import org.springframework.stereotype.Repository;
 
 
@@ -11,14 +8,14 @@ import com.arka.shared.domain.exceptions.NotFoundException;
 import com.arka.user.application.port.out.IUserRepository;
 import com.arka.user.domain.model.User;
 
-import com.arka.user.infrastructure.persistence.entity.UserTable;
-import com.arka.user.infrastructure.persistence.entity.enums.Role;
+
 import com.arka.user.infrastructure.persistence.mapper.PersistenceUserMapper;
 import com.arka.user.infrastructure.persistence.repository.internal.gateway.IJPAUserRepository;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+
 
 @RequiredArgsConstructor
 @Repository
@@ -30,12 +27,11 @@ public class UserRepositoryAdapter implements IUserRepository{
     
     @Transactional
     public User save(User user){
-        
-        UserTable entity = persistanceUserMapper.toEntity(user);
-        
-       entity = userRepository.save(entity);
-       
-       return persistanceUserMapper.toDomain(entity);
+        return persistanceUserMapper.toDomain(
+            userRepository.save(
+                persistanceUserMapper.toEntity(user)
+            )
+        );
 
     }
 
@@ -57,26 +53,6 @@ public class UserRepositoryAdapter implements IUserRepository{
 
     }
     
-    @Override
-    public boolean isAdmin(Long id){
-       UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
-       Role entitytRol = entity.getRole();
-       return entitytRol==Role.Administrador;
-    }
-
-    @Override
-    public boolean isClient(Long id){
-        UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
-        Role entitytRol = entity.getRole();
-        return entitytRol==Role.Cliente;
-    }
-
-    @Override
-    public boolean isEmploye(Long id){
-        UserTable entity = userRepository.findById(id).orElseThrow(()->new NotFoundException("User"));
-        Role entitytRol = entity.getRole();
-        return entitytRol==Role.Empleado;
-    }
 
 
     @Override

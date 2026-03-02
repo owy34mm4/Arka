@@ -1,13 +1,14 @@
 package com.arka.product.infrastructure.persistence.repository.internal.adapter;
 
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 
 import com.arka.product.application.port.out.IProductRepositoryPort;
 import com.arka.product.domain.model.Product;
 
-import com.arka.product.infrastructure.persistence.entity.ProductTable;
 import com.arka.product.infrastructure.persistence.mapper.adapter.PersistanceProductMapper;
 import com.arka.product.infrastructure.persistence.repository.internal.gateway.IJPAProductRepository;
 import com.arka.shared.domain.exceptions.NotFoundException;
@@ -18,26 +19,36 @@ import lombok.RequiredArgsConstructor;
 @Repository
 public class ProductRepositoryAdapter implements IProductRepositoryPort{
     
-    private final IJPAProductRepository jpaProduct;
+    private final IJPAProductRepository productRepository;
 
-    private final PersistanceProductMapper persistanceMapper;
+    private final PersistanceProductMapper peristanceProductMapper;
    
     @Override
     public Product save(Product product) {
-        if (product==null ){return null;}
-
-        ProductTable nProduct = persistanceMapper.toEntity(product);
-        ProductTable savedEntity=jpaProduct.save(nProduct);
-        Product savedModel = persistanceMapper.toDomain(savedEntity);
-        return savedModel;
+        return peristanceProductMapper.toDomain(
+            productRepository.save(
+                peristanceProductMapper.toEntity(product)
+            )
+        );
     }
 
     @Override
     public Product findById(Long id) {
-        if (id==null) return null;
-        ProductTable entity = jpaProduct.findById(id).orElseThrow(()-> new NotFoundException("Product"));
-        Product model = persistanceMapper.toDomain(entity);
-        return model;
+        return peristanceProductMapper.toDomain(
+            productRepository.findById(id).orElseThrow(()-> new NotFoundException("Product"))
+        );
+    }
+
+    @Override
+    public List<Product> findAllById(List<Long> ids) {
+       return productRepository.findAllById(ids).stream().map(
+        p -> peristanceProductMapper.toDomain(p)
+       ).toList();
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return productRepository.existsById(id);
     }
     
 }

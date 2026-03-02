@@ -3,7 +3,7 @@ package com.arka.product.application.useCase.handler;
 
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashSet;
+
 import java.util.List;
 
 
@@ -20,7 +20,7 @@ import com.arka.shared.domain.exceptions.BusinessRuleException;
 import lombok.RequiredArgsConstructor;
 
 
-// import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
+
 import com.arka.product.application.port.in.ICreateProductUseCase;
 import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
 import com.arka.product.application.port.out.IProductRepositoryPort;

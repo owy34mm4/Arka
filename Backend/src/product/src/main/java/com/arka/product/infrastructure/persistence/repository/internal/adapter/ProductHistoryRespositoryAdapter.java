@@ -19,17 +19,18 @@ import lombok.RequiredArgsConstructor;
 public class ProductHistoryRespositoryAdapter implements IProductHistoryRepositoryPort{
 
     
-    private final IJPAProductHistoryRespository jpaProductHistory;
+    private final IJPAProductHistoryRespository productHistoryRepository;
    
-    private final PersistanceProductHistoryMapper productHistoryMapper;
+    private final PersistanceProductHistoryMapper persistanceProductHistoryeMapper;
 
     
     @Override
     public ProductHistory save(ProductHistory productToRecord) {
-        if (productToRecord ==null) return null;
-        var entity = productHistoryMapper.toEntity(productToRecord);
-        entity = jpaProductHistory.save(entity);
-        return productHistoryMapper.toDomain(entity);
+        return persistanceProductHistoryeMapper.toDomain(
+            productHistoryRepository.save(
+                persistanceProductHistoryeMapper.toEntity(productToRecord)
+            )
+        );
        
     }
 

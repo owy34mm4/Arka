@@ -7,7 +7,7 @@ import com.arka.user.application.port.in.IUpdateUserUsecase;
 import com.arka.user.application.port.out.IUserRepository;
 import com.arka.user.application.usecase.command.UpdateUserCommand;
 import com.arka.user.domain.model.User;
-
+import com.arka.user.domain.model.enums.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,14 +21,16 @@ public class UpdateUserHandler implements IUpdateUserUsecase{
     @Override
     public User execute(UpdateUserCommand cmd) {
         //Validar que el dueño del usuario o un Admin sean los que va a actuar
-        if (cmd.getRequesterId() != cmd.getIdToModify() ){
+        User requester = userRepository.findById(cmd.getRequesterId());
+
+        if (requester.getId() != cmd.getIdToModify() ){
             throw new BusinessRuleException("Accion no permitida");
         }
         User oldUser = userRepository.findById(cmd.getIdToModify());
         User u = cmd.toModel();
 
         //Accion de Admin -> Cambiar al role especificado
-        if(userRepository.isAdmin(cmd.getRequesterId())){
+        if(requester.getRole().name() == Role.Administrador.name()){
             u.setRole(cmd.getRole());
         }
         //Eliminar despues de crear un administrador en sistema
