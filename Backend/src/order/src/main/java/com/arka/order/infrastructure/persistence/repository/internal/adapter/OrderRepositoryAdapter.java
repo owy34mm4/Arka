@@ -1,17 +1,13 @@
 package com.arka.order.infrastructure.persistence.repository.internal.adapter;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
 import com.arka.order.application.port.out.IOrderRepository;
 import com.arka.order.domain.model.Order;
 import com.arka.order.infrastructure.persistence.entity.OrderTable;
-import com.arka.order.infrastructure.persistence.entity.enums.OrderState;
 import com.arka.order.infrastructure.persistence.mapper.adapter.PersistanceOrderMapper;
 import com.arka.order.infrastructure.persistence.repository.auxiliarObjects.TopCustomerWeeklyDTO;
 import com.arka.order.infrastructure.persistence.repository.auxiliarObjects.TopProductDTO;
@@ -56,13 +52,13 @@ public class OrderRepositoryAdapter implements IOrderRepository {
     @Override
     public List<Order> findOrderLast7Days() {
         LocalDateTime hace7Dias= LocalDateTime.now().minusDays(7);
-        return orderRepository.getlast7DaysOrders(hace7Dias).stream()
+        return orderRepository.getlast7DaysOrders(hace7Dias).orElseThrow(()-> new  NotFoundException("OrdersLast7Days")).stream()
         .map(orderData -> persistanceOrderMapper.toDomain(orderData)).toList();
     }
 
     @Override
     public TopProductDTO topMasVendido() {
-        List<Object[]> result = orderRepository.topMasVendido(LocalDateTime.now().minusDays(7), LocalDateTime.now(),PageRequest.of(0,1));
+        List<Object[]> result = orderRepository.topMasVendido(LocalDateTime.now().minusDays(7), LocalDateTime.now(),PageRequest.of(0,1)).orElseThrow(()-> new NotFoundException("TopProductoMasVendido"));
         if (result.isEmpty()) return null;  
   
         Object[] row = result.get(0);  
@@ -75,7 +71,7 @@ public class OrderRepositoryAdapter implements IOrderRepository {
 
     @Override
     public TopCustomerWeeklyDTO topCustomerOfWeek() {
-        return orderRepository.topCustomerOfWeek(LocalDateTime.now().minusDays(7), LocalDateTime.now(), PageRequest.of(0, 1)).getContent().stream().findFirst().orElse(null);
+        return orderRepository.topCustomerOfWeek(LocalDateTime.now().minusDays(7), LocalDateTime.now(), PageRequest.of(0, 1)).orElseThrow(()-> new NotFoundException("TopCustomerOfWeek")).getContent().stream().findFirst().orElse(null);
     }
     
 

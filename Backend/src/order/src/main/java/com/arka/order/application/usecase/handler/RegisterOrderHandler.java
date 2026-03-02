@@ -6,7 +6,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -40,8 +40,6 @@ import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.shopingCart.domain.model.ShopingCart;
 import com.arka.shopingCart.infrastructure.infoMapper.ExternalShopingCartMapper;
 
-
-// import com.arka.user.infrastructure.persistence.repository.external.gateway.IUserExternalRepository;
 
 import lombok.RequiredArgsConstructor;
 

@@ -2,6 +2,7 @@ package com.arka.order.infrastructure.persistence.repository.internal.gateway;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +22,7 @@ public interface IJPAOrderRepository extends JpaRepository<OrderTable,Long>{
     @Query("SELECT o FROM OrderTable o " +  
            "WHERE o.createdAt >= :desde " +  
            "AND o.state = 'CONFIRMADO'")
-    List<OrderTable> getlast7DaysOrders (@Param("desde") LocalDateTime desde);
+    Optional<List<OrderTable>> getlast7DaysOrders (@Param("desde") LocalDateTime desde);
 
 
    @Query(value = """  
@@ -39,7 +40,7 @@ public interface IJPAOrderRepository extends JpaRepository<OrderTable,Long>{
     """,  
     countQuery = "SELECT 1",  
     nativeQuery = true) 
-List<Object[]> topMasVendido(  
+Optional<List<Object[]>> topMasVendido(  
     @Param("fechaInicio") LocalDateTime fechaInicio,   
     @Param("fechaFin") LocalDateTime fechaFin,   
     PageRequest pageable);
@@ -57,7 +58,7 @@ List<Object[]> topMasVendido(
     group by u.id, u.firstName, u.firstSurname, u.lastName, u.lastSurname
     order by count(o.id) desc, coalesce(sum(o.price), 0) desc
     """)
-    Page<TopCustomerWeeklyDTO> topCustomerOfWeek(@Param("from")LocalDateTime from, @Param("to")LocalDateTime to, Pageable pageable);
+    Optional<Page<TopCustomerWeeklyDTO>> topCustomerOfWeek(@Param("from")LocalDateTime from, @Param("to")LocalDateTime to, Pageable pageable);
 
 
 }

@@ -1,10 +1,7 @@
 package com.arka.order.domain.model;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import com.arka.order.domain.model.enums.OrderState;
 import com.arka.order.domain.valueObjects.OrderSubtotal;
 import com.arka.order.domain.valueObjects.OrderTotal;

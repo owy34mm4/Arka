@@ -1,5 +1,8 @@
 package com.arka.category.application.port.out;
 
+import java.util.List;
+
+import com.arka.category.domain.model.Category;
 
 /**  
  * PUERTO DE SALIDA (Driven Port)  
@@ -13,5 +16,9 @@ public interface ICategoryRepository {
 
     boolean existsByName (String name);
 
-    com.arka.category.domain.model.Category save(com.arka.category.domain.model.Category category);
+    Category findById(Long id);
+
+    List<Category> findAllById (List<Long> ids);
+
+    Category save(Category category);
 }

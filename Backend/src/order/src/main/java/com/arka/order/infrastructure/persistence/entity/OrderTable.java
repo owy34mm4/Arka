@@ -3,10 +3,7 @@ package com.arka.order.infrastructure.persistence.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import com.arka.order.infrastructure.persistence.entity.enums.OrderState;
 
 import jakarta.persistence.CascadeType;

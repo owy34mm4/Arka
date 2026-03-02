@@ -48,8 +48,8 @@ public class GenerateWeeklyReportHandler implements IGenerateWeeklySaleReportUse
     @Override
     public void execute(GenerateWeeklyReportCommand cmd) {
         //Validamos permisos de Ejecucion
-        System.out.println(1L);
-            UserInfo requester = userRepository.findById(1l);
+        
+            UserInfo requester = userRepository.findById(cmd.getRequesterId());
            
             if(requester.getRole().name() != Roleinfo.Administrador.name()){throw new BusinessRuleException("Permisos insuficientes");}
 

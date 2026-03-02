@@ -2,6 +2,7 @@ package com.arka.shopingCart.infrastructure.persistence.entity;
 
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,7 @@ public class ShopingCartTable {
     private Long id;
 
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "owner_id")
     private Long ownerId;
@@ -60,7 +61,7 @@ public class ShopingCartTable {
     @PrePersist
     private void onCreate(){
         this.isOrdered=false;
-        this.createdAt=Date.from(Instant.now());
+        this.createdAt=LocalDateTime.now();
     }
     
     

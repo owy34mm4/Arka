@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carritos Abandonados</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; background-color: #f4f4f4;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #f4f4f4;">
+        <tr>
+            <td align="center" style="padding: 40px 20px;">
+                <table role="presentation" width="680" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+                    <!-- Header -->
+                    <tr>
+                        <td style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 30px 40px; text-align: center;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 26px;">Arka</h1>
+                            <p style="color: #e0e7ff; margin: 8px 0 0 0; font-size: 14px;">Reporte de Carritos Abandonados</p>
+                            <p style="color: #c7d2fe; margin: 6px 0 0 0; font-size: 13px;">
+                                Generado el <span th:text="${reportDate}">01 Mar 2026</span>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Greeting -->
+                    <tr>
+                        <td style="padding: 30px 40px 10px 40px;">
+                            <h2 style="color: #1f2937; margin: 0 0 8px 0; font-size: 20px;">
+                                Hola, <span th:text="${recipientName}">Admin</span> 👋
+                            </h2>
+                            <p style="color: #6b7280; font-size: 14px; margin: 0 0 6px 0;">
+                                Aquí tienes el listado de carritos que fueron abandonados y aún no han sido completados.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Summary Card -->
+                    <tr>
+                        <td style="padding: 16px 40px 10px 40px;">
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td style="background-color: #fef3c7; border-radius: 8px; padding: 16px 20px; border-left: 4px solid #f59e0b;">
+                                        <p style="margin: 0; font-size: 14px; color: #92400e;">
+                                            🛒 Total de carritos abandonados:
+                                            <strong th:text="${totalAbandonedCarts}">12</strong>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Carts List -->
+                    <tr>
+                        <td style="padding: 20px 40px 30px 40px;">
+                            <h3 style="color: #1f2937; font-size: 16px; margin: 0 0 14px 0; border-bottom: 2px solid #e5e7eb; padding-bottom: 10px;">
+                                🛒 Detalle de Carritos
+                            </h3>
+
+                            <!-- Cart Card — th:each sobre pendingCarts (List<PendingCartDTOInfo>) -->
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                                   th:each="cart : ${pendingCarts}">
+                                <tr>
+                                    <td style="background-color: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 12px; display: block;">
+
+                                        <!-- Cart Header -->
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+                                                <td style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); padding: 10px 16px;">
+                                                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                        <tr>
+                                                            <td style="vertical-align: middle;">
+                                                                <p style="margin: 0; font-size: 13px; font-weight: bold; color: #ffffff;">
+                                                                    🛒 Carrito #<span th:text="${cart.cartId}">1001</span>
+                                                                </p>
+                                                            </td>
+                                                            <td style="vertical-align: middle; text-align: right;">
+                                                                <p style="margin: 0; font-size: 12px; color: #c7d2fe;">
+                                                                    📅 <span th:text="${#temporals.format(cart.createdAt, 'dd MMM yyyy HH:mm')}">01 Mar 2026 14:32</span>
+                                                                </p>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <!-- Cart Body -->
+                                        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                            <tr>
+
+                                                <!-- Owner Info -->
+                                                <td width="38%" style="padding: 14px 16px; vertical-align: top; border-right: 1px solid #e5e7eb;">
+                                                    <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: bold; color: #6366f1; text-transform: uppercase; letter-spacing: 1px;">👤 Dueño</p>
+                                                    <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: bold; color: #1f2937;">
+                                                        <span th:text="${cart.firstName}"></span>
+                                                        <span th:text="${cart.firstSurname}"></span>
+                                                    </p>
+                                                    <p style="margin: 0 0 4px 0; font-size: 12px; color: #6b7280;">
+                                                        <a th:href="'mailto:' + ${cart.email}"
+                                                           th:text="${cart.email}"
+                                                           style="color: #6366f1; text-decoration: none;"></a>
+                                                    </p>
+                                                    <p style="margin: 4px 0 0 0; font-size: 11px; color: #9ca3af;">
+                                                        ID Cliente: <span th:text="${cart.ownerId}"></span>
+                                                    </p>
+                                                </td>
+
+                                                <!-- Products -->
+                                                <td width="62%" style="padding: 14px 16px; vertical-align: top;">
+                                                    <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: bold; color: #6366f1; text-transform: uppercase; letter-spacing: 1px;">📦 Productos</p>
+
+                                                    <!-- Product row — th:each sobre cart.products (List<ProductInfo>) -->
+                                                    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0"
+                                                           th:each="product : ${cart.products}">
+                                                        <tr>
+                                                            <td style="padding: 5px 0; border-bottom: 1px dashed #e5e7eb;">
+                                                                <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                    <tr>
+                                                                        <td style="vertical-align: middle; width: 60%;">
+                                                                            <p style="margin: 0; font-size: 13px; color: #1f2937; font-weight: bold;"
+                                                                               th:text="${product.name}"></p>
+                                                                        </td>
+                                                                        <td style="vertical-align: middle; text-align: right; width: 40%;">
+                                                                            <span style="font-size: 13px; font-weight: bold; color: #065f46;"
+                                                                                  th:text="${product.price}"></span>
+                                                                            <span style="font-size: 11px; color: #9ca3af; margin-left: 2px;"
+                                                                                  th:text="${product.currency}"></span>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </td>
+                                </tr>
+                                <!-- Spacer -->
+                                <tr><td style="height: 12px;"></td></tr>
+                            </table>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #1f2937; padding: 25px 40px; text-align: center;">
+                            <p style="color: #9ca3af; font-size: 13px; margin: 0 0 8px 0;">
+                                ¿Tienes preguntas? <a th:href="'mailto:' + ${supportEmail}" th:text="${supportEmail}" style="color: #8b5cf6;">soporte@arka.com</a>
+                            </p>
+                            <p style="color: #6b7280; font-size: 12px; margin: 0;">
+                                © <span th:text="${currentYear}">2026</span> Arka. Todos los derechos reservados.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

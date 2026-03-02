@@ -1,5 +1,6 @@
 package com.arka.shopingCart.domain.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import lombok.Setter;
 @Builder
 public class ShopingCart {
     private Long id;
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private Long ownerId;
     private UserInfo owner;
     private List<Long> productsIds;
