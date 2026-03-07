@@ -1,0 +1,34 @@
+name: Build and Push to Docker Hub
+
+on:
+  push:
+    branches:
+      - "main"  # Se ejecuta cuando haces push a la rama main
+    tags:
+      - "v*.*.*" # También se ejecuta cuando creas un tag de versión (ej. v1.0.0)
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: actions/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: ./Backend
+          file : ./Backend/Dockerfile.deploy
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/arka:latest
+            ${{ secrets.DOCKER_USERNAME }}/arka:${{ github.sha }}

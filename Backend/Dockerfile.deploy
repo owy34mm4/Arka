@@ -6,11 +6,7 @@ WORKDIR /workspace
 
 COPY Backend/src .
 
-EXPOSE 8080
-
-
-RUN chmod +x gradlew
-RUN ./gradlew bootstrap:bootJar
+RUN chmod +x gradlew && ./gradlew bootstrap:bootJar
 
 FROM amazoncorretto:21-alpine AS runner
 
