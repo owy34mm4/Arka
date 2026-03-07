@@ -26,10 +26,11 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./Backend
+          context: .
           file: ./Backend/Dockerfile.deploy
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/arka:latest
 
             ${{ secrets.DOCKER_USERNAME }}/arka:${{ github.sha }}
+
