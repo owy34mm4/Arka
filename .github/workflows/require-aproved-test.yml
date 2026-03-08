@@ -1,4 +1,4 @@
-name: Manatory Tests in PRs
+name: Mandatory Tests in PRs
 on: [pull_request]  
   
 jobs:  
