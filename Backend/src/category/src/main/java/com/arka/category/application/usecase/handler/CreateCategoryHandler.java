@@ -34,14 +34,14 @@ public class CreateCategoryHandler implements ICreateCategoryUseCase {
         //Validar que el solicitante tenga permisos de acción para este evento
             UserInfo requester = userRepository.findById(authenticatedUser.getUserId());
 
-        if (requester.getRole().name().equals(Roleinfo.Cliente.name())){throw new BusinessRuleException("Permisos Insuficientes para esta acción");}
+        if (requester.getRole().name() == Roleinfo.Cliente.name()){throw new BusinessRuleException("Permisos Insuficientes para esta acción");}
 
         //Validar existencia antes de intentar crear
         if (categoryRepository.existsByName(cmd.getName())){throw new BusinessRuleException("Categoria ya exitente");}       
         
-        //Creamos con metodo de dominio
-        Category c = Category.createCategory(cmd.getName());
-        
+        //Dumpeamos de command a modelo
+        Category c = cmd.toModel();     
+
         //Persistir
         c = categoryRepository.save(c);
 

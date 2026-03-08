@@ -16,7 +16,7 @@ public class ResponseCreateCategory{
     public static  ResponseCreateCategory createFromModel(Category model, String msg){
         return ResponseCreateCategory.builder()
                 .id(model.getId())
-                .name(model.getName().getValue())
+                .name(model.getName())
                 .message(msg)
             .build();
     }

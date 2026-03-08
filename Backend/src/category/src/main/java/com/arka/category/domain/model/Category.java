@@ -2,7 +2,6 @@ package com.arka.category.domain.model;
 
 import java.util.List;
 
-import com.arka.category.domain.valueObject.CategoryName;
 import com.arka.shared.application.ports.out.product.ProductInfo;
 
 
@@ -14,19 +13,28 @@ import lombok.Setter;
 @Builder
 public class Category {
     private Long id;
-    private CategoryName name;
+    private String name;
     private List<Long> productsId;
     private List<ProductInfo> products;
 
-    public static Category createCategory(String name){
-        return Category.builder()
-            .id(null)
-            .name(CategoryName.create(name))
-            .productsId(null)
-            .products(null)
-        .build();
 
-    }
+    //Descontinuado, lo correcto es usar ValueObjects
+    // public static Category create(Long id, String name, List<Long> products) throws InvalidPropertiesGiven {
+    //     validateName(name);
+        
+    //     return Category.builder()
+    //                     .id(id)
+    //                     .name(name)
+    //                     .productsId(products)
+    //                     .products(null)
+    //             .build();
+
+    // }    
+
+    // private static void validateName(String nameToCheck) throws InvalidPropertiesGiven{
+    //     if(nameToCheck.strip().isBlank() || nameToCheck ==null) throw new InvalidPropertiesGiven("Category");
+    // }
+
     
 }
     

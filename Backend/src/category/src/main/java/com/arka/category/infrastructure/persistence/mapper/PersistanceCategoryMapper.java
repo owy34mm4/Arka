@@ -3,7 +3,6 @@ package com.arka.category.infrastructure.persistence.mapper;
 import org.springframework.stereotype.Component;
 
 import com.arka.category.domain.model.Category;
-import com.arka.category.domain.valueObject.CategoryName;
 import com.arka.category.infrastructure.persistence.entity.CategoryTable;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IPersistanceMapper;
 
@@ -18,7 +17,7 @@ public class PersistanceCategoryMapper implements IPersistanceMapper<Category, C
         if (c==null) return null;
         return Category.builder()
         .id(c.getId())
-        .name(CategoryName.create(c.getName()))
+        .name(c.getName())
         .productsId(c.getProducts())
         .build();
     }
@@ -27,7 +26,7 @@ public class PersistanceCategoryMapper implements IPersistanceMapper<Category, C
         if (c==null) return null;
         return CategoryTable.builder()
             .id(c.getId())
-            .name(c.getName().getValue())
+            .name(c.getName())
             .products(c.getProductsId())
             .build();
     }
