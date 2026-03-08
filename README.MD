@@ -29,10 +29,10 @@ El proyecto utiliza **Docker Compose** para orquestar el entorno de desarrollo, 
 - Archivos de variables de entorno: `.env.db` y `.env.back` (basados en los ejemplos de configuración).  
   
 ### 2. Levantar el Entorno (Full Stack Local)  
-Desde la raíz del proyecto (donde se encuentra el `docker-compose.yml`):  
+Desde la raíz del proyecto (No donde se encuentra el `docker-compose.dev.yml`, este está en .devcontainer):  
   
 ```bash  
-docker compose up -d
+docker compose -f.devcontainer/docker-compose.dev.yml up
 
 Este comando levantará:
 
