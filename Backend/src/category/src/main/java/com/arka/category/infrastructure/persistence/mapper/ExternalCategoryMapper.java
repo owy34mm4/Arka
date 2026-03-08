@@ -3,7 +3,6 @@ package com.arka.category.infrastructure.persistence.mapper;
 import org.springframework.stereotype.Component;
 
 import com.arka.category.domain.model.Category;
-import com.arka.category.domain.valueObject.CategoryName;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IExternalMapper;
 
@@ -14,7 +13,7 @@ public class ExternalCategoryMapper implements IExternalMapper<CategoryInfo, Cat
     public Category toDomain(CategoryInfo info) {
        return Category.builder()
             .id(info.getId())
-            .name(CategoryName.create(info.getName()))
+            .name(info.getName())
             .products(null)
             .productsId(null)
         .build();
@@ -24,7 +23,7 @@ public class ExternalCategoryMapper implements IExternalMapper<CategoryInfo, Cat
     public CategoryInfo toInfo(Category domain) {
         return CategoryInfo.builder()
             .id(domain.getId())
-            .name(domain.getName().getValue())
+            .name(domain.getName())
         .build();
     }
     
