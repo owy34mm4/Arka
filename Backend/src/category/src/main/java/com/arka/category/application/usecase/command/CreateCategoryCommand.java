@@ -6,6 +6,7 @@ package com.arka.category.application.usecase.command;
 
 
 import com.arka.category.domain.model.Category;
+import com.arka.category.domain.valueObject.CategoryName;
 import com.arka.category.infrastructure.entryPoints.rest.dto.useCase.createCategory.RequestCreateCategory;
 
  
@@ -38,7 +39,7 @@ public class CreateCategoryCommand {
     public Category toModel(){
         return Category.builder()
         .id(this.id)
-        .name(this.name)
+        .name(CategoryName.create(this.name))
         .productsId(null)
         .products(null)
         .build();
