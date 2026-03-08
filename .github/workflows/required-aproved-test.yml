@@ -19,6 +19,5 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Run tests
-        working-directory: Backend/src   # <- apunta donde está el gradlew
-        run: ./gradlew test
+      - name: Run tests  
+        run: cd Backend/src && ./gradlew test
