@@ -50,7 +50,7 @@ public class CreateUserHandler implements ICreateUserUseCase {
         //Notificar al cliente
             Map<String,Object> variablesHtml = Map.of(
                 "company_name","Arka",
-                "customer_name",u.getName().getFirstName()+" "+u.getName().getFirstSurname(),
+                "customer_name",u.getName().getFulName(),
                 "customer_email",u.getEmail()
             );
             emailPort.sendHtml(u.getEmail(), "Usuario Creado Exitosamente", "welcome.html", variablesHtml );

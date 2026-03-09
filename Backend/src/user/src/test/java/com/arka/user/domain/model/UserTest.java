@@ -45,9 +45,9 @@ public class UserTest {
                 assertEquals(uAdmin.getUsername(), "usuarioValido");
                 assertEquals(uAdmin.getPassword(), "contraseñaValida");
 
-                assertEquals(uAdmin.getRole(), Role.Administrador.name());
-                assertEquals(uClient.getRole(), Role.Cliente.name());
-                assertEquals(uEmployee.getRole(), Role.Empleado.name());
+                assertEquals(uAdmin.getRole().name(), Role.Administrador.name());
+                assertEquals(uClient.getRole().name(), Role.Cliente.name());
+                assertEquals(uEmployee.getRole().name(), Role.Empleado.name());
                 
             }
         );
@@ -58,7 +58,7 @@ public class UserTest {
 
         assertThrows(
             InvalidPropertiesGiven.class,
-            (()->{buildAdminUserWithName("", "usuario sin nombre 1", null, "ni apellido 1");})
+            (()->{buildAdminUserWithName("", "usuario sin nombre 1", "", "ni apellido 1");})
         );
         
 

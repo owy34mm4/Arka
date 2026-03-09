@@ -14,12 +14,16 @@ public class UserName {
     private String lastSurname;
 
     public static UserName create (String firstName, String lastName, String firstSurname, String lastSurname){
-        if (firstName.isBlank() && firstSurname.isBlank()) {throw new InvalidPropertiesGiven("UserName");}
+        if (firstName.isBlank() || firstSurname.isBlank()) {throw new InvalidPropertiesGiven("UserName");}
         return UserName.builder()
         .firstName(firstName)
         .lastName(lastName)
         .firstSurname(firstSurname)
         .lastSurname(lastSurname)
         .build();
+    }
+
+    public String getFulName(){
+        return getFirstName()+" "+getLastName()+" "+getFirstSurname()+" "+getLastSurname();
     }
 }

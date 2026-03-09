@@ -25,6 +25,13 @@ public class UserNameTest {
     }
 
     @Test
+    void should_generate_full_name(){
+        UserName name = UserName.create("Luis", "Javier", "Jaramillo", "Cruz");
+
+        assertEquals("Luis Javier Jaramillo Cruz", name.getFulName());
+    }
+
+    @Test
     void should_thrown_when_firstName_or_firstSurname_blank(){
         assertAll(
             ()->{
@@ -34,6 +41,7 @@ public class UserNameTest {
             }
         );
     }
+    
     
     
 }
