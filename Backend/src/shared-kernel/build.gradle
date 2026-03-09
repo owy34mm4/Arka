@@ -11,6 +11,8 @@ plugins {
 
 dependencies {
 
+    testFixturesImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+
     //SpringWeb
     implementation 'org.springframework.boot:spring-boot-starter-web'
     //SpringSecurity
