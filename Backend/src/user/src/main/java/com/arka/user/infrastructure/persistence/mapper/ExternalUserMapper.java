@@ -7,6 +7,7 @@ import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.infrastructure.persistence.mapper.gateway.IExternalMapper;
 import com.arka.user.domain.model.User;
 import com.arka.user.domain.model.enums.Role;
+import com.arka.user.domain.valueObjects.UserName;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,10 +19,7 @@ public class ExternalUserMapper implements IExternalMapper<UserInfo,User> {
     public User toDomain(UserInfo info) {
         return User.builder()
         .id(info.getId())
-        .firstName(info.getFirstName())
-        .lastName(info.getLastName())
-        .firstSurname(info.getFirstSurname())
-        .lastSurname(info.getLastSurname())
+        .name(UserName.create(info.getFirstName(), info.getLastName(), info.getFirstSurname(), info.getLastSurname()))
         .username(info.getUsername())
         .email(info.getEmail())
         .password(info.getPassword())
@@ -39,10 +37,10 @@ public class ExternalUserMapper implements IExternalMapper<UserInfo,User> {
     public UserInfo toInfo(User domain) {
         return UserInfo.builder()
         .id(domain.getId())
-        .firstName(domain.getFirstName())
-        .lastName(domain.getLastName())
-        .firstSurname(domain.getFirstSurname())
-        .lastSurname(domain.getLastSurname())
+        .firstName(domain.getName().getFirstName())
+        .lastName(domain.getName().getLastName())
+        .firstSurname(domain.getName().getFirstSurname())
+        .lastSurname(domain.getName().getLastSurname())
         .email(domain.getEmail())
         .username(domain.getUsername())
         .password(domain.getPassword())

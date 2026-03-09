@@ -39,12 +39,12 @@ public class UpdateUserHandler implements IUpdateUserUsecase{
             u.setRole(cmd.getRole());
         }
         //Eliminar despues de crear un administrador en sistema
-        u.setFirstName(cmd.getFirst_name());
-        u.setLastName((cmd.getLast_name()));
-        u.setRole(cmd.getRole());
-        u.setCreatedAt(oldUser.getCreatedAt());
-        u.setLastLogin(oldUser.getLastLogin());
-        u.setActive(oldUser.isActive());
+        // u.setFirstName(cmd.getFirst_name());
+        // u.setLastName((cmd.getLast_name()));
+        // u.setRole(cmd.getRole());
+        // u.setCreatedAt(oldUser.getCreatedAt());
+        // u.setLastLogin(oldUser.getLastLogin());
+        // u.setActive(oldUser.isActive());
         
         u.setPassword(passwordEncoder.encode(u.getPassword()));
         u = userRepository.save(u);
