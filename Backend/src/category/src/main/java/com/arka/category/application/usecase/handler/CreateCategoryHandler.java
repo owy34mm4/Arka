@@ -39,8 +39,7 @@ public class CreateCategoryHandler implements ICreateCategoryUseCase {
         //Validar existencia antes de intentar crear
         if (categoryRepository.existsByName(cmd.getName())){throw new BusinessRuleException("Categoria ya exitente");}       
         
-        //Dumpeamos de command a modelo
-        Category c = cmd.toModel();     
+        Category c =Category.createCategory(cmd.getName());
 
         //Persistir
         c = categoryRepository.save(c);

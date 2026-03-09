@@ -1,9 +1,29 @@
 dependencies {
     implementation project(':shared-kernel')
-    implementation project(':user')
+
+    testImplementation testFixtures(project(':shared-kernel'))
+
     
     implementation 'org.springframework:spring-context'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Testing core  
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'  
+  
+    // Mockito explícito  
+    testImplementation 'org.mockito:mockito-core:5.11.0'  
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.11.0'  
+
+    // AssertJ (assertions fluidas)  
+    testImplementation 'org.assertj:assertj-core:3.25.3'  
+  
+    // Testcontainers (MySQL real en tests)  
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'  
+    testImplementation 'org.testcontainers:mysql:1.19.7'  
+  
+    // RestAssured (tests HTTP)  
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'  
+    testImplementation 'io.rest-assured:spring-mock-mvc:5.4.0'
 }
