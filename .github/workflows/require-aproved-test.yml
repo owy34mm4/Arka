@@ -6,22 +6,20 @@ on:
       - dev
       - main
 
-jobs:
-  run-tests:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
-      - name: Grant execute permission to gradlew  
-        run: chmod +x Backend/src/gradlew
-
-      - name: Run tests
-        working-directory: Backend/src   # <- apunta donde está el gradlew
-        run: ./gradlew test
+jobs:  
+  tests:  
+    name: tests  
+    runs-on: ubuntu-latest  
+    steps:  
+      - uses: actions/checkout@v4  
+  
+      - uses: actions/setup-java@v4  
+        with:  
+          distribution: temurin  
+          java-version: "21"  
+  
+      - name: Run tests (Gradle)  
+        working-directory: Backend/src  
+        run: |  
+          chmod +x gradlew  
+          ./gradlew test
