@@ -10,6 +10,8 @@
 
 # Backend ignore
 
+**/**.class
+
 Backend/src/HELP.md
 Backend/src/.gradle
 Backend/src/build/
