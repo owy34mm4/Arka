@@ -1,7 +1,7 @@
 package com.arka.user.application.usecase.command;
 
 import com.arka.user.domain.model.User;
-
+import com.arka.user.domain.valueObjects.UserName;
 import com.arka.user.infrastructure.entryPoints.rest.dto.useCase.CreateUser.RequestCreateUser;
 import com.arka.user.infrastructure.persistence.entity.enums.Role;
 
@@ -41,10 +41,7 @@ public class CreateUserCommand {
     public User toModel(){
         return User.builder()
         .id(this.getId())
-        .firstName(this.getFirst_name())
-        .lastName(this.getLast_name())
-        .firstSurname(this.getFirst_surname())
-        .lastSurname(this.getLast_name())
+        .name(UserName.create(this.getFirst_name(), this.getLast_name(), this.getFirst_surname(), this.getLast_surname()))
         .email(this.email)
         .username(this.getUsername())
         .password(this.getPassword())
