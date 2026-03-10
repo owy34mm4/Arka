@@ -54,9 +54,10 @@ jobs:
           context: .
           file: ./Backend/Dockerfile.deploy
           push: true
+          platforms: linux/amd64
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/arka:latest
             ${{ secrets.DOCKER_USERNAME }}/arka:${{ github.sha }}
-            ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest  
             ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:${{ github.sha }}
+
 
