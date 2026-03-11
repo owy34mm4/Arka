@@ -46,7 +46,7 @@ public class User {
     }
 
     public void editUserInstance(User newData){
-        this.setId(newData.getId());
+        // this.setId(newData.getId());
         this.setName(newData.getName());
         this.setEmail(newData.getEmail());
         this.setUsername(newData.getUsername());

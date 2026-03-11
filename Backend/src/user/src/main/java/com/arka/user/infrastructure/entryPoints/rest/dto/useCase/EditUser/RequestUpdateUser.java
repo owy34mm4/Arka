@@ -2,10 +2,11 @@ package com.arka.user.infrastructure.entryPoints.rest.dto.useCase.EditUser;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 public class RequestUpdateUser {
 
     @NotBlank

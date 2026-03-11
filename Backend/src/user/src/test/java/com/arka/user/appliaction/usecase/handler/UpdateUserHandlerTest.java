@@ -32,13 +32,13 @@ import com.arka.user.domain.model.enums.Role;
 public class UpdateUserHandlerTest {
 
     @Mock
-    private  IUserRepository userRepository;
+    private IUserRepository userRepository;
 
     @Mock
-    private  IPasswordEncoderPort passwordEncoder;
+    private IPasswordEncoderPort passwordEncoder;
 
     @Mock
-    private  IAuthenticateUserPort authenticateUserPort;
+    private IAuthenticateUserPort authenticateUserPort;
     
     @InjectMocks
     private UpdateUserHandler updateUserHanlder;
@@ -219,8 +219,6 @@ public class UpdateUserHandlerTest {
         verify(userRepository, never()).save(any(User.class));
         
     }
-
-
 
 
 }
