@@ -55,7 +55,7 @@ public class UserControllerIT {
 
 	@Test
 	@DisplayName("POST /api/v0/user/create - Should create user and return 200 oktgb ")
-    void shhould_create_user_sucesfully(){
+    void should_create_user_sucesfully(){
 		// 1. ARRANGE (Preparar) 
 	
 	    RequestCreateUser request = RequestCreateUser.builder() 

@@ -48,7 +48,7 @@ public class UserRepositoryAdapterIT {
 
       @Test
       @Transactional
-      @DisplayName("should sab and retrieve user from real MySQL")
+      @DisplayName("should save and retrieve user from real MySQL")
       void should_save_and_search_user(){
         User uClient =User.createUser(
             "Jaime", "Cecil",

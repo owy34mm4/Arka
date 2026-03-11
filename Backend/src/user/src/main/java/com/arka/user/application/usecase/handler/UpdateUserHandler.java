@@ -27,29 +27,32 @@ public class UpdateUserHandler implements IUpdateUserUsecase{
 
     @Override
     public User execute(UpdateUserCommand cmd) {
-        
-        if (authenticateUserPort.getUserId() != cmd.getIdToModify() ){
-            throw new BusinessRuleException("Accion no permitida");
-        }
-        User oldUser = userRepository.findById(cmd.getIdToModify());
-        User u = cmd.toModel();
+        var requesterId = authenticateUserPort.getUserId();
+        var requesterRole = authenticateUserPort.getRole();
 
-        //Accion de Admin -> Cambiar al role especificado
-        if(authenticateUserPort.getRole() == Role.Administrador.name()){
-            u.setRole(cmd.getRole());
+        boolean isOwner = requesterId.equals(cmd.getIdToModify());  
+        boolean isAdmin = Role.Administrador.name().equals(requesterRole);  
+        
+        if (!isOwner && !isAdmin) {  
+        throw new BusinessRuleException("Accion no permitida");  
         }
-        //Eliminar despues de crear un administrador en sistema
-        // u.setFirstName(cmd.getFirst_name());
-        // u.setLastName((cmd.getLast_name()));
-        // u.setRole(cmd.getRole());
-        // u.setCreatedAt(oldUser.getCreatedAt());
-        // u.setLastLogin(oldUser.getLastLogin());
-        // u.setActive(oldUser.isActive());
+        
+        User u = cmd.toModel();
         
         u.setPassword(passwordEncoder.encode(u.getPassword()));
-        u = userRepository.save(u);
 
-        return u;
+        User oldUser = userRepository.findById(cmd.getIdToModify());
+
+        oldUser.editUserInstance(u);
+
+        //Accion de Admin -> Cambiar al role especificado
+        if(isAdmin){
+            oldUser.setRole(u.getRole());
+        }
+
+        oldUser = userRepository.save(oldUser);
+
+        return oldUser;
 
     }
     
