@@ -1,11 +1,6 @@
 package com.arka.product.application.useCase.handler;
 
-
-import java.time.Instant;
-import java.util.Date;
-
 import java.util.List;
-
 
 import org.springframework.stereotype.Service;
 
@@ -17,10 +12,7 @@ import com.arka.shared.application.ports.out.user.Roleinfo;
 import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 
-
 import lombok.RequiredArgsConstructor;
-
-
 
 import com.arka.product.application.port.in.ICreateProductUseCase;
 import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
@@ -28,10 +20,6 @@ import com.arka.product.application.port.out.IProductRepositoryPort;
 import com.arka.product.application.useCase.command.CreateProductCommand;
 import com.arka.product.domain.model.Product;
 import com.arka.product.domain.model.ProductHistory;
-
-
-
-
 
 
 @Service
@@ -48,19 +36,36 @@ public class CreateProductHandler implements ICreateProductUseCase {
     
     private final IAuthenticateUserPort authenticateUserPort;
 
+
+    private boolean isAdminOrEmployee(UserInfo requester){
+        return requester.getRole().name().equals(Roleinfo.Empleado.name()) || requester.getRole().name().equals( Roleinfo.Administrador.name()) ;
+    }
+
     @Override
     public Product execute(CreateProductCommand cmd) throws BusinessRuleException {
         //Validar privilegios de accion -> Min empleado
-            UserInfo requester =  userRepository.findById(authenticateUserPort.getUserId());
-            if(requester.getRole().name().equals( Roleinfo.Empleado.name() )&& authenticateUserPort.getRole().equals( Roleinfo.Administrador.name())){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
+            Long requesterId = authenticateUserPort.getUserId();
+            UserInfo requester =  userRepository.findById(requesterId);
+
+            if(!isAdminOrEmployee(requester)){throw new BusinessRuleException("Autorizacion insuficiente para la accion");}
 
         //Generamos modelo 
-        Product model = cmd.toModel();
+        Product model = Product.create(
+            cmd.getId(),
+            cmd.getName(), 
+            cmd.getDescription(), 
+            cmd.getPrice(), 
+            cmd.getStock(), 
+            cmd.getCategories(), 
+            null, 
+            null, 
+            null
+        );
 
         //Buscar Categorias - Criterio Aceptacion
-            //Obtener las categorias de su repositorio -- Error 404 si no existe
+            //Obtener las categorias de su repositorio -- Error 404 si no existe <- EarlyError
             List <CategoryInfo> categories = categoryRepository.findAllById(cmd.getCategories());
-        
+       
         //Persistir
       
             //Guardamos Producto
@@ -71,11 +76,9 @@ public class CreateProductHandler implements ICreateProductUseCase {
                 
                 //Sets De MetaData
 
-                    //TimeStamp de Creacion
-                    pH.setCreatedAt(Date.from(Instant.now()));
-                    //Marca de Responsabilidad
-                    pH.setCreatedById(cmd.getRequesterId());
-                
+                    //TimeStamp de Creacion y Marca de Responsabilidad <-Metodo Dominio
+                    pH.establishForCreation(requester.getId());
+                    
                 //Guardar -- No retorna nada. Solo persiste para Log
                     productHistoryRepository.save(pH);
 

@@ -24,7 +24,9 @@ public class UserE2E extends BaseE2E {
     @Test
     @DisplayName("Escenario: Admin actualiza la info de un usuario")
     void admin_updates_user_info(){
+        //Creates the user to modify
         ResponseCreateUser responseCreate = createUser("usuario_update", "password_update").getBody();
+        //LogIn as setUp Admin
         String token = loginInAdmin();
 
         RequestUpdateUser request = RequestUpdateUser.builder()

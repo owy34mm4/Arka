@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.arka.product.application.useCase.command.CreateProductCommand;
-import com.arka.product.application.useCase.command.UpdateProductCommand;
+import com.arka.product.application.useCase.command.UpdateStockProductCommand;
 import com.arka.product.application.useCase.handler.CreateProductHandler;
 import com.arka.product.application.useCase.handler.UpdateStockProductHandler;
 import com.arka.product.domain.model.Product;
@@ -85,7 +85,7 @@ public class ProductController {
     public ResponseEntity<ResponseUpdateStockProduct> updateProductRoute( @RequestBody RequestUpdateStockProduct request) throws InvalidPropertiesGiven {
         
         //Ejecutamos nuestro caso de uso, inyectando el resultado de la creacion del command a traves de la request
-        Product savedModel = updateStockUseCase.execute(UpdateProductCommand.createFromRequest(request));
+        Product savedModel = updateStockUseCase.execute(UpdateStockProductCommand.createFromRequest(request));
         
         //Creamos respuesta 
         ResponseUpdateStockProduct response = ResponseUpdateStockProduct.createFromModel(savedModel,"Stock Actualizado exitosamente");
