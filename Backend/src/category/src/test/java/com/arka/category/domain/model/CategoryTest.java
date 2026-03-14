@@ -1,5 +1,7 @@
 package com.arka.category.domain.model;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.Test;
@@ -20,7 +22,14 @@ public class CategoryTest {
 
     @Test
     void should_create_valid_category(){
-        assertDoesNotThrow(()->buildCategoryWithName("nombreValido"));
+        assertAll(
+            ()->{
+                Category c = assertDoesNotThrow(()->buildCategoryWithName("nombreValido"));
+
+                assertEquals("nombreValido", c.getName().getValue());
+            }
+        );
+        
     }
     
 

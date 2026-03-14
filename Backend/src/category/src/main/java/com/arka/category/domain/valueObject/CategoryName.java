@@ -15,7 +15,7 @@ public class CategoryName {
     private String value;
     
     public static CategoryName create (String value){
-        if(value.strip().isBlank() || value ==null) throw new InvalidPropertiesGiven("CategoryName");
+        if(value ==null || value.strip().isBlank() ) throw new InvalidPropertiesGiven("CategoryName");
         return CategoryName.builder()
         .value(value)
         .build();

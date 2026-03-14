@@ -1,5 +1,6 @@
 package com.arka.product.domain.model;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +70,16 @@ public class ProductHistory {
         .ordersIds(this.getOrdersIds())
         .build();
 
+    }
+
+    public void establishForCreation(Long idWhoCreates){
+        this.setCreatedAt(Date.from(Instant.now()));
+        this.setCreatedById(idWhoCreates);
+    }
+
+    public void establishForModification(Long idWhoModifies){
+        this.setModifiedAt(Date.from(Instant.now()));
+        this.setModifiedById(idWhoModifies);
     }
     
 }

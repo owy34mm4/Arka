@@ -51,11 +51,15 @@ public class Product {
         .build();
     }
 
+    public void updateStock(Integer newStock){
+        //Validacion en constructor valueObject
+        this.setStock(new ProductStock(newStock));
+    }
+
    public void inyectCategories( List<CategoryInfo> categoriesToInyect) throws BusinessRuleException{
         validateCategories(categoriesToInyect);
         this.setCategories(categoriesToInyect);
    }
-
 
    public ProductHistory toProductHistory(){
     return ProductHistory.builder()
@@ -71,9 +75,6 @@ public class Product {
         .ordersIds(this.getShopingCartsIds())
     .build();
    }
-
-    
-    
     
     private static void validateCategories(List<CategoryInfo> categoriesToCheck) throws BusinessRuleException{
         if(categoriesToCheck.size()<=0 || categoriesToCheck.isEmpty() || categoriesToCheck==null){
@@ -82,7 +83,5 @@ public class Product {
 
     }
    
-
-
 
 }

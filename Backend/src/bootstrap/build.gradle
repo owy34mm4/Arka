@@ -13,6 +13,7 @@ dependencies {
     implementation project(':product')
     implementation project(':shopingCart')
     implementation project(':notifications')
+    testImplementation testFixtures(project(':shared-kernel'))
     // Configuración global
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -31,6 +32,17 @@ dependencies {
 
     //Swagger UI SpringDoc
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // Testing core  
+    testImplementation 'org.springframework.boot:spring-boot-starter-test' 
+
+    // Testcontainers (MySQL real en tests)  
+    testImplementation 'org.testcontainers:junit-jupiter:1.19.7'  
+    testImplementation 'org.testcontainers:mysql:1.19.7'  
+  
+    // RestAssured (tests HTTP)  
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'  
+    testImplementation 'io.rest-assured:spring-mock-mvc:5.4.0'
 
     
 }
