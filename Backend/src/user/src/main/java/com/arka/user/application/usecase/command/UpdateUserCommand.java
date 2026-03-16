@@ -1,5 +1,7 @@
 package com.arka.user.application.usecase.command;
 
+import java.time.LocalDateTime;
+
 import com.arka.user.domain.model.User;
 import com.arka.user.domain.model.enums.Role;
 import com.arka.user.domain.valueObjects.UserName;
@@ -11,7 +13,6 @@ import lombok.Getter;
 @Getter
 @Builder
 public class UpdateUserCommand {
-
 
     private Long idToModify;
 
@@ -45,6 +46,7 @@ public class UpdateUserCommand {
         .email(this.email)
         .username(this.getUsername())
         .password(this.getPassword())
+        .createdAt(LocalDateTime.now())
         .role(this.getRole())
         .build();
     }

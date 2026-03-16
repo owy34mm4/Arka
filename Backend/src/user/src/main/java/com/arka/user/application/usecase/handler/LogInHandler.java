@@ -25,6 +25,8 @@ public class LogInHandler implements ILoginUseCase {
     public ResponseLogIn execute(LogInCommand cmd) {
         // 1. Buscar usuario  
         User user = userRepository.findByUsername(cmd.getUsername()); 
+
+        if(user==null){throw new BusinessRuleException("Credenciales inválidas");}
   
         // 2. Validar contraseña (asume que guardas hash con BCrypt)  
         if (!passwordMatches(cmd.getPassword(), user.getPassword())) {  

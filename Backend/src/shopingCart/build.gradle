@@ -7,4 +7,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    //Tests
+        // Mocks
+        testImplementation 'org.mockito:mockito-core:5.11.0'  
+        testImplementation 'org.mockito:mockito-junit-jupiter:5.11.0'  
+
+        // AssertJ (assertions fluidas)  
+        testImplementation 'org.assertj:assertj-core:3.25.3'  
+        //Asserts
+        testImplementation 'org.testcontainers:junit-jupiter:1.19.7'  
+  
 }

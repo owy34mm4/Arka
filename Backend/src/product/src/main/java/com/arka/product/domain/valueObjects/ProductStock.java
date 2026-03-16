@@ -9,7 +9,7 @@ public class ProductStock {
     Integer value;
 
     public ProductStock(Integer value){
-        if (value<0 || value ==null) {throw new InvalidPropertiesGiven("Product"); }
+        if (value ==null || value<0 ) {throw new InvalidPropertiesGiven("Product"); }
         this.value=value;
     }
 }

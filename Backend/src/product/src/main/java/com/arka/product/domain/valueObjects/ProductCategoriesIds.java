@@ -11,7 +11,7 @@ public class ProductCategoriesIds {
     List<Long> values;
 
     public ProductCategoriesIds(List<Long> values){
-        if (values.size()<=0 || values.isEmpty() || values ==null) {throw new InvalidPropertiesGiven("Product"); }
+        if ( values ==null || values.size()<=0 || values.isEmpty() ) {throw new InvalidPropertiesGiven("Product"); }
 
         this.values = values;
 

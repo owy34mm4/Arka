@@ -1,5 +1,6 @@
 package com.arka.category.application.usecase.handler;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;   
 import static org.junit.jupiter.api.Assertions.assertNotNull;  
 import static org.junit.jupiter.api.Assertions.assertThrows;   
@@ -77,7 +78,7 @@ public class CreateCategoryHandlerTest {
             .thenAnswer(invocation -> invocation.getArgument(0));
 
 
-        Category result = createCategoryHandler.execute(validCommand);
+        Category result = assertDoesNotThrow(()->createCategoryHandler.execute(validCommand));
 
         assertNotNull(result);
         assertEquals(validCommand.getName(), result.getName().getValue());

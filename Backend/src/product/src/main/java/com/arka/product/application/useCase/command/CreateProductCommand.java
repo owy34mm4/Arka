@@ -19,7 +19,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CreateProductCommand {
     
-    Long requesterId;
     Long id;
     String name;
     String description;

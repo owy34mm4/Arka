@@ -5,7 +5,7 @@ package com.arka.category.domain.valueObject;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
@@ -18,8 +18,9 @@ public class CategoryNameTest {
     }
 
     @Test
-    void should_throw_when_name_invalid(){
+    void should_throw_when_invalid_properties(){
         assertThrows(InvalidPropertiesGiven.class , (()-> CategoryName.create(null)));
+        assertThrows(InvalidPropertiesGiven.class , (()-> CategoryName.create("")));
 
     }
     

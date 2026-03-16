@@ -1,23 +1,16 @@
 package com.arka.product.application.useCase.handler;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
-
-
 
 import org.springframework.stereotype.Service;
 
-
-// import com.arka.category.infrastructure.persistence.repository.external.gateway.ICategoryExternalRepository;
 import com.arka.product.application.port.in.IUpdateStockUseCase;
 
 import com.arka.product.application.port.out.IProductHistoryRepositoryPort;
 import com.arka.product.application.port.out.IProductRepositoryPort;
-import com.arka.product.application.useCase.command.UpdateProductCommand;
+import com.arka.product.application.useCase.command.UpdateStockProductCommand;
 import com.arka.product.domain.model.Product;
 import com.arka.product.domain.model.ProductHistory;
-import com.arka.product.domain.valueObjects.ProductStock;
 import com.arka.shared.application.ports.out.category.CategoryInfo;
 import com.arka.shared.application.ports.out.category.ICategoryDataPort;
 import com.arka.shared.application.ports.out.security.IAuthenticateUserPort;
@@ -27,9 +20,7 @@ import com.arka.shared.application.ports.out.user.UserInfo;
 import com.arka.shared.domain.exceptions.BusinessRuleException;
 import com.arka.shared.domain.exceptions.InvalidPropertiesGiven;
 
-
 import lombok.RequiredArgsConstructor;
-
 
 
 @Service
@@ -44,23 +35,25 @@ public class UpdateStockProductHandler implements IUpdateStockUseCase{
 
     private final IUserDataPort userRepository;
 
-     private final IAuthenticateUserPort authenticateUserPort;
+    private final IAuthenticateUserPort authenticateUserPort;
 
-
+    private boolean isAdminOrEmployee(UserInfo requester){
+       return requester.getRole().name().equals(Roleinfo.Administrador.name()) || requester.getRole().name().equals(Roleinfo.Empleado.name());
+    }
     
     @Override
-    public Product execute(UpdateProductCommand cmd) throws InvalidPropertiesGiven {
+    public Product execute(UpdateStockProductCommand cmd) throws InvalidPropertiesGiven {
         //Validar Permisos de Accion
-            UserInfo requester = userRepository.findById(authenticateUserPort.getUserId());
+            var requesterId = authenticateUserPort.getUserId();
+            UserInfo requester = userRepository.findById(requesterId);
             
-            if( !(requester.getRole().name() == Roleinfo.Administrador.name() || requester.getRole().name() == Roleinfo.Empleado.name() ) ){throw new BusinessRuleException("No permitido");}
+            if(!isAdminOrEmployee(requester)){throw new BusinessRuleException("No permitido");}
 
         //Obtenemos la entidad que vamos a modificar
-        Product modelToModify = productRepository.findById(cmd.getProductId());
+            Product modelToModify = productRepository.findById(cmd.getProductId());
 
-        //Actualizamos el stock (Validacion en Dominio-ValueObject)
-        modelToModify.setStock(new ProductStock(cmd.getNewStock()));
-        
+            //Actualizamos el stock (Validacion en Dominio-ValueObject)
+            modelToModify.updateStock(cmd.getNewStock());
 
         //Persistir
 
@@ -71,11 +64,9 @@ public class UpdateStockProductHandler implements IUpdateStockUseCase{
                 ProductHistory pH = savedModel.toProductHistory();
 
                 //Setear MetaData
-                    //TimeStamp Modificacion
-                    pH.setModifiedAt(Date.from(Instant.now()));
-                    //Flag de Responsabilidad
-                    pH.setModifiedById(cmd.getRequesterId());
-                
+                    //TimeStamp Modificacion & Flag de Responsabilidad
+                    pH.establishForModification(requester.getId());
+                    
                 //Persistir ProducthistoryRecord -- No retorna. Solo persiste
                     productHisotryRepository.save(pH);
 

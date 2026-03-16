@@ -6,10 +6,10 @@ import lombok.Getter;
 
 @Getter
 public class ProductDescription {
-    String value;
+    private String value;
 
     public ProductDescription (String value){
-        if (value.isBlank() || value.length()<5) {throw new InvalidPropertiesGiven("Product");}
+        if (value ==null || value.isBlank() || value.length()<=10) {throw new InvalidPropertiesGiven("Product");}
 
         this.value=value;
     }

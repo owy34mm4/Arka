@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class ProductName {
 
-    String value;
+    private final String value;
 
     public ProductName (String value){
-        if (value.isBlank() || value ==null) {throw new InvalidPropertiesGiven("Product"); }
+        if (value ==null || value.isBlank() ) {throw new InvalidPropertiesGiven("Product"); }
         this.value = value;
     }
     
